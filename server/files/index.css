@@ -1,0 +1,71 @@
+* { /*Damit kein Abstand zwischen den Elementen sind header - nav - main*/
+    margin: 0;
+    padding: 0;
+  }
+header {
+    background-color: greenyellow;
+    text-align: center;
+    padding: 20px;
+  }
+nav{
+    display: flex;
+    justify-content: center;
+    background-color: gray;
+}
+body {
+    background-color: #99f988;
+}
+main {
+    justify-content: center;
+    margin-top: 24px;
+    display: flex;
+    background-color: greenyellow;
+    flex-wrap: wrap;
+}
+nav ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+  }
+  nav li {
+    display: inline;
+    margin-right: 40px;
+  }
+  nav a {
+    font-size: 24px;
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+  }
+  .searchcontainer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .search-form {
+    display: flex;
+  }
+  
+  .search-input {
+    padding: 10px;
+    width: 600px;
+  }
+  
+  .search-button {
+    padding: 8px;
+  }
+  article {
+    background-color: rgb(199, 199, 199);
+    border-radius: 16px;
+    flex: 0 0 200px;
+    margin: 20px;
+    /*vom Rand aus*/
+    padding: 16px;
+}
+.articleimage{
+    border-radius: 16px;
+    width: 200px; 
+    height: auto;
+}
