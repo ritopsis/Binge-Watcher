@@ -28,7 +28,10 @@ http.get(options, (response) => {
     });
 
     response.on('end', () => {
-    console.log(data);
+    const jsonData = JSON.parse(data);
+    const searchResults = jsonData.results;
+    console.log(searchResults.primaryImage.url);
+
     });
 
     response.on('error', (error) => {
