@@ -4,19 +4,22 @@
 }
 
 header {
-  background-color: greenyellow;
+  background-color: rgb(0, 138, 148);
   text-align: center;
   padding: 20px;
+}
+header h1 {
+  font-size: 64px;
 }
 
 nav {
   display: flex;
   justify-content: center;
-  background-color: gray;
+  background-color: rgb(150, 150, 150);
 }
 
 body {
-  background-color: #99f988;
+  background-color: rgb(0, 138, 148);
 }
 
 main {
@@ -25,7 +28,7 @@ margin-top: 16px;
   justify-content: center;
   display: flex;
   flex-direction: column;
-  background-color: greenyellow;
+  background-color: rgb(0, 127, 147);
 }
 
 nav ul {
@@ -67,7 +70,7 @@ nav a {
 }
 
 article {
-  background-color: rgb(199, 199, 199);
+  background-color: rgb(168, 226, 255);
   border-radius: 16px;
   flex: 0 0 200px;
   margin: 20px;
@@ -79,13 +82,13 @@ article {
   margin: 24px;
   justify-content: center;
   display: flex;
-  background-color: greenyellow;
+  background-color: rgb(0, 127, 147);
   flex-wrap: wrap;
 }
 
 .topmovies article,
 .topseries article {
-  background-color: rgb(199, 199, 199);
+  background-color: rgb(177, 177, 177);
   border-radius: 16px;
   flex: 0 0 200px;
   margin: 20px;

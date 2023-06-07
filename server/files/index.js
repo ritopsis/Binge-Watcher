@@ -33,6 +33,7 @@ function addmovie(movie){
     } else {
         console.log("help");
       imageElement.src = 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fb3ef66312333.5691dd2253378.jpg';
+      imageElement.loading = 'lazy';
       imageElement.alt = 'Alternative Image';
     }
     console.log(imageElement.src);
