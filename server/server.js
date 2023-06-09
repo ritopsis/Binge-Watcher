@@ -41,8 +41,12 @@ http.get(options, (response) => {
         console.log(error);
     });
 });
-
 })
+
+app.get("/series", function(req, res){
+    
+})
+
 
 app.listen(3000);
 
