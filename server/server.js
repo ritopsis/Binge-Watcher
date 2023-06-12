@@ -7,13 +7,12 @@ const { stringify } = require("querystring");
 const fs = require("fs"); //For file creation/reading
 const session = require("express-session");
 
-// Parse urlencoded bodies
 app.use(bodyParser.json());
 app.use(
   session({
     secret: "mysecret", // Secret key used to sign the session ID cookie
     resave: false, // Forces the session to be saved back to the session store, even if it wasn't modified during the request
-    saveUninitialized: false, // Forces an uninitialized session to be saved to the session store
+    saveUninitialized: false, //uninitialized sessions will not be saved in the session store
   })
 );
 // Serve static content in directory 'files'
@@ -141,7 +140,6 @@ app.post("/register", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  console.log(req.sessionID);
   const { username, password } = req.body;
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
@@ -151,7 +149,7 @@ app.post("/login", function (req, res) {
     const jsonData = JSON.parse(data);
     if (jsonData[username] == password) {
       console.log("login success");
-      req.session.username = username; //wird in cookie gespeichert!
+      req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
       res.status(200).send("Login");
     } else {
       res.status(401).send("Wrong Username/Password!");

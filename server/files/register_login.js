@@ -9,6 +9,7 @@ window.onload = function () {
   xhr.open("GET", "loggedin");
   xhr.send();
 };
+
 document
   .getElementById("registrationForm")
   .addEventListener("submit", function (event) {
@@ -24,13 +25,13 @@ document
       password: password,
     };
 
-    // Send the data to the server using an HTTP POST request
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
       if (xhr.status === 200) {
         console.log(xhr.status);
       } else if (xhr.status === 409) {
-        console.log(xhr.responseText); //Username is taken
+        //409 -> Username is taken
+        console.log(xhr.responseText);
       } else {
         console.log(xhr.status);
       }
@@ -39,6 +40,7 @@ document
     xhr.setRequestHeader("Content-Type", "application/json"); //type of data being sent in the request body,  specifies that the request body contains JSON data
     xhr.send(JSON.stringify(data));
   });
+
 document
   .getElementById("loginForm")
   .addEventListener("submit", function (event) {
