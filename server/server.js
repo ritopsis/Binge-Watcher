@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const http = require("https");
 const { stringify } = require("querystring");
+const fs = require('fs'); //For file creation/reading
 
 // Parse urlencoded bodies
 app.use(bodyParser.json());
@@ -97,6 +98,42 @@ http.get(options, (response) => {
     });
 });
 })
+
+// Define the JSON file path
+const filePath = 'data/registeredaccounts.json';
+
+
+app.post("/register", function(req, res){
+  const { username, password } = req.body;
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error:', err);
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    if(jsonData[username])
+    {
+      console.log(jsonData[username]);
+      res.status(409).send('Username already taken'); //Status 409 is conflict
+    }
+    else
+    {
+      console.log("User doesn't exist!")
+      jsonData[username] = password;
+      fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf8', err => {
+        if (err) {
+          console.error('Error:', err);
+          return;
+        }
+        console.log('File saved successfully.');
+      });
+      res.status(200).send('User created');
+      console.log("User created")     
+    }
+  });
+
+});
 
 
 app.listen(3000);
