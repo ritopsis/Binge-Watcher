@@ -119,6 +119,7 @@ app.post("/register", function(req, res){
     else //username doesn't exist
     {
       jsonData[username] = password; //Add username as key and password as value into the jsonData
+      createFile(username);
       fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf8', err => {//jsonData, null, 2 <- better formatting of json in registeredaccounts.json
         if (err) {
           console.error('Error:', err);
@@ -131,6 +132,36 @@ app.post("/register", function(req, res){
   });
 });
 
+app.post("/login", function(req, res){
+const { username, password } = req.body;
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error:', err);
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    if(jsonData[username] == password)
+    {
+      console.log("login success");
+      res.status(200).send('Login');
+    }
+    else
+    {
+      res.status(401).send('Wrong Username/Password!');
+    }
+  });
+});
+
+function createFile(filename)
+{
+  fs.writeFile("data/userdata/"+filename + ".json", "{ }", 'utf8', (err) => {
+    if (err) {
+      console.error('Error:', err);
+      return;
+    }
+    console.log('JSON file created successfully.');
+  });
+}
 
 app.listen(3000);
 
