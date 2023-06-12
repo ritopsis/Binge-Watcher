@@ -112,27 +112,23 @@ app.post("/register", function(req, res){
       return;
     }
     const jsonData = JSON.parse(data);
-    if(jsonData[username])
+    if(jsonData[username]) //jsonData[username] -> undefined -> false (falsy)
     {
-      console.log(jsonData[username]);
       res.status(409).send('Username already taken'); //Status 409 is conflict
     }
-    else
+    else //username doesn't exist
     {
-      console.log("User doesn't exist!")
-      jsonData[username] = password;
-      fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf8', err => {
+      jsonData[username] = password; //Add username as key and password as value into the jsonData
+      fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf8', err => {//jsonData, null, 2 <- better formatting of json in registeredaccounts.json
         if (err) {
           console.error('Error:', err);
           return;
         }
         console.log('File saved successfully.');
-      });
-      res.status(200).send('User created');
-      console.log("User created")     
+        res.status(200).send('User created'); 
+      }); 
     }
   });
-
 });
 
 
