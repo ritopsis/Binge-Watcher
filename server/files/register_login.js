@@ -1,16 +1,14 @@
 window.onload = function () {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
-      if (xhr.status === 200) {
-        window.location.href = "index.html";
-        }
-       else 
-      {
-      }
+    if (xhr.status === 200) {
+      window.location.href = "index.html";
+    } else {
     }
-    xhr.open("GET", "loggedin");
-    xhr.send();
-}
+  };
+  xhr.open("GET", "loggedin");
+  xhr.send();
+};
 document
   .getElementById("registrationForm")
   .addEventListener("submit", function (event) {
