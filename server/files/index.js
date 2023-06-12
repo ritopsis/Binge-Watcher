@@ -31,6 +31,36 @@
       };
       xhrShows.open("GET", "series"); 
       xhrShows.send();
+
+      const xhrlogin = new XMLHttpRequest();
+      const menuItems = document.getElementById("menuItems");
+      xhrlogin.onload = function () {
+        if (xhrlogin.status === 200) {
+          const myProfileLink = document.createElement("li");
+          const myProfileAnchor = document.createElement("a");
+          myProfileAnchor.href = "myprofile.html";
+          myProfileAnchor.textContent = "My Profile";
+          myProfileLink.appendChild(myProfileAnchor);
+
+         const logoutLink = document.createElement("li");
+          const logutLinkAnchor = document.createElement("a");
+          logutLinkAnchor.href = "logout";
+          logutLinkAnchor.textContent = "Logout";
+          logoutLink.appendChild(logutLinkAnchor);
+          menuItems.appendChild(myProfileLink);
+          menuItems.appendChild(logoutLink);
+
+        } else {
+          const loginLink = document.createElement("li");
+          const loginLinkAnchor = document.createElement("a");
+          loginLinkAnchor.href = "register_login.html";
+          loginLinkAnchor.textContent = "Login";
+          loginLink.appendChild(loginLinkAnchor);
+          menuItems.appendChild(loginLink);
+        }
+      };
+      xhrlogin.open("GET", "loggedin"); 
+      xhrlogin.send();
       
     };
   

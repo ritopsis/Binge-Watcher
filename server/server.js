@@ -5,10 +5,17 @@ const app = express();
 const http = require("https");
 const { stringify } = require("querystring");
 const fs = require('fs'); //For file creation/reading
+const session = require('express-session');
 
 // Parse urlencoded bodies
 app.use(bodyParser.json());
-
+app.use(
+  session({
+    secret: 'mysecret', // Secret key used to sign the session ID cookie
+    resave: false, // Forces the session to be saved back to the session store, even if it wasn't modified during the request
+    saveUninitialized: false // Forces an uninitialized session to be saved to the session store
+  })
+);
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, "files")));
 
@@ -133,6 +140,7 @@ app.post("/register", function(req, res){
 });
 
 app.post("/login", function(req, res){
+  console.log(req.sessionID);
 const { username, password } = req.body;
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
@@ -143,6 +151,7 @@ const { username, password } = req.body;
     if(jsonData[username] == password)
     {
       console.log("login success");
+      req.session.username = username; //wird in cookie gespeichert!
       res.status(200).send('Login');
     }
     else
@@ -162,6 +171,26 @@ function createFile(filename)
     console.log('JSON file created successfully.');
   });
 }
+
+app.get("/loggedin", function(req, res){
+  if (req.session.username) {
+    // User is logged in
+    res.status(200).send('User is logged in!');
+  } else {
+    // User is not logged in
+    res.status(401).send('Unauthorized');
+  }
+});
+app.get("/logout", function(req, res){
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error while destroying session:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.redirect('/');
+    }
+  });
+});
 
 app.listen(3000);
 
