@@ -15,7 +15,8 @@ window.onload = function () {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
-      console.log(xhr.responseText);
+      const result = JSON.parse(xhr.responseText);
+      console.log(result);
     } else {
       console.log(xhr.status);
     }
@@ -23,4 +24,21 @@ window.onload = function () {
   xhr.open("GET", "watchlist");
   xhr.send();
   */
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const result = JSON.parse(xhr.responseText);
+      //if titletypetext -> movie dann nix (layout für movie)
+      //if titletypetext -> series dann episoden abfragen
+      //einem request für /titles/series/{seriesId} -> bekomme list von episoden zurück
+      //dann alle episoden in einem array übergeben an /titles/episode/{id} -> bekomme List mit mehr informationen zu jeder Episode zurück
+      console.log(result);
+    } else {
+      console.log(xhr.status);
+    }
+  };
+  xhr.open("GET", `/details/${id}`);
+  xhr.send();
 };
