@@ -63,6 +63,7 @@ window.onload = function () {
       menuItems.appendChild(loginLink);
     }
   };
+
   xhrlogin.open("GET", "loggedin");
   xhrlogin.send();
 };
@@ -72,7 +73,7 @@ function addmovie(movie) {
   articleElement.id = movie.id;
   // Create the link element
   const linkElement = document.createElement("a");
-  linkElement.href = movie.id;
+  linkElement.href = "/details.html?id=" + movie.id;
 
   // Create the image element
   const imageElement = document.createElement("img");
@@ -111,7 +112,7 @@ function addShow(show) {
 
   // Create the link element
   const linkElement = document.createElement("a");
-  linkElement.href = show.id;
+  linkElement.href = "/details.html?id=" + show.id;
 
   // Create the image element
   const imageElement = document.createElement("img");
