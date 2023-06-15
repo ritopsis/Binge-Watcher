@@ -51,7 +51,7 @@ app.get("/movie", function (req, res) {
   });
 });
 
-/*app.get("/series", function(req, res) {
+app.get("/series", function(req, res) {
     const options = {
       method: 'GET',
       headers: {
@@ -70,10 +70,11 @@ app.get("/movie", function (req, res) {
       .catch(error => {
         console.log(error);
       });
-  });
-*/
 
-app.get("/series", function (req, res) {
+  });
+
+
+/*app.get("/series", function (req, res) {
   const options = {
     method: "GET",
     hostname: "moviesdatabase.p.rapidapi.com",
@@ -102,7 +103,7 @@ app.get("/series", function (req, res) {
     });
   });
 });
-
+*/
 app.get("/watchlist", function (req, res) {
   if (req.session.username) {
     fs.readFile(userdataPath, "utf-8", (err, data) => {
@@ -226,6 +227,32 @@ app.get("/logout", function (req, res) {
     }
   });
 });
+
+app.get("/episodes/${id}", function(req, res){ //provides episode numbers and episode id's
+  const options = {
+    method: "GET",  
+    headers: {
+      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
+      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+    },
+  };
+
+  const seriesID = req.params.seriesID; //include query named "seriesID" in the request
+
+  fetch('https://moviesdatabase.p.rapidapi.com/titles/series/' + seriesID, options)
+      .then(response => response.json())
+      .then(data => {
+        const searchResults = data.results;
+        console.log(searchResults);
+        res.send(searchResults);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      
+  });
+
+
 
 app.listen(3000);
 
