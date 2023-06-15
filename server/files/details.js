@@ -39,6 +39,6 @@ window.onload = function () {
       console.log(xhr.status);
     }
   };
-  xhr.open("GET", `/details/${id}`);
+  xhr.open("GET", `/details/${id}`, true);
   xhr.send();
 };
