@@ -36,7 +36,7 @@ document
         console.log(xhr.status);
       }
     };
-    xhr.open("POST", "register");
+    xhr.open("POST", "register", true);
     xhr.setRequestHeader("Content-Type", "application/json"); //type of data being sent in the request body,  specifies that the request body contains JSON data
     xhr.send(JSON.stringify(data));
   });
@@ -67,7 +67,7 @@ document
         console.log(xhr.status);
       }
     };
-    xhr.open("POST", "login");
+    xhr.open("POST", "login", true);
     xhr.setRequestHeader("Content-Type", "application/json"); //type of data being sent in the request body,  specifies that the request body contains JSON data
     xhr.send(JSON.stringify(data));
   });
