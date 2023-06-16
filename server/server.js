@@ -6,7 +6,6 @@ const http = require("https");
 const { stringify } = require("querystring");
 const fs = require("fs"); //For file creation/reading
 const session = require("express-session");
-
 const registerPath = "data/registeredaccounts.json";
 const userdataPath = "data/userdata.json";
 
@@ -18,6 +17,7 @@ app.use(
     saveUninitialized: false, //uninitialized sessions will not be saved in the session store
   })
 );
+
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, "files")));
 
@@ -121,7 +121,7 @@ app.get("/watchlist", function (req, res) {
   }
 });
 
-app.post("/addwatchlist", function (req, res) {
+app.post("/addepwatchlist", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
       console.error("Error:", err);
@@ -130,7 +130,15 @@ app.post("/addwatchlist", function (req, res) {
     }
     const jsonData = JSON.parse(data);
     if (req.session.username) {
-      jsonData[req.session.username].watchlist[req.body.tconst] = "watched";
+      const watchlist = jsonData[req.session.username].watchlist;
+      const id = req.body.id;
+      const tconst = req.body.tconst;
+
+      if (!watchlist[id]) {
+        watchlist[id] = {};
+      }
+      watchlist[id][tconst] = new Date().toISOString();
+
       fs.writeFile(
         userdataPath,
         JSON.stringify(jsonData, null, 2),
@@ -138,14 +146,58 @@ app.post("/addwatchlist", function (req, res) {
         (err) => {
           if (err) {
             console.error("Error:", err);
+            res.status(500).send("Internal Server Error");
             return;
           }
           console.log("File saved successfully.");
-          res.status(200);
+          res.sendStatus(200);
         }
       );
     } else {
-      res.status(401);
+      res.sendStatus(401);
+    }
+  });
+});
+
+app.delete("/removeepwatchlist", function (req, res) {
+  fs.readFile(userdataPath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    const jsonData = JSON.parse(data);
+    if (req.session.username) {
+      const watchlist = jsonData[req.session.username].watchlist;
+      const id = req.body.id;
+      const tconst = req.body.tconst;
+
+      if (watchlist[id]) {
+        delete watchlist[id][tconst];
+        if (Object.keys(watchlist[id]).length === 0) {
+          delete watchlist[id];
+        }
+
+        fs.writeFile(
+          userdataPath,
+          JSON.stringify(jsonData, null, 2),
+          "utf8",
+          (err) => {
+            if (err) {
+              console.error("Error:", err);
+              res.status(500).send("Internal Server Error");
+              return;
+            }
+            console.log("File saved successfully.");
+            res.sendStatus(200);
+          }
+        );
+      } else {
+        res.sendStatus(404); // Not found - tconst does not exist in the watchlist
+      }
+    } else {
+      res.sendStatus(401); // Unauthorized
     }
   });
 });
@@ -159,7 +211,12 @@ app.post("/register", function (req, res) {
       res.status(500).send("Internal Server Error");
       return;
     }
-    const jsonData = JSON.parse(data);
+
+    let jsonData = {};
+    if (data) {
+      jsonData = JSON.parse(data);
+    }
+
     if (jsonData[username]) {
       res.status(409).send("Username already taken");
     } else {
@@ -176,7 +233,12 @@ app.post("/register", function (req, res) {
             res.status(500).send("Internal Server Error");
             return;
           }
-          const userjsonData = JSON.parse(userdata);
+
+          let userjsonData = {};
+          if (userdata) {
+            userjsonData = JSON.parse(userdata);
+          }
+
           userjsonData[username] = { watchlist: {} };
           writeinFile(userdataPath, userjsonData, (err) => {
             if (err) {
