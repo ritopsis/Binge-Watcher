@@ -6,6 +6,7 @@ const http = require("https");
 const { stringify } = require("querystring");
 const fs = require("fs"); //For file creation/reading
 const session = require("express-session");
+const watchlist = require("./movie-model.js");
 
 const registerPath = "data/registeredaccounts.json";
 const userdataPath = "data/userdata.json";
@@ -114,11 +115,40 @@ app.get("/watchlist", function (req, res) {
         return;
       }
       const jsonData = JSON.parse(data);
-      res.status(200).json(jsonData);
+      res.status(200).json(jsonData[req.session.username]);
     });
   } else {
     res.status(401).send("Unauthorized");
   }
+});
+
+app.post("/addwatchlist", function (req, res) {
+  fs.readFile(userdataPath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    if (req.session.username) {
+      jsonData[req.session.username].watchlist[req.body.tconst] = "watched";
+      fs.writeFile(
+        userdataPath,
+        JSON.stringify(jsonData, null, 2),
+        "utf8",
+        (err) => {
+          if (err) {
+            console.error("Error:", err);
+            return;
+          }
+          console.log("File saved successfully.");
+          res.status(200);
+        }
+      );
+    } else {
+      res.status(401);
+    }
+  });
 });
 
 app.post("/register", function (req, res) {
