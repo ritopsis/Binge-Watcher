@@ -6,7 +6,6 @@ const http = require("https");
 const { stringify } = require("querystring");
 const fs = require("fs"); //For file creation/reading
 const session = require("express-session");
-const watchlist = require("./movie-model.js");
 
 const registerPath = "data/registeredaccounts.json";
 const userdataPath = "data/userdata.json";
