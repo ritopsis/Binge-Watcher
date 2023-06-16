@@ -51,28 +51,29 @@ app.get("/movie", function (req, res) {
   });
 });
 
-app.get("/series", function(req, res) {
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': '76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54',
-        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
-      }
-    };
-  
-    fetch('https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=most_pop_series', options)
-      .then(response => response.json())
-      .then(data => {
-        const searchResults = data.results;
-        console.log(searchResults);
-        res.send(searchResults);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+app.get("/series", function (req, res) {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
+      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+    },
+  };
 
-  });
-
+  fetch(
+    "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=most_pop_series",
+    options
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      const searchResults = data.results;
+      console.log(searchResults);
+      res.send(searchResults);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 /*app.get("/series", function (req, res) {
   const options = {
@@ -195,25 +196,19 @@ app.post("/login", function (req, res) {
 });
 
 app.get("/loggedin", function (req, res) {
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.setHeader("Surrogate-Control", "no-store");
+
   if (req.session.username) {
     // User is logged in
-    res.setHeader(
-      "Cache-Control",
-      "no-store, no-cache, must-revalidate, proxy-revalidate"
-    );
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Expires", "0");
-    res.setHeader("Surrogate-Control", "no-store");
     res.status(200).send("User is logged in!");
   } else {
     // User is not logged in
-    res.setHeader(
-      "Cache-Control",
-      "no-store, no-cache, must-revalidate, proxy-revalidate"
-    );
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Expires", "0");
-    res.setHeader("Surrogate-Control", "no-store");
     res.status(401).send("Unauthorized");
   }
 });
@@ -228,58 +223,83 @@ app.get("/logout", function (req, res) {
   });
 });
 
-
-app.get("/episodes/:seriesID", function(req, res){ //provides episode numbers and episode id's
+app.get("/episodes/:seriesID", function (req, res) {
+  //provides episode numbers and episode id's
   const options = {
-    method: "GET",  
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
+      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+    },
+  };
+  const seriesID = req.params.seriesID;
+  const URL = "https://moviesdatabase.p.rapidapi.com/titles/series/" + seriesID;
+
+  fetch(URL, options)
+    .then((response) => response.json())
+    .then((data) => {
+      const searchResults = data.results;
+      res.send(searchResults);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+/*
+app.get("/epDetails:episodeIDs", function (req, res) {
+  //provides episode details
+  const options = {
+    method: "GET",
     headers: {
       "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
       "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
     },
   };
 
-  const seriesID = req.params.seriesID; 
-  const URL = "https://moviesdatabase.p.rapidapi.com/titles/series/" + seriesID;
-  
+  const episodeID = "tt23788036";
+  const URL =
+    "https://moviesdatabase.p.rapidapi.com/titles/episode/" +
+    episodeID +
+    "?info=base_info";
+
   fetch(URL, options)
-      .then(response => response.json())
-      .then(data => {
-        const searchResults = data.results;
-        console.log(searchResults);
-        res.send(searchResults);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-      
-  });
-
-
-  app.get("/epDetails/:episodeID", function(req, res){ //provides episode details
-    const options = {
-      method: "GET",  
-      headers: {
-        "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-      },
-    };
-    
-    const episodeID = req.params.episodeID; 
-    const URL = "https://moviesdatabase.p.rapidapi.com/titles/episode/" + episodeID + "?info=base_info";
-    
-    fetch(URL, options)
-        .then(response => response.json())
-        .then(data => {
-          const searchResults = data.results;
-          console.log(searchResults);
-          res.send(searchResults);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-        
+    .then((response) => response.json())
+    .then((data) => {
+      const searchResults = data.results;
+      //console.log(searchResults);
+      res.send(searchResults);
+    })
+    .catch((error) => {
+      console.log(error);
     });
-  
+});
+*/
+app.get("/details/:id", function (req, res) {
+  //provides information about the movie/show
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
+      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+    },
+  };
+
+  const detail = req.params.id;
+  const URL =
+    "https://moviesdatabase.p.rapidapi.com/titles/" +
+    detail +
+    "?info=base_info";
+
+  fetch(URL, options)
+    .then((response) => response.json())
+    .then((data) => {
+      const searchResults = data.results;
+      res.send(searchResults);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 app.listen(3000);
 
