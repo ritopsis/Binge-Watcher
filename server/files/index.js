@@ -3,6 +3,7 @@ window.onload = function () {
   const menuItems = document.getElementById("menuItems");
   xhrlogin.onload = function () {
     if (xhrlogin.status === 200) {
+      content(true);
       const myProfileLink = document.createElement("li");
       const myProfileAnchor = document.createElement("a");
       myProfileAnchor.href = "myprofile.html";
@@ -17,6 +18,7 @@ window.onload = function () {
       menuItems.appendChild(myProfileLink);
       menuItems.appendChild(logoutLink);
     } else {
+      content(false);
       const loginLink = document.createElement("li");
       const loginLinkAnchor = document.createElement("a");
       loginLinkAnchor.href = "register_login.html";
@@ -27,13 +29,15 @@ window.onload = function () {
   };
   xhrlogin.open("GET", "loggedin");
   xhrlogin.send();
+};
 
+function content(loggin) {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
       const result = JSON.parse(xhr.responseText);
       result.forEach((element) => {
-        addarticle(element, ".topmovies");
+        addarticle(element, ".topmovies", loggin);
       });
     } else {
       document
@@ -51,7 +55,7 @@ window.onload = function () {
     if (xhrShows.status === 200) {
       const showsResult = JSON.parse(xhrShows.responseText);
       showsResult.forEach((element) => {
-        addarticle(element, ".topseries");
+        addarticle(element, ".topseries", loggin);
       });
     } else {
       document
@@ -63,9 +67,9 @@ window.onload = function () {
   };
   xhrShows.open("GET", "series", true);
   xhrShows.send();
-};
+}
 
-function addarticle(movie, documentelement) {
+function addarticle(movie, documentelement, loggin) {
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
   // Create the link element
@@ -85,7 +89,6 @@ function addarticle(movie, documentelement) {
     imageElement.alt = "Alternative Image";
   }
   //console.log(imageElement.src);
-
   // Create the heading element
   const headingElement = document.createElement("h1");
   headingElement.textContent = movie.titleText.text;
@@ -96,6 +99,12 @@ function addarticle(movie, documentelement) {
 
   // Append the link element to the article element
   articleElement.appendChild(linkElement);
+
+  if (loggin) {
+    const buttonElement = document.createElement("button");
+    buttonElement.textContent = "Add/Remove from Watchlist";
+    articleElement.appendChild(buttonElement);
+  }
 
   // Add the article element to the document
   const topMoviesElement = document.querySelector(documentelement);

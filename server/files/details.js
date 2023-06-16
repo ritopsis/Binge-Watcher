@@ -11,54 +11,72 @@ window.onload = function () {
   };
   xhrlogin.open("GET", "loggedin");
   xhrlogin.send();
-  /*
-  const xhr = new XMLHttpRequest();
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      const result = JSON.parse(xhr.responseText);
-      console.log(result);
-    } else {
-      console.log(xhr.status);
-    }
-  };
-  xhr.open("GET", "watchlist");
-  xhr.send();
-  */
+
+  const watchlistPromise = new Promise((resolve, reject) => {
+    const xhrwatchlist = new XMLHttpRequest();
+    xhrwatchlist.onload = function () {
+      if (xhrwatchlist.status === 200) {
+        const result = JSON.parse(xhrwatchlist.responseText);
+        resolve(result);
+      } else {
+        reject(xhrwatchlist.status);
+      }
+    };
+    xhrwatchlist.open("GET", "watchlist");
+    xhrwatchlist.send();
+  });
+
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
-  const xhr = new XMLHttpRequest();
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      const result = JSON.parse(xhr.responseText);
-      if (result.titleType.isSeries) {
-        displayDetails(result);
-        // true = Serie, false = keine Serie sondern Film
-        // Episoden abrufen
-        const xhrEpisode = new XMLHttpRequest();
-        xhrEpisode.onload = function () {
-          if (xhrEpisode.status === 200) {
-            const result2 = JSON.parse(xhrEpisode.responseText);
-            displaySeasonAndEpisode(result2);
-            console.log(result2);
-          } else {
-            console.log(xhrEpisode.status);
-          }
-        };
-        xhrEpisode.open("GET", `/episodes/${id}`, true);
-        xhrEpisode.send();
+  const informationPromise = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const result = JSON.parse(xhr.responseText);
+        if (result.titleType.isSeries) {
+          displayDetails(result);
+          // true = Serie, false = keine Serie sondern Film
+          // Episoden abrufen
+          const xhrEpisode = new XMLHttpRequest();
+          xhrEpisode.onload = function () {
+            if (xhrEpisode.status === 200) {
+              const result2 = JSON.parse(xhrEpisode.responseText);
+              displaySeasonAndEpisode(result2);
+              console.log(result2);
+              resolve(result2);
+            } else {
+              console.log(xhrEpisode.status);
+              reject(xhrEpisode.status);
+            }
+          };
+          xhrEpisode.open("GET", `/episodes/${id}`, true);
+          xhrEpisode.send();
+        } else {
+          // ist ein Film
+          console.log(result);
+          resolve(result);
+          displayDetails(result);
+        }
       } else {
-        // ist ein Film
-        console.log(result);
-        displayDetails(result);
+        console.log(xhr.status);
+        reject(xhr.status);
       }
-      // einen Request für /titles/series/{seriesId} -> erhalte eine Liste von Episoden zurück
-      // dann alle Episoden in einem Array an /titles/episode/{id} übergeben -> erhalte eine Liste mit weiteren Informationen zu jeder Episode zurück
-    } else {
-      console.log(xhr.status);
-    }
-  };
-  xhr.open("GET", `/details/${id}`, true);
-  xhr.send();
+    };
+    xhr.open("GET", `/details/${id}`, true);
+    xhr.send();
+  });
+
+  Promise.all([watchlistPromise, informationPromise])
+    .then(([watchlistResult, informationPromise]) => {
+      console.log(watchlistResult);
+      console.log(informationPromise);
+
+      // Perform your desired action here
+      console.log("Both requests finished");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 function displayDetails(content) {
@@ -102,8 +120,20 @@ function displaySeasonAndEpisode(data) {
       episodeElement.textContent = `Season ${seasonNumber}, Episode ${episodeNumber}`;
 
       const buttonElement = document.createElement("button");
-      buttonElement.textContent = "Play";
-      buttonElement.addEventListener("click", () => {});
+      buttonElement.textContent = "Watched";
+      buttonElement.addEventListener("click", () => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            console.log(xhr.status);
+          } else {
+            console.log(xhr.status);
+          }
+        };
+        xhr.open("POST", "addwatchlist", true);
+        xhr.setRequestHeader("Content-Type", "application/json"); //type of data being sent in the request body,  specifies that the request body contains JSON data
+        xhr.send(JSON.stringify(episode));
+      });
 
       episodeElement.appendChild(buttonElement);
       mainElement.appendChild(episodeElement);
