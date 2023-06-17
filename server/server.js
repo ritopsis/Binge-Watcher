@@ -137,7 +137,9 @@ app.post("/addepwatchlist", function (req, res) {
       if (!watchlist[id]) {
         watchlist[id] = {};
       }
-      watchlist[id][tconst] = new Date().toISOString();
+      watchlist[id][tconst] = Number(
+        req.body.seasonNumber + "" + req.body.episodeNumber
+      );
 
       fs.writeFile(
         userdataPath,
