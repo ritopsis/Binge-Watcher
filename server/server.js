@@ -132,12 +132,11 @@ app.post("/addepwatchlist", function (req, res) {
       const id = req.body.id;
       const tconst = req.body.tconst;
 
-      if (!watchlist[id]) {
-        watchlist[id] = {};
+      if (!watchlist[id]["episode"]) {
+        watchlist[id]["episode"] = {};
       }
-      watchlist[id][tconst] = Number(
-        req.body.seasonNumber + "" + req.body.episodeNumber
-      );
+      watchlist[id]["episode"][tconst] =
+        req.body.seasonNumber + "-" + req.body.episodeNumber;
 
       fs.writeFile(
         userdataPath,
@@ -173,10 +172,10 @@ app.delete("/removeepwatchlist", function (req, res) {
       const id = req.body.id;
       const tconst = req.body.tconst;
 
-      if (watchlist[id]) {
-        delete watchlist[id][tconst];
+      if (watchlist[id]["episode"]) {
+        delete watchlist[id]["episode"][tconst];
         if (Object.keys(watchlist[id]).length === 0) {
-          delete watchlist[id];
+          delete watchlist[id]["episode"];
         }
 
         fs.writeFile(
@@ -419,6 +418,44 @@ app.get("/titles/:input", function (req, res) {
     });
 });
 
+app.post("/addwatchlist", function (req, res) {
+  fs.readFile(userdataPath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    if (req.session.username) {
+      const watchlist = jsonData[req.session.username].watchlist;
+      const id = req.body.id;
+      const title = req.body.title;
+      const type = req.body.type;
+
+      if (!watchlist[id]) {
+        watchlist[id] = {};
+        watchlist[id]["title"] = title;
+        watchlist[id]["type"] = type;
+      }
+      fs.writeFile(
+        userdataPath,
+        JSON.stringify(jsonData, null, 2),
+        "utf8",
+        (err) => {
+          if (err) {
+            console.error("Error:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+          console.log("File saved successfully.");
+          res.sendStatus(200);
+        }
+      );
+    } else {
+      res.sendStatus(401);
+    }
+  });
+});
 app.listen(3000);
 
 console.log("Server now listening on http://localhost:3000/");

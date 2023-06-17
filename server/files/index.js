@@ -1,8 +1,19 @@
+import { checkifloggedin } from "./user.js";
+import { addWatchlist } from "./user.js";
+
 window.onload = function () {
-  const xhrlogin = new XMLHttpRequest();
   const menuItems = document.getElementById("menuItems");
-  xhrlogin.onload = function () {
-    if (xhrlogin.status === 200) {
+  checkifloggedin(function (error, response) {
+    if (error) {
+      content(false);
+      const loginLink = document.createElement("li");
+      const loginLinkAnchor = document.createElement("a");
+      loginLinkAnchor.href = "register_login.html";
+      loginLinkAnchor.textContent = "Login";
+      loginLink.appendChild(loginLinkAnchor);
+      menuItems.appendChild(loginLink);
+    }
+    if (response) {
       content(true);
       const myProfileLink = document.createElement("li");
       const myProfileAnchor = document.createElement("a");
@@ -17,18 +28,8 @@ window.onload = function () {
       logoutLink.appendChild(logutLinkAnchor);
       menuItems.appendChild(myProfileLink);
       menuItems.appendChild(logoutLink);
-    } else {
-      content(false);
-      const loginLink = document.createElement("li");
-      const loginLinkAnchor = document.createElement("a");
-      loginLinkAnchor.href = "register_login.html";
-      loginLinkAnchor.textContent = "Login";
-      loginLink.appendChild(loginLinkAnchor);
-      menuItems.appendChild(loginLink);
     }
-  };
-  xhrlogin.open("GET", "loggedin");
-  xhrlogin.send();
+  });
 };
 
 function content(loggin) {
@@ -37,7 +38,7 @@ function content(loggin) {
     if (xhr.status === 200) {
       const result = JSON.parse(xhr.responseText);
       result.forEach((element) => {
-        addarticle(element, ".topmovies", loggin);
+        addarticle(element, ".topmovies", loggin, "movie");
       });
     } else {
       document
@@ -55,7 +56,7 @@ function content(loggin) {
     if (xhrShows.status === 200) {
       const showsResult = JSON.parse(xhrShows.responseText);
       showsResult.forEach((element) => {
-        addarticle(element, ".topseries", loggin);
+        addarticle(element, ".topseries", loggin, "tvseries");
       });
     } else {
       document
@@ -69,9 +70,10 @@ function content(loggin) {
   xhrShows.send();
 }
 
-function addarticle(movie, documentelement, loggin) {
+function addarticle(movie, documentelement, loggin, type) {
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
+  articleElement.title = type;
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;
@@ -103,10 +105,20 @@ function addarticle(movie, documentelement, loggin) {
   if (loggin) {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = "Add/Remove from Watchlist";
+    buttonElement.addEventListener("click", function () {
+      blub(articleElement);
+    });
     articleElement.appendChild(buttonElement);
   }
 
   // Add the article element to the document
   const topMoviesElement = document.querySelector(documentelement);
   topMoviesElement.appendChild(articleElement);
+}
+function blub(article) {
+  addWatchlist(article, function (error, response) {
+    if (error) {
+    } else {
+    }
+  });
 }

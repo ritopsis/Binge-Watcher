@@ -1,18 +1,12 @@
+import { checkifloggedin } from "./user.js";
+import { getwatchlist } from "./user.js";
+
 let loggin = null;
 
 window.onload = function () {
-  const xhrlogin = new XMLHttpRequest();
   const menuItems = document.getElementById("menuItems");
-  xhrlogin.onload = () => {
-    if (xhrlogin.status === 200) {
-      menuItems.innerHTML += `<li><a href="myprofile.html">My Profile</a></li><li><a href="logout">Logout</a></li>`;
-      loggin = true;
-      const url = new URL(location.href);
-      const params = new URLSearchParams(url.search);
-      if (params.has("page") && params.has("title")) {
-        handleSearchRequest(params.get("title"), params.get("page"));
-      }
-    } else {
+  checkifloggedin(function (error, response) {
+    if (error) {
       loggin = false;
       menuItems.innerHTML += `<li><a href="register_login.html">Login</a></li>`;
       const url = new URL(location.href);
@@ -21,11 +15,16 @@ window.onload = function () {
         handleSearchRequest(params.get("title"), params.get("page"));
       }
     }
-  };
-  xhrlogin.open("GET", "loggedin");
-  xhrlogin.send();
-
-  //If query "page/title" exist than load data! -> else just do nothing
+    if (response) {
+      menuItems.innerHTML += `<li><a href="myprofile.html">My Profile</a></li><li><a href="logout">Logout</a></li>`;
+      loggin = true;
+      const url = new URL(location.href);
+      const params = new URLSearchParams(url.search);
+      if (params.has("page") && params.has("title")) {
+        handleSearchRequest(params.get("title"), params.get("page"));
+      }
+    }
+  });
 };
 
 document.getElementById("search").addEventListener("submit", function (event) {
@@ -50,7 +49,7 @@ function handleSearchRequest(title, page) {
         mainElement.removeChild(mainElement.firstChild);
       }
       result.forEach((element) => {
-        addarticle(element, loggin);
+        addarticle(element);
       });
       if (sresult.next) {
         if (Number(sresult.page) - 1 != 0) {
@@ -68,9 +67,7 @@ function handleSearchRequest(title, page) {
     } else {
     }
   };
-
   let type = null;
-  console.log(location.pathname);
   if (location.pathname == "/movies.html") {
     type = "movie";
   } else if (location.pathname == "/series.html") {
@@ -97,15 +94,14 @@ function addarticle(movie) {
   // Append the image and heading elements to the link element
   linkElement.appendChild(headingElement);
 
+  // Append the link element to the article element
+  articleElement.appendChild(linkElement);
+
   if (loggin) {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = "Add/Remove from Watchlist";
     articleElement.appendChild(buttonElement);
   }
-
-  // Append the link element to the article element
-  articleElement.appendChild(linkElement);
-
   // Add the article element to the document
   const topMoviesElement = document.querySelector("main");
   topMoviesElement.appendChild(articleElement);

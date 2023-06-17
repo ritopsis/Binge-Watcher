@@ -1,13 +1,11 @@
+import { checkifloggedin } from "./user.js";
+
 window.onload = function () {
-  const xhr = new XMLHttpRequest();
-  xhr.onload = function () {
-    if (xhr.status === 200) {
+  checkifloggedin(function (error, response) {
+    if (response) {
       window.location.href = "index.html";
-    } else {
     }
-  };
-  xhr.open("GET", "loggedin");
-  xhr.send();
+  });
 };
 
 document

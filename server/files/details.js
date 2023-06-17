@@ -1,29 +1,27 @@
-window.onload = function () {
-  const xhrlogin = new XMLHttpRequest();
-  const menuItems = document.getElementById("menuItems");
-  xhrlogin.onload = () => {
-    if (xhrlogin.status === 200) {
-      menuItems.innerHTML += `<li><a href="myprofile.html">My Profile</a></li><li><a href="logout">Logout</a></li>`;
-      //request to get information about series from data
-    } else {
-      menuItems.innerHTML += `<li><a href="register_login.html">Login</a></li>`;
-    }
-  };
-  xhrlogin.open("GET", "loggedin");
-  xhrlogin.send();
+import { checkifloggedin } from "./user.js";
+import { getwatchlist } from "./user.js";
 
+window.onload = function () {
+  const menuItems = document.getElementById("menuItems");
+  checkifloggedin(function (error, response) {
+    if (error) {
+      console.log("Error:", error);
+      menuItems.innerHTML += `<li><a href="register_login.html">Login</a></li>`;
+    } else {
+      console.log("Response:", response);
+      menuItems.innerHTML += `<li><a href="myprofile.html">My Profile</a></li><li><a href="logout">Logout</a></li>`;
+    }
+  });
   const watchlistPromise = new Promise((resolve, reject) => {
-    const xhrwatchlist = new XMLHttpRequest();
-    xhrwatchlist.onload = function () {
-      if (xhrwatchlist.status === 200) {
-        const result = JSON.parse(xhrwatchlist.responseText);
-        resolve(result);
+    getwatchlist(function (error, response) {
+      if (error) {
+        console.log("Error:", error);
+        reject(error);
       } else {
-        reject(xhrwatchlist.status);
+        console.log("Response:", response);
+        resolve(JSON.parse(response));
       }
-    };
-    xhrwatchlist.open("GET", "watchlist");
-    xhrwatchlist.send();
+    });
   });
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -124,7 +122,7 @@ function displaySeasonAndEpisode(watchlist, data) {
       const buttonElement = document.createElement("button");
       episodeElement.appendChild(buttonElement);
 
-      if (watchlist[id]?.hasOwnProperty(episodeid)) {
+      if (watchlist[id].episode?.hasOwnProperty(episodeid)) {
         buttonElement.textContent = "Unwatched";
         buttonElement.addEventListener("click", removeEpWatchlist);
       } else {
