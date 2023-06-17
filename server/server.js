@@ -73,36 +73,6 @@ app.get("/series", function (req, res) {
     });
 });
 
-/*app.get("/series", function (req, res) {
-  const options = {
-    method: "GET",
-    hostname: "moviesdatabase.p.rapidapi.com",
-    port: null,
-    path: "/titles/random?limit=5&list=most_pop_series",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
-  http.get(options, (response) => {
-    let data = "";
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
-
-    response.on("end", () => {
-      const jsonData = JSON.parse(data);
-      const searchResults = jsonData.results;
-      //console.log(searchResults);
-      res.send(searchResults);
-    });
-
-    response.on("error", (error) => {
-      console.log(error);
-    });
-  });
-});
-*/
 app.get("/watchlist", function (req, res) {
   if (req.session.username) {
     fs.readFile(userdataPath, "utf-8", (err, data) => {
@@ -132,11 +102,16 @@ app.post("/addepwatchlist", function (req, res) {
       const id = req.body.id;
       const tconst = req.body.tconst;
 
-      if (!watchlist[id]["episode"]) {
-        watchlist[id]["episode"] = {};
+      if (watchlist.tvseries[id]) {
+        watchlist.tvseries[id]["episode"][tconst] =
+          req.body.seasonNumber + "-" + req.body.episodeNumber;
+      } else {
+        watchlist.tvseries[id] = {};
+        watchlist.tvseries[id]["title"] = "NOT Working yet";
+        watchlist.tvseries[id]["episode"] = {};
+        watchlist.tvseries[id]["episode"][tconst] =
+          req.body.seasonNumber + "-" + req.body.episodeNumber;
       }
-      watchlist[id]["episode"][tconst] =
-        req.body.seasonNumber + "-" + req.body.episodeNumber;
 
       fs.writeFile(
         userdataPath,
@@ -172,11 +147,8 @@ app.delete("/removeepwatchlist", function (req, res) {
       const id = req.body.id;
       const tconst = req.body.tconst;
 
-      if (watchlist[id]["episode"]) {
-        delete watchlist[id]["episode"][tconst];
-        if (Object.keys(watchlist[id]).length === 0) {
-          delete watchlist[id]["episode"];
-        }
+      if (watchlist.tvseries[id]) {
+        delete watchlist.tvseries[id]["episode"][tconst];
 
         fs.writeFile(
           userdataPath,
@@ -238,7 +210,7 @@ app.post("/register", function (req, res) {
             userjsonData = JSON.parse(userdata);
           }
 
-          userjsonData[username] = { watchlist: {} };
+          userjsonData[username] = { watchlist: { tvseries: {}, movies: {} } };
           writeinFile(userdataPath, userjsonData, (err) => {
             if (err) {
               console.error("Error:", err);
@@ -272,15 +244,20 @@ app.post("/login", function (req, res) {
   fs.readFile(registerPath, "utf8", (err, data) => {
     if (err) {
       console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
       return;
     }
-    const jsonData = JSON.parse(data);
-    if (jsonData[username] == password) {
-      console.log("login success");
-      req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
-      res.status(200).send("Login");
-    } else {
+    if (!data) {
       res.status(401).send("Wrong Username/Password!");
+    } else {
+      const jsonData = JSON.parse(data);
+      if (jsonData[username] == password) {
+        console.log("login success");
+        req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
+        res.status(200).send("Login");
+      } else {
+        res.status(401).send("Wrong Username/Password!");
+      }
     }
   });
 });
@@ -335,35 +312,7 @@ app.get("/episodes/:seriesID", function (req, res) {
       console.log(error);
     });
 });
-/*
-app.get("/epDetails:episodeIDs", function (req, res) {
-  //provides episode details
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
 
-  const episodeID = "tt23788036";
-  const URL =
-    "https://moviesdatabase.p.rapidapi.com/titles/episode/" +
-    episodeID +
-    "?info=base_info";
-
-  fetch(URL, options)
-    .then((response) => response.json())
-    .then((data) => {
-      const searchResults = data.results;
-      //console.log(searchResults);
-      res.send(searchResults);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-*/
 app.get("/details/:id", function (req, res) {
   //provides information about the movie/show
   const options = {
@@ -432,11 +381,19 @@ app.post("/addwatchlist", function (req, res) {
       const title = req.body.title;
       const type = req.body.type;
 
-      if (!watchlist[id]) {
-        watchlist[id] = {};
-        watchlist[id]["title"] = title;
-        watchlist[id]["type"] = type;
+      if (type == "tvseries") {
+        if (!watchlist.tvseries[id]) {
+          watchlist.tvseries[id] = {};
+          watchlist.tvseries[id]["title"] = title;
+          watchlist.tvseries[id]["episode"] = {};
+        }
+      } else {
+        if (!watchlist.movies[id]) {
+          watchlist.movies[id] = {};
+          watchlist.movies[id]["title"] = title;
+        }
       }
+
       fs.writeFile(
         userdataPath,
         JSON.stringify(jsonData, null, 2),

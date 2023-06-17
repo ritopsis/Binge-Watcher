@@ -122,13 +122,19 @@ function displaySeasonAndEpisode(watchlist, data) {
       const buttonElement = document.createElement("button");
       episodeElement.appendChild(buttonElement);
 
-      if (watchlist[id].episode?.hasOwnProperty(episodeid)) {
-        buttonElement.textContent = "Unwatched";
-        buttonElement.addEventListener("click", removeEpWatchlist);
+      if (watchlist[id]?.hasOwnProperty(episode)) {
+        if (watchlist[id].episode?.hasOwnProperty(episodeid)) {
+          buttonElement.textContent = "Unwatched";
+          buttonElement.addEventListener("click", removeEpWatchlist);
+        } else {
+          buttonElement.textContent = "Watched";
+          buttonElement.addEventListener("click", addEpWatchlist);
+        }
       } else {
         buttonElement.textContent = "Watched";
         buttonElement.addEventListener("click", addEpWatchlist);
       }
+
       episode["id"] = mainElement.id;
 
       function removeEpWatchlist() {
