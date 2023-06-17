@@ -69,8 +69,15 @@ function handleSearchRequest(title, page) {
     }
   };
 
+  let type = null;
+  console.log(location.pathname);
+  if (location.pathname == "/movies.html") {
+    type = "movie";
+  } else if (location.pathname == "/series.html") {
+    type = "tvSeries";
+  }
   const url = new URL("/titles/" + title, location.href);
-  url.searchParams.set("type", "tvSeries");
+  url.searchParams.set("type", type);
   url.searchParams.set("site", page);
   xhr.open("GET", url, true);
   xhr.send();
