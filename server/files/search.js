@@ -99,6 +99,7 @@ function addarticle(movie, type) {
   }
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
+  articleElement.setAttribute("type", type);
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;

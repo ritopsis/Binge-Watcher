@@ -88,7 +88,7 @@ function content() {
 function addarticle(movie, documentelement, type) {
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
-  articleElement.title = type;
+  articleElement.setAttribute("type", type);
 
   // Create the link element
   const linkElement = document.createElement("a");
