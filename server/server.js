@@ -101,13 +101,14 @@ app.post("/addepwatchlist", function (req, res) {
       const watchlist = jsonData[req.session.username].watchlist;
       const id = req.body.id;
       const tconst = req.body.tconst;
+      const title = req.body.title;
 
       if (watchlist.tvseries[id]) {
         watchlist.tvseries[id]["episode"][tconst] =
           req.body.seasonNumber + "-" + req.body.episodeNumber;
       } else {
         watchlist.tvseries[id] = {};
-        watchlist.tvseries[id]["title"] = "NOT Working yet";
+        watchlist.tvseries[id]["title"] = title;
         watchlist.tvseries[id]["episode"] = {};
         watchlist.tvseries[id]["episode"][tconst] =
           req.body.seasonNumber + "-" + req.body.episodeNumber;

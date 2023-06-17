@@ -1,12 +1,19 @@
-import { checkifloggedin } from "./user.js";
-import { addWatchlist } from "./user.js";
-import { removeWatchlist } from "./user.js";
+import {
+  checkifloggedin,
+  getwatchlist,
+  addWatchlist,
+  removeWatchlist,
+} from "./user.js";
+
+let watchlist = null;
+let loggin = null;
 
 window.onload = function () {
   const menuItems = document.getElementById("menuItems");
   checkifloggedin(function (error, response) {
     if (error) {
-      content(false, null);
+      content();
+      loggin = false;
       const loginLink = document.createElement("li");
       const loginLinkAnchor = document.createElement("a");
       loginLinkAnchor.href = "register_login.html";
@@ -15,31 +22,38 @@ window.onload = function () {
       menuItems.appendChild(loginLink);
     }
     if (response) {
-      content(true);
-      const myProfileLink = document.createElement("li");
-      const myProfileAnchor = document.createElement("a");
-      myProfileAnchor.href = "myprofile.html";
-      myProfileAnchor.textContent = "My Profile";
-      myProfileLink.appendChild(myProfileAnchor);
+      getwatchlist(function (error, response) {
+        if (response) {
+          watchlist = JSON.parse(response);
+          loggin = true;
+          content();
+          const myProfileLink = document.createElement("li");
+          const myProfileAnchor = document.createElement("a");
+          myProfileAnchor.href = "myprofile.html";
+          myProfileAnchor.textContent = "My Profile";
+          myProfileLink.appendChild(myProfileAnchor);
 
-      const logoutLink = document.createElement("li");
-      const logutLinkAnchor = document.createElement("a");
-      logutLinkAnchor.href = "logout";
-      logutLinkAnchor.textContent = "Logout";
-      logoutLink.appendChild(logutLinkAnchor);
-      menuItems.appendChild(myProfileLink);
-      menuItems.appendChild(logoutLink);
+          const logoutLink = document.createElement("li");
+          const logutLinkAnchor = document.createElement("a");
+          logutLinkAnchor.href = "logout";
+          logutLinkAnchor.textContent = "Logout";
+          logoutLink.appendChild(logutLinkAnchor);
+          menuItems.appendChild(myProfileLink);
+          menuItems.appendChild(logoutLink);
+        } else {
+        }
+      });
     }
   });
 };
 
-function content(loggin, watchlist) {
+function content() {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
       const result = JSON.parse(xhr.responseText);
       result.forEach((element) => {
-        addarticle(element, ".topmovies", loggin, "movie");
+        addarticle(element, ".topmovies", "movies");
       });
     } else {
       document
@@ -57,7 +71,7 @@ function content(loggin, watchlist) {
     if (xhrShows.status === 200) {
       const showsResult = JSON.parse(xhrShows.responseText);
       showsResult.forEach((element) => {
-        addarticle(element, ".topseries", loggin, "tvseries");
+        addarticle(element, ".topseries", "tvseries");
       });
     } else {
       document
@@ -71,7 +85,7 @@ function content(loggin, watchlist) {
   xhrShows.send();
 }
 
-function addarticle(movie, documentelement, loggin, type) {
+function addarticle(movie, documentelement, type) {
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
   articleElement.title = type;
@@ -104,10 +118,15 @@ function addarticle(movie, documentelement, loggin, type) {
   // Append the link element to the article element
   articleElement.appendChild(linkElement);
 
-  if (loggin) {
+  if (loggin && watchlist) {
     const buttonElement = document.createElement("button");
-    buttonElement.textContent = "Add/Remove from Watchlist";
-    buttonElement.setAttribute("data-action", "add"); // Set initial action to "add"
+    if (watchlist["watchlist"][type].hasOwnProperty(movie.id)) {
+      buttonElement.textContent = "Remove";
+      buttonElement.setAttribute("data-action", "remove");
+    } else {
+      buttonElement.textContent = "Add";
+      buttonElement.setAttribute("data-action", "add");
+    }
     buttonElement.addEventListener("click", function () {
       const action = buttonElement.getAttribute("data-action");
       if (action === "add") {

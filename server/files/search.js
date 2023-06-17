@@ -1,8 +1,11 @@
-import { checkifloggedin } from "./user.js";
-import { getwatchlist } from "./user.js";
-import { addWatchlist } from "./user.js";
-import { removeWatchlist } from "./user.js";
+import {
+  checkifloggedin,
+  getwatchlist,
+  addWatchlist,
+  removeWatchlist,
+} from "./user.js";
 
+let watchlist = null;
 let loggin = null;
 
 window.onload = function () {
@@ -20,11 +23,16 @@ window.onload = function () {
     if (response) {
       menuItems.innerHTML += `<li><a href="myprofile.html">My Profile</a></li><li><a href="logout">Logout</a></li>`;
       loggin = true;
-      const url = new URL(location.href);
-      const params = new URLSearchParams(url.search);
-      if (params.has("page") && params.has("title")) {
-        handleSearchRequest(params.get("title"), params.get("page"));
-      }
+      getwatchlist(function (error, response) {
+        if (response) {
+          watchlist = JSON.parse(response);
+        }
+        const url = new URL(location.href);
+        const params = new URLSearchParams(url.search);
+        if (params.has("page") && params.has("title")) {
+          handleSearchRequest(params.get("title"), params.get("page"));
+        }
+      });
     }
   });
 };
@@ -47,11 +55,12 @@ function handleSearchRequest(title, page) {
       const sresult = JSON.parse(xhr.responseText);
       const result = sresult.results;
       const mainElement = document.querySelector("main");
+
       while (mainElement.firstChild) {
         mainElement.removeChild(mainElement.firstChild);
       }
       result.forEach((element) => {
-        addarticle(element);
+        addarticle(element, type);
       });
       if (sresult.next) {
         if (Number(sresult.page) - 1 != 0) {
@@ -82,7 +91,12 @@ function handleSearchRequest(title, page) {
   xhr.send();
 }
 
-function addarticle(movie) {
+function addarticle(movie, type) {
+  if (type == "movie") {
+    type = "movies";
+  } else {
+    type = "tvseries";
+  }
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
   // Create the link element
@@ -99,10 +113,15 @@ function addarticle(movie) {
   // Append the link element to the article element
   articleElement.appendChild(linkElement);
 
-  if (loggin) {
+  if (loggin && watchlist) {
     const buttonElement = document.createElement("button");
-    buttonElement.textContent = "Add/Remove from Watchlist";
-    buttonElement.setAttribute("data-action", "add"); // Set initial action to "add"
+    if (watchlist["watchlist"][type].hasOwnProperty(movie.id)) {
+      buttonElement.textContent = "Remove";
+      buttonElement.setAttribute("data-action", "remove");
+    } else {
+      buttonElement.textContent = "Add";
+      buttonElement.setAttribute("data-action", "add");
+    }
     buttonElement.addEventListener("click", function () {
       const action = buttonElement.getAttribute("data-action");
       if (action === "add") {

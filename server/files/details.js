@@ -79,6 +79,7 @@ window.onload = function () {
 function displayDetails(content) {
   const mainElement = document.querySelector("main");
   mainElement.id = content.id;
+  mainElement.text = content.titleText.text;
 
   // Create elements for movie details
   const titleElement = document.createElement("h2");
@@ -109,12 +110,14 @@ function displayDetails(content) {
 function displaySeasonAndEpisode(watchlist, data) {
   const mainElement = document.querySelector("main");
   const id = mainElement.id;
+  const title = mainElement.text;
 
   data.forEach((episode) => {
     const seasonNumber = episode.seasonNumber;
     const episodeNumber = episode.episodeNumber;
     const episodeid = episode.tconst;
     episode["id"] = mainElement.id;
+    episode["title"] = mainElement.text;
 
     if (!isNaN(seasonNumber) && !isNaN(episodeNumber)) {
       const episodeElement = document.createElement("div");
@@ -122,14 +125,9 @@ function displaySeasonAndEpisode(watchlist, data) {
 
       const buttonElement = document.createElement("button");
       episodeElement.appendChild(buttonElement);
-      if (watchlist.tvseries[id]) {
-        if (watchlist.tvseries[id].episode.hasOwnProperty(episodeid)) {
-          buttonElement.textContent = "Unwatched";
-          buttonElement.setAttribute("data-action", "remove");
-        } else {
-          buttonElement.textContent = "Watched";
-          buttonElement.setAttribute("data-action", "add");
-        }
+      if (watchlist.tvseries[id]?.episode.hasOwnProperty(episodeid)) {
+        buttonElement.textContent = "Unwatched";
+        buttonElement.setAttribute("data-action", "remove");
       } else {
         buttonElement.textContent = "Watched";
         buttonElement.setAttribute("data-action", "add");
