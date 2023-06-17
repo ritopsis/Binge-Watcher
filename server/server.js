@@ -41,7 +41,6 @@ app.get("/movie", function (req, res) {
     response.on("end", () => {
       const jsonData = JSON.parse(data);
       const searchResults = jsonData.results;
-      //console.log(searchResults);
       res.send(searchResults);
     });
 
@@ -67,7 +66,6 @@ app.get("/series", function (req, res) {
     .then((response) => response.json())
     .then((data) => {
       const searchResults = data.results;
-      console.log(searchResults);
       res.send(searchResults);
     })
     .catch((error) => {
@@ -388,6 +386,33 @@ app.get("/details/:id", function (req, res) {
     .then((data) => {
       const searchResults = data.results;
       res.send(searchResults);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+app.get("/titles/:input", function (req, res) {
+  const searchinput = req.params.input;
+  const searchtype = req.query.type;
+  const searchsite = req.query.site;
+  //provides information about the movie/show
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
+      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+    },
+  };
+
+  const URL = `https://moviesdatabase.p.rapidapi.com/titles/search/title/${encodeURIComponent(
+    searchinput
+  )}?page=${searchsite}&titleType=${searchtype}&limit=10`;
+  fetch(URL, options)
+    .then((response) => response.json())
+    .then((data) => {
+      //const searchResults = data.results;
+      res.send(data);
     })
     .catch((error) => {
       console.log(error);
