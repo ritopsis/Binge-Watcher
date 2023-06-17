@@ -122,14 +122,10 @@ function displaySeasonAndEpisode(watchlist, data) {
       const buttonElement = document.createElement("button");
       episodeElement.appendChild(buttonElement);
 
-      if (watchlist[id]?.hasOwnProperty(episode)) {
-        if (watchlist[id].episode?.hasOwnProperty(episodeid)) {
-          buttonElement.textContent = "Unwatched";
-          buttonElement.addEventListener("click", removeEpWatchlist);
-        } else {
-          buttonElement.textContent = "Watched";
-          buttonElement.addEventListener("click", addEpWatchlist);
-        }
+      if (watchlist.tvseries[id].episode.hasOwnProperty(episodeid)) {
+        console.log("geht");
+        buttonElement.textContent = "Unwatched";
+        buttonElement.addEventListener("click", removeEpWatchlist);
       } else {
         buttonElement.textContent = "Watched";
         buttonElement.addEventListener("click", addEpWatchlist);
