@@ -114,6 +114,7 @@ function displaySeasonAndEpisode(watchlist, data) {
     const seasonNumber = episode.seasonNumber;
     const episodeNumber = episode.episodeNumber;
     const episodeid = episode.tconst;
+    episode["id"] = mainElement.id;
 
     if (!isNaN(seasonNumber) && !isNaN(episodeNumber)) {
       const episodeElement = document.createElement("div");
@@ -121,52 +122,60 @@ function displaySeasonAndEpisode(watchlist, data) {
 
       const buttonElement = document.createElement("button");
       episodeElement.appendChild(buttonElement);
-
-      if (watchlist.tvseries[id].episode.hasOwnProperty(episodeid)) {
-        console.log("geht");
-        buttonElement.textContent = "Unwatched";
-        buttonElement.addEventListener("click", removeEpWatchlist);
+      if (watchlist.tvseries[id]) {
+        if (watchlist.tvseries[id].episode.hasOwnProperty(episodeid)) {
+          buttonElement.textContent = "Unwatched";
+          buttonElement.setAttribute("data-action", "remove");
+        } else {
+          buttonElement.textContent = "Watched";
+          buttonElement.setAttribute("data-action", "add");
+        }
       } else {
         buttonElement.textContent = "Watched";
-        buttonElement.addEventListener("click", addEpWatchlist);
+        buttonElement.setAttribute("data-action", "add");
       }
 
-      episode["id"] = mainElement.id;
+      buttonElement.addEventListener("click", function () {
+        const action = buttonElement.getAttribute("data-action");
+        if (action === "add") {
+          addEpWatchlist(episode, buttonElement);
+        } else {
+          removeEpWatchlist(episode, buttonElement);
+        }
+      });
 
-      function removeEpWatchlist() {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-          if (xhr.status === 200) {
-            buttonElement.textContent = "Watched";
-            buttonElement.removeEventListener("click", removeEpWatchlist);
-            buttonElement.addEventListener("click", addEpWatchlist);
-          } else {
-            console.log(xhr.status);
-          }
-        };
-
-        xhr.open("DELETE", "removeepwatchlist", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(episode));
-      }
-
-      function addEpWatchlist() {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-          if (xhr.status === 200) {
-            buttonElement.textContent = "Unwatched";
-            buttonElement.removeEventListener("click", addEpWatchlist);
-            buttonElement.addEventListener("click", removeEpWatchlist);
-          } else {
-            console.log(xhr.status);
-          }
-        };
-
-        xhr.open("POST", "addepwatchlist", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(episode));
-      }
       mainElement.appendChild(episodeElement);
     }
   });
+}
+function removeEpWatchlist(episode, buttonElement) {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      buttonElement.textContent = "Watched";
+      buttonElement.setAttribute("data-action", "add");
+    } else {
+      console.log(xhr.status);
+    }
+  };
+
+  xhr.open("DELETE", "removeepwatchlist", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(episode));
+}
+
+function addEpWatchlist(episode, buttonElement) {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      buttonElement.textContent = "Unwatched";
+      buttonElement.setAttribute("data-action", "remove");
+    } else {
+      console.log(xhr.status);
+    }
+  };
+
+  xhr.open("POST", "addepwatchlist", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(episode));
 }

@@ -393,7 +393,6 @@ app.post("/addwatchlist", function (req, res) {
           watchlist.movies[id]["title"] = title;
         }
       }
-
       fs.writeFile(
         userdataPath,
         JSON.stringify(jsonData, null, 2),
@@ -413,6 +412,46 @@ app.post("/addwatchlist", function (req, res) {
     }
   });
 });
+
+app.delete("/removewatchlist", function (req, res) {
+  console.log("yuhu");
+  fs.readFile(userdataPath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    if (req.session.username) {
+      const watchlist = jsonData[req.session.username].watchlist;
+      const id = req.body.id;
+      if (watchlist.tvseries[id]) {
+        delete watchlist.tvseries[id];
+      } else {
+        if (watchlist.movies[id]) {
+          delete watchlist.movies[id];
+        }
+      }
+      fs.writeFile(
+        userdataPath,
+        JSON.stringify(jsonData, null, 2),
+        "utf8",
+        (err) => {
+          if (err) {
+            console.error("Error:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+          console.log("File saved successfully.");
+          res.sendStatus(200);
+        }
+      );
+    } else {
+      res.sendStatus(401);
+    }
+  });
+});
+
 app.listen(3000);
 
 console.log("Server now listening on http://localhost:3000/");

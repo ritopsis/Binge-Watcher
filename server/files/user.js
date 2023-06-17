@@ -43,3 +43,19 @@ export function addWatchlist(article, callback) {
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(JSON.stringify(data));
 }
+export function removeWatchlist(article, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      callback(null, xhr.responseText);
+    } else {
+      callback("Error: " + xhr.status, null);
+    }
+  };
+  const data = {
+    id: article.id,
+  };
+  xhr.open("DELETE", "removewatchlist", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(data));
+}

@@ -1,11 +1,12 @@
 import { checkifloggedin } from "./user.js";
 import { addWatchlist } from "./user.js";
+import { removeWatchlist } from "./user.js";
 
 window.onload = function () {
   const menuItems = document.getElementById("menuItems");
   checkifloggedin(function (error, response) {
     if (error) {
-      content(false);
+      content(false, null);
       const loginLink = document.createElement("li");
       const loginLinkAnchor = document.createElement("a");
       loginLinkAnchor.href = "register_login.html";
@@ -32,7 +33,7 @@ window.onload = function () {
   });
 };
 
-function content(loggin) {
+function content(loggin, watchlist) {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
@@ -74,6 +75,7 @@ function addarticle(movie, documentelement, loggin, type) {
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
   articleElement.title = type;
+
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;
@@ -90,7 +92,7 @@ function addarticle(movie, documentelement, loggin, type) {
     imageElement.loading = "lazy";
     imageElement.alt = "Alternative Image";
   }
-  //console.log(imageElement.src);
+
   // Create the heading element
   const headingElement = document.createElement("h1");
   headingElement.textContent = movie.titleText.text;
@@ -105,8 +107,14 @@ function addarticle(movie, documentelement, loggin, type) {
   if (loggin) {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = "Add/Remove from Watchlist";
+    buttonElement.setAttribute("data-action", "add"); // Set initial action to "add"
     buttonElement.addEventListener("click", function () {
-      blub(articleElement);
+      const action = buttonElement.getAttribute("data-action");
+      if (action === "add") {
+        add(articleElement, buttonElement);
+      } else {
+        remove(articleElement, buttonElement);
+      }
     });
     articleElement.appendChild(buttonElement);
   }
@@ -115,10 +123,25 @@ function addarticle(movie, documentelement, loggin, type) {
   const topMoviesElement = document.querySelector(documentelement);
   topMoviesElement.appendChild(articleElement);
 }
-function blub(article) {
+
+function add(article, button) {
   addWatchlist(article, function (error, response) {
     if (error) {
+      // Handle error
     } else {
+      button.textContent = "Remove";
+      button.setAttribute("data-action", "remove"); // Change the action to "remove"
+    }
+  });
+}
+
+function remove(article, button) {
+  removeWatchlist(article, function (error, response) {
+    if (error) {
+      // Handle error
+    } else {
+      button.textContent = "Add";
+      button.setAttribute("data-action", "add"); // Change the action to "add"
     }
   });
 }

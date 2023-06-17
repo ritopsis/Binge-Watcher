@@ -1,5 +1,7 @@
 import { checkifloggedin } from "./user.js";
 import { getwatchlist } from "./user.js";
+import { addWatchlist } from "./user.js";
+import { removeWatchlist } from "./user.js";
 
 let loggin = null;
 
@@ -100,6 +102,15 @@ function addarticle(movie) {
   if (loggin) {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = "Add/Remove from Watchlist";
+    buttonElement.setAttribute("data-action", "add"); // Set initial action to "add"
+    buttonElement.addEventListener("click", function () {
+      const action = buttonElement.getAttribute("data-action");
+      if (action === "add") {
+        add(articleElement, buttonElement);
+      } else {
+        remove(articleElement, buttonElement);
+      }
+    });
     articleElement.appendChild(buttonElement);
   }
   // Add the article element to the document
@@ -125,4 +136,25 @@ function createButton(text) {
 
   // Append the button to the main element
   mainElement.appendChild(button);
+}
+function add(article, button) {
+  addWatchlist(article, function (error, response) {
+    if (error) {
+      // Handle error
+    } else {
+      button.textContent = "Remove";
+      button.setAttribute("data-action", "remove"); // Change the action to "remove"
+    }
+  });
+}
+
+function remove(article, button) {
+  removeWatchlist(article, function (error, response) {
+    if (error) {
+      // Handle error
+    } else {
+      button.textContent = "Add";
+      button.setAttribute("data-action", "add"); // Change the action to "add"
+    }
+  });
 }
