@@ -70,7 +70,7 @@ function handleSearchRequest(title, page) {
   };
 
   const url = new URL("/titles/" + title, location.href);
-  url.searchParams.set("type", "movie");
+  url.searchParams.set("type", "tvSeries");
   url.searchParams.set("site", page);
   xhr.open("GET", url, true);
   xhr.send();
@@ -83,25 +83,11 @@ function addarticle(movie) {
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;
 
-  // Create the image element
-  const imageElement = document.createElement("img");
-  imageElement.classList.add("articleimage");
-  if (movie.primaryImage && movie.primaryImage.url) {
-    imageElement.src = movie.primaryImage.url;
-    imageElement.alt = "Movie Image";
-  } else {
-    imageElement.src =
-      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fb3ef66312333.5691dd2253378.jpg";
-    imageElement.loading = "lazy";
-    imageElement.alt = "Alternative Image";
-  }
-  //console.log(imageElement.src);
   // Create the heading element
   const headingElement = document.createElement("h1");
   headingElement.textContent = movie.titleText.text;
 
   // Append the image and heading elements to the link element
-  linkElement.appendChild(imageElement);
   linkElement.appendChild(headingElement);
 
   if (loggin) {
