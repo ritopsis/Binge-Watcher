@@ -80,7 +80,7 @@ nav a {
 }
 
 article {
-  background-color: rgba(168, 226, 255, 0);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 16px;
   flex: 0 0 200px;
   margin: 20px;
