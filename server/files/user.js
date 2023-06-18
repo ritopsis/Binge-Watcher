@@ -8,7 +8,7 @@ export function checkifloggedin(callback) {
       callback("Error: " + xhr.status, null);
     }
   };
-  xhr.open("GET", "loggedin");
+  xhr.open("GET", "loggedin", true);
   xhr.send();
 }
 export function getwatchlist(callback) {
@@ -21,7 +21,7 @@ export function getwatchlist(callback) {
       callback("Error: " + xhr.status, null);
     }
   };
-  xhr.open("GET", "watchlist");
+  xhr.open("GET", "watchlist", true);
   xhr.send();
 }
 
