@@ -3,11 +3,6 @@
     "biography": "Boom boom",
     "watchlist": {
       "tvseries": {
-        "tt10436284": {
-          "title": "Kamp Koral: SpongeBob's Under Years",
-          "date": "2023-06-18T15:31:07.386Z",
-          "episode": {}
-        },
         "tt0995011": {
           "title": "The Electric Company",
           "date": "2023-06-18T15:31:08.226Z",
@@ -49,6 +44,14 @@
         "tt9691136": {
           "title": "Shadow in the Cloud",
           "date": "2023-06-18T15:31:10.705Z"
+        },
+        "tt16152642": {
+          "title": "Harry Potter and the Cursed Child: Melbourne Show",
+          "date": "2023-06-18T15:44:34.226Z"
+        },
+        "tt16152972": {
+          "title": "Harry Potter and the Cursed Child: Toronto Show",
+          "date": "2023-06-18T15:44:34.913Z"
         }
       }
     }

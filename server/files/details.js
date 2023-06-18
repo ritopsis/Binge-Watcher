@@ -77,12 +77,12 @@ window.onload = function () {
 
       Promise.all([watchlistPromise, informationPromise])
         .then(([watchlistResult, informationPromise]) => {
+          console.log("Both requests finished");
           watchlist = watchlistResult;
           addarticle(informationPromise);
-          console.log(content);
-          displaySeasonAndEpisode(watchlistResult.watchlist, content);
-          // Perform your desired action here
-          console.log("Both requests finished");
+          if (informationPromise.titleType.isSeries) {
+            displaySeasonAndEpisode(watchlistResult.watchlist, content);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -93,6 +93,10 @@ window.onload = function () {
 
 function addarticle(movie) {
   const articleElement = document.createElement("article");
+  let type = movie.titleType.id.toLowerCase();
+  if (movie.titleType == "movie") {
+    type = "movies";
+  }
   articleElement.id = movie.id;
   articleElement.setAttribute("data-type", movie.titleType.id.toLowerCase());
   articleElement.setAttribute("data-name", movie.titleText.text);
@@ -126,7 +130,7 @@ function addarticle(movie) {
 
   if (loggin && watchlist) {
     const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][movie.titleType.id]?.hasOwnProperty(movie.id)) {
+    if (watchlist["watchlist"][type]?.hasOwnProperty(movie.id)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
     } else {
@@ -144,16 +148,17 @@ function addarticle(movie) {
     articleElement.appendChild(buttonElement);
   }
 
-  const plotElement = document.createElement("p");
-  plotElement.textContent = movie.plot.plotText.plainText;
-
+  if (movie.plot) {
+    const plotElement = document.createElement("p");
+    plotElement.textContent = movie.plot.plotText.plainText;
+    articleElement.appendChild(plotElement);
+  }
   const ratingElement = document.createElement("p");
   ratingElement.textContent = `Rating: ${movie.ratingsSummary.aggregateRating}`;
 
   const releaseDateElement = document.createElement("p");
   releaseDateElement.textContent = `Release Date: ${movie.releaseDate.month}/${movie.releaseDate.day}/${movie.releaseDate.year}`;
 
-  articleElement.appendChild(plotElement);
   articleElement.appendChild(ratingElement);
   articleElement.appendChild(releaseDateElement);
 
