@@ -4,7 +4,7 @@ import {
   addWatchlist,
   removeWatchlist,
 } from "./user.js";
-
+import { createNavButton } from "./createElements.js";
 let watchlist = null;
 let loggin = null;
 
@@ -13,7 +13,8 @@ window.onload = function () {
   checkifloggedin(function (error, response) {
     if (error) {
       loggin = false;
-      menuItems.innerHTML += `<li><a href="register_login.html">Login</a></li>`;
+      let nav = document.querySelector("nav");
+      createNavButton("Login", "register_login.html", nav);
       const url = new URL(location.href);
       const params = new URLSearchParams(url.search);
       if (params.has("page") && params.has("title")) {
@@ -21,7 +22,9 @@ window.onload = function () {
       }
     }
     if (response) {
-      menuItems.innerHTML += `<li><a href="myprofile.html">My Profile</a></li><li><a href="logout">Logout</a></li>`;
+      let nav = document.querySelector("nav");
+      createNavButton("My Profile", "myprofile.html", nav);
+      createNavButton("Logout", "logout", nav);
       loggin = true;
       getwatchlist(function (error, response) {
         if (response) {

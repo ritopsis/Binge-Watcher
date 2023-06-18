@@ -4,6 +4,7 @@ import {
   addWatchlist,
   removeWatchlist,
 } from "./user.js";
+import { createNavButton } from "./createElements.js";
 
 let watchlist = null;
 let loggin = null;
@@ -14,12 +15,8 @@ window.onload = function () {
     if (error) {
       content();
       loggin = false;
-      const loginLink = document.createElement("li");
-      const loginLinkAnchor = document.createElement("a");
-      loginLinkAnchor.href = "register_login.html";
-      loginLinkAnchor.textContent = "Login";
-      loginLink.appendChild(loginLinkAnchor);
-      menuItems.appendChild(loginLink);
+      let nav = document.querySelector("nav");
+      createNavButton("Login", "register_login.html", nav);
     }
     if (response) {
       getwatchlist(function (error, response) {
@@ -27,19 +24,9 @@ window.onload = function () {
           watchlist = JSON.parse(response);
           loggin = true;
           content();
-          const myProfileLink = document.createElement("li");
-          const myProfileAnchor = document.createElement("a");
-          myProfileAnchor.href = "myprofile.html";
-          myProfileAnchor.textContent = "My Profile";
-          myProfileLink.appendChild(myProfileAnchor);
-
-          const logoutLink = document.createElement("li");
-          const logutLinkAnchor = document.createElement("a");
-          logutLinkAnchor.href = "logout";
-          logutLinkAnchor.textContent = "Logout";
-          logoutLink.appendChild(logutLinkAnchor);
-          menuItems.appendChild(myProfileLink);
-          menuItems.appendChild(logoutLink);
+          let nav = document.querySelector("nav");
+          createNavButton("My Profile", "myprofile.html", nav);
+          createNavButton("Logout", "logout", nav);
         } else {
         }
       });
