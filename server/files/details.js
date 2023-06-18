@@ -81,6 +81,12 @@ function displayDetails(content) {
   mainElement.id = content.id;
   mainElement.text = content.titleText.text;
 
+  const movieContainer = document.createElement("div");
+  movieContainer.className = "movieContainer";
+
+  const paraContainer = document.createElement("div");
+  paraContainer.className = "paraContainer";
+
   // Create elements for movie details
   const titleElement = document.createElement("h2");
   titleElement.textContent = content.titleText.text;
@@ -100,12 +106,19 @@ function displayDetails(content) {
   const releaseDateElement = document.createElement("p");
   releaseDateElement.textContent = `Release Date: ${content.releaseDate.month}/${content.releaseDate.day}/${content.releaseDate.year}`;
 
+  paraContainer.appendChild(plotElement);
+  paraContainer.appendChild(ratingElement);
+  paraContainer.appendChild(releaseDateElement);
+
+  movieContainer.appendChild(titleElement);
+  movieContainer.appendChild(imageElement);
+  movieContainer.appendChild(paraContainer);
+  
+
   // Append movie details to the <main> element
-  mainElement.appendChild(titleElement);
-  mainElement.appendChild(imageElement);
-  mainElement.appendChild(plotElement);
-  mainElement.appendChild(ratingElement);
-  mainElement.appendChild(releaseDateElement);
+ 
+  mainElement.appendChild(movieContainer); 
+ 
 }
 function displaySeasonAndEpisode(watchlist, data) {
   const mainElement = document.querySelector("main");
