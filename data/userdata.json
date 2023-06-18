@@ -1,105 +1,85 @@
 {
   "a": {
+    "biography": "Boom boom",
     "watchlist": {
       "tvseries": {
-        "tt0090496": {
-          "title": "Our House",
+        "tt10436284": {
+          "title": "Kamp Koral: SpongeBob's Under Years",
+          "date": "2023-06-18T15:31:07.386Z",
           "episode": {}
         },
-        "tt5729304": {
-          "title": "In the Dark",
+        "tt0995011": {
+          "title": "The Electric Company",
+          "date": "2023-06-18T15:31:08.226Z",
+          "episode": {}
+        },
+        "tt17500926": {
+          "title": "Bestseller",
+          "date": "2023-06-18T15:41:52.891Z",
           "episode": {
-            "tt5902626": "1-1",
-            "tt5984714": "1-1",
-            "tt5984716": "1-2",
-            "tt5927996": "1-3",
-            "tt5927998": "1-4"
+            "tt17528616": "1-1",
+            "tt17538142": "1-2",
+            "tt17545400": "1-3",
+            "tt17545444": "1-4",
+            "tt17545570": "1-5",
+            "tt17545614": "1-6",
+            "tt17548164": "1-7",
+            "tt17550716": "1-8"
           }
         },
-        "tt0101069": {
-          "title": "The Commish",
+        "tt0088582": {
+          "title": "Night Heat",
+          "date": "2023-06-18T15:42:03.648Z",
           "episode": {
-            "tt0545088": "1-1",
-            "tt0545074": "1-2",
-            "tt0545053": "1-5",
-            "tt0545128": "1-3",
-            "tt0545096": "1-4",
-            "tt0545054": "1-6",
-            "tt0545064": "1-7",
-            "tt0545120": "1-8",
-            "tt0545139": "1-9"
+            "tt0660887": "1-3",
+            "tt0660892": "1-2",
+            "tt0660886": "1-1"
           }
+        }
+      },
+      "movies": {
+        "tt13412252": {
+          "title": "Ashin of the North",
+          "date": "2023-06-18T15:31:09.515Z"
         },
-        "tt1493923": {
-          "title": "Him & Her",
+        "tt14992922": {
+          "title": "The Tinder Swindler",
+          "date": "2023-06-18T15:31:10.121Z"
+        },
+        "tt9691136": {
+          "title": "Shadow in the Cloud",
+          "date": "2023-06-18T15:31:10.705Z"
+        }
+      }
+    }
+  },
+  "t": {
+    "biography": "asd",
+    "watchlist": {
+      "tvseries": {
+        "tt0088582": {
+          "title": "Night Heat",
+          "date": "2023-06-18T15:31:20.389Z",
           "episode": {}
         },
-        "tt1841108": {
-          "title": "Femme Fatales",
-          "episode": {}
-        },
-        "tt13879630": {
-          "title": "The Harry Potter Unofficial Quiz",
+        "tt0361192": {
+          "title": "Hunter",
+          "date": "2023-06-18T15:31:22.802Z",
           "episode": {}
         }
       },
       "movies": {
-        "tt11271038": {
-          "title": "Licorice Pizza"
+        "tt15384272": {
+          "title": "Smuk",
+          "date": "2023-06-18T15:31:17.960Z"
         },
-        "tt2850386": {
-          "title": "The Croods: A New Age"
+        "tt16085592": {
+          "title": "Tall Girl 2",
+          "date": "2023-06-18T15:31:18.559Z"
         },
-        "tt13879630": {
-          "title": "The Harry Potter Unofficial Quiz"
-        },
-        "tt15431326": {
-          "title": "Harry Potter: Hogwarts Tournament of Houses"
-        },
-        "tt15456012": {
-          "title": "Harry Potter: Magical Movie Moments"
-        },
-        "tt13261656": {
-          "title": "Clip: Lego Harry Potter Years 1 - 4 Gameplay - Zebra Gamer"
-        },
-        "tt16152642": {
-          "title": "Harry Potter and the Cursed Child: Melbourne Show"
-        },
-        "tt16152972": {
-          "title": "Harry Potter and the Cursed Child: Toronto Show"
-        },
-        "tt13155056": {
-          "title": "Darla's Book Club: Discussing the Harry Potter Series"
-        },
-        "tt8358970": {
-          "title": "The Harry Potter Saga Analyzed"
-        },
-        "tt16124664": {
-          "title": "Harry Potter and the Cursed Child: San Francisco"
-        },
-        "tt7783322": {
-          "title": "Harry Potter: A History of Magic"
-        },
-        "tt16116640": {
-          "title": "Harry Potter and the Cursed Child: London Show"
-        },
-        "tt8443702": {
-          "title": "Harry Potter and the Untold Stories of Hogwarts"
-        },
-        "tt1201607": {
-          "title": "Harry Potter and the Deathly Hallows: Part 2"
-        },
-        "tt0926084": {
-          "title": "Harry Potter and the Deathly Hallows: Part 1"
-        },
-        "tt1781796": {
-          "title": "Creating the World of Harry Potter, Part 4: Sound and Music"
-        },
-        "tt2076822": {
-          "title": "Chaos Walking"
-        },
-        "tt7713068": {
-          "title": "Birds of Prey: And the Fantabulous Emancipation of One Harley Quinn"
+        "tt6402468": {
+          "title": "Blood Red Sky",
+          "date": "2023-06-18T15:31:19.414Z"
         }
       }
     }

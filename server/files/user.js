@@ -37,7 +37,7 @@ export function addWatchlist(article, callback) {
   const data = {
     title: article.querySelector("h1").textContent,
     id: article.id,
-    type: article.type,
+    type: article.dataset.type,
   };
   xhr.open("POST", "addwatchlist", true);
   xhr.setRequestHeader("Content-Type", "application/json");

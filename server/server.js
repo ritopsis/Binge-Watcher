@@ -89,6 +89,26 @@ app.get("/watchlist", function (req, res) {
   }
 });
 
+app.get("/watchlist/:userid", function (req, res) {
+  if (req.session.username) {
+    fs.readFile(userdataPath, "utf-8", (err, data) => {
+      if (err) {
+        console.error("Error:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      const jsonData = JSON.parse(data);
+      if (jsonData[req.params.userid]) {
+        res.status(200).json(jsonData[req.params.userid]);
+      } else {
+        res.sendStatus(404);
+      }
+    });
+  } else {
+    res.status(401).send("Unauthorized");
+  }
+});
+
 app.post("/addepwatchlist", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
@@ -104,11 +124,13 @@ app.post("/addepwatchlist", function (req, res) {
       const title = req.body.title;
 
       if (watchlist.tvseries[id]) {
+        watchlist.tvseries[id]["date"] = new Date().toISOString();
         watchlist.tvseries[id]["episode"][tconst] =
           req.body.seasonNumber + "-" + req.body.episodeNumber;
       } else {
         watchlist.tvseries[id] = {};
         watchlist.tvseries[id]["title"] = title;
+        watchlist.tvseries[id]["date"] = new Date().toISOString();
         watchlist.tvseries[id]["episode"] = {};
         watchlist.tvseries[id]["episode"][tconst] =
           req.body.seasonNumber + "-" + req.body.episodeNumber;
@@ -211,7 +233,10 @@ app.post("/register", function (req, res) {
             userjsonData = JSON.parse(userdata);
           }
 
-          userjsonData[username] = { watchlist: { tvseries: {}, movies: {} } };
+          userjsonData[username] = {
+            biography: "",
+            watchlist: { tvseries: {}, movies: {} },
+          };
           writeinFile(userdataPath, userjsonData, (err) => {
             if (err) {
               console.error("Error:", err);
@@ -274,7 +299,7 @@ app.get("/loggedin", function (req, res) {
 
   if (req.session.username) {
     // User is logged in
-    res.status(200).send("User is logged in!");
+    res.status(200).send(req.session.username);
   } else {
     // User is not logged in
     res.status(401).send("Unauthorized");
@@ -381,17 +406,20 @@ app.post("/addwatchlist", function (req, res) {
       const id = req.body.id;
       const title = req.body.title;
       const type = req.body.type;
+      console.log(type);
 
       if (type == "tvseries") {
         if (!watchlist.tvseries[id]) {
           watchlist.tvseries[id] = {};
           watchlist.tvseries[id]["title"] = title;
+          watchlist.tvseries[id]["date"] = new Date().toISOString();
           watchlist.tvseries[id]["episode"] = {};
         }
       } else {
         if (!watchlist.movies[id]) {
           watchlist.movies[id] = {};
           watchlist.movies[id]["title"] = title;
+          watchlist.movies[id]["date"] = new Date().toISOString();
         }
       }
       fs.writeFile(
@@ -433,6 +461,37 @@ app.delete("/removewatchlist", function (req, res) {
           delete watchlist.movies[id];
         }
       }
+      fs.writeFile(
+        userdataPath,
+        JSON.stringify(jsonData, null, 2),
+        "utf8",
+        (err) => {
+          if (err) {
+            console.error("Error:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+          console.log("File saved successfully.");
+          res.sendStatus(200);
+        }
+      );
+    } else {
+      res.sendStatus(401);
+    }
+  });
+});
+
+app.put("/changebio", function (req, res) {
+  fs.readFile(userdataPath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    if (req.session.username) {
+      jsonData[req.session.username]["biography"] = req.body.biography;
+
       fs.writeFile(
         userdataPath,
         JSON.stringify(jsonData, null, 2),
