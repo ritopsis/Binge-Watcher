@@ -57,6 +57,9 @@ window.onload = function () {
       Promise.all([informationPromise])
         .then(([informationPromise]) => {
           addarticle(informationPromise);
+          if (informationPromise.titleType.isSeries) {
+            displaySeasonAndEpisode(null, content);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -97,7 +100,9 @@ function addarticle(content) {
   const articleElement = document.createElement("article");
   const title = content.titleText.text;
   let type = content.titleType.id.toLowerCase();
-  if (content.titleType == "movie") {
+  if (type == "tvminiseries") {
+    type = "tvseries";
+  } else {
     type = "movies";
   }
   articleElement.id = content.id;
@@ -191,6 +196,16 @@ function add(article, button) {
     }
   });
 }
+function remove(article, button) {
+  removeWatchlist(article, function (error, response) {
+    if (error) {
+      // Handle error
+    } else {
+      button.textContent = "Add";
+      button.setAttribute("data-action", "add"); // Change the action to "add"
+    }
+  });
+}
 function displaySeasonAndEpisode(watchlist, data) {
   const articleElement = document.querySelector("article");
   console.log(articleElement);
@@ -208,25 +223,26 @@ function displaySeasonAndEpisode(watchlist, data) {
       const episodeElement = document.createElement("div");
       episodeElement.textContent = `Season ${seasonNumber}, Episode ${episodeNumber}`;
 
-      const buttonElement = document.createElement("button");
-      episodeElement.appendChild(buttonElement);
-      if (watchlist.tvseries[id]?.episode.hasOwnProperty(episodeid)) {
-        buttonElement.textContent = "Unwatched";
-        buttonElement.setAttribute("data-action", "remove");
-      } else {
-        buttonElement.textContent = "Watched";
-        buttonElement.setAttribute("data-action", "add");
-      }
-
-      buttonElement.addEventListener("click", function () {
-        const action = buttonElement.getAttribute("data-action");
-        if (action === "add") {
-          addEpWatchlist(episode, buttonElement);
+      if (watchlist) {
+        const buttonElement = document.createElement("button");
+        episodeElement.appendChild(buttonElement);
+        if (watchlist.tvseries[id]?.episode.hasOwnProperty(episodeid)) {
+          buttonElement.textContent = "Unwatched";
+          buttonElement.setAttribute("data-action", "remove");
         } else {
-          removeEpWatchlist(episode, buttonElement);
+          buttonElement.textContent = "Watched";
+          buttonElement.setAttribute("data-action", "add");
         }
-      });
 
+        buttonElement.addEventListener("click", function () {
+          const action = buttonElement.getAttribute("data-action");
+          if (action === "add") {
+            addEpWatchlist(episode, buttonElement);
+          } else {
+            removeEpWatchlist(episode, buttonElement);
+          }
+        });
+      }
       articleElement.appendChild(episodeElement);
     }
   });
