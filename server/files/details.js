@@ -91,18 +91,19 @@ window.onload = function () {
   });
 };
 
-function addarticle(movie) {
+function addarticle(content) {
   const articleElement = document.createElement("article");
-  let type = movie.titleType.id.toLowerCase();
-  if (movie.titleType == "movie") {
+  const title = content.titleText.text;
+  let type = content.titleType.id.toLowerCase();
+  if (content.titleType == "movie") {
     type = "movies";
   }
-  articleElement.id = movie.id;
-  articleElement.setAttribute("data-type", movie.titleType.id.toLowerCase());
-  articleElement.setAttribute("data-name", movie.titleText.text);
+  articleElement.id = content.id;
+  articleElement.setAttribute("data-type", content.titleType.id.toLowerCase());
+  articleElement.setAttribute("data-name", title);
   // Create the link element
   const linkElement = document.createElement("a");
-  linkElement.href = "/details.html?id=" + movie.id;
+  linkElement.href = "/details.html?id=" + content.id;
 
   const movieContainer = document.createElement("div");
   movieContainer.className = "movieContainer";
@@ -112,12 +113,12 @@ function addarticle(movie) {
 
   // Create elements for movie details
   const titleElement = document.createElement("h2");
-  titleElement.textContent = content.titleText.text;
+  titleElement.textContent = title;
 
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
-  if (movie.primaryImage && movie.primaryImage.url) {
-    imageElement.src = movie.primaryImage.url;
+  if (content.primaryImage && content.primaryImage.url) {
+    imageElement.src = content.primaryImage.url;
     imageElement.alt = "Movie Image";
   } else {
     imageElement.src =
@@ -128,7 +129,7 @@ function addarticle(movie) {
 
   // Create the heading element
   const headingElement = document.createElement("h1");
-  headingElement.textContent = movie.titleText.text;
+  headingElement.textContent = title;
 
   // Append the image and heading elements to the link element
   linkElement.appendChild(imageElement);
@@ -139,7 +140,7 @@ function addarticle(movie) {
 
   if (loggin && watchlist) {
     const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][type]?.hasOwnProperty(movie.id)) {
+    if (watchlist["watchlist"][type]?.hasOwnProperty(content.id)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
     } else {
@@ -157,16 +158,16 @@ function addarticle(movie) {
     articleElement.appendChild(buttonElement);
   }
 
-  if (movie.plot) {
+  if (content.plot) {
     const plotElement = document.createElement("p");
-    plotElement.textContent = movie.plot.plotText.plainText;
+    plotElement.textContent = content.plot.plotText.plainText;
     articleElement.appendChild(plotElement);
   }
   const ratingElement = document.createElement("p");
-  ratingElement.textContent = `Rating: ${movie.ratingsSummary.aggregateRating}`;
+  ratingElement.textContent = `Rating: ${content.ratingsSummary.aggregateRating}`;
 
   const releaseDateElement = document.createElement("p");
-  releaseDateElement.textContent = `Release Date: ${movie.releaseDate.month}/${movie.releaseDate.day}/${movie.releaseDate.year}`;
+  releaseDateElement.textContent = `Release Date: ${content.releaseDate.month}/${content.releaseDate.day}/${content.releaseDate.year}`;
 
   articleElement.appendChild(ratingElement);
   articleElement.appendChild(releaseDateElement);
