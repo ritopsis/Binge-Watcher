@@ -186,21 +186,6 @@ function add(article, button) {
     }
   });
 }
-
-  paraContainer.appendChild(plotElement);
-  paraContainer.appendChild(ratingElement);
-  paraContainer.appendChild(releaseDateElement);
-
-  movieContainer.appendChild(titleElement);
-  movieContainer.appendChild(imageElement);
-  movieContainer.appendChild(paraContainer);
-  
-
-  // Append movie details to the <main> element
- 
-  mainElement.appendChild(movieContainer); 
- 
-}
 function displaySeasonAndEpisode(watchlist, data) {
   const articleElement = document.querySelector("article");
   console.log(articleElement);
