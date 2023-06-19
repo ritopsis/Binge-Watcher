@@ -52,7 +52,8 @@ window.onload = function () {
   checkifloggedin(function (error, response) {
     if (error) {
       console.log("Error:", error);
-      menuItems.innerHTML += `<li><a href="register_login.html">Login</a></li>`;
+      let nav = document.querySelector("nav");
+      createNavButton("Login", "register_login.html", nav);
       Promise.all([informationPromise])
         .then(([informationPromise]) => {
           addarticle(informationPromise);
@@ -62,8 +63,9 @@ window.onload = function () {
         });
     } else {
       loggin = true;
-      menuItems.innerHTML += `<li><a href="myprofile.html">My Profile</a></li><li><a href="logout">Logout</a></li>`;
-
+      let nav = document.querySelector("nav");
+      createNavButton("My Profile", "myprofile.html", nav);
+      createNavButton("Logout", "logout", nav);
       const watchlistPromise = new Promise((resolve, reject) => {
         getwatchlist(function (error, response) {
           if (error) {
