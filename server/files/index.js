@@ -79,6 +79,7 @@ function addarticle(movie, documentelement, type) {
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;
+  linkElement.setAttribute('id', 'titleLink');
 
   // Create the image element
   const imageElement = document.createElement("img");

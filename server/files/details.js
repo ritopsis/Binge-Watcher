@@ -111,6 +111,7 @@ function addarticle(content) {
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + content.id;
+  linkElement.setAttribute('id', 'titleLink');
 
   const movieContainer = document.createElement("div");
   movieContainer.className = "movieContainer";
