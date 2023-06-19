@@ -50,6 +50,35 @@ app.get("/movie", function (req, res) {
   });
 });
 
+app.get("/serie", function (req, res) {
+  const options = {
+    method: "GET",
+    hostname: "moviesdatabase.p.rapidapi.com",
+    port: null,
+    path: "/titles/random?startYear=2020&sort=year.incr&limit=5&list=top_rated_250",
+    headers: {
+      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
+      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+    },
+  };
+  http.get(options, (response) => {
+    let data = "";
+    response.on("data", (chunk) => {
+      data += chunk;
+    });
+
+    response.on("end", () => {
+      const jsonData = JSON.parse(data);
+      const searchResults = jsonData.results;
+      res.send(searchResults);
+    });
+
+    response.on("error", (error) => {
+      //console.log(error);
+    });
+  });
+});
+
 app.get("/series", function (req, res) {
   const options = {
     method: "GET",
@@ -60,12 +89,13 @@ app.get("/series", function (req, res) {
   };
 
   fetch(
-    "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=most_pop_series",
+    "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=top_rated_series_250",
     options
   )
     .then((response) => response.json())
     .then((data) => {
       const searchResults = data.results;
+      console.log(searchResults);
       res.send(searchResults);
     })
     .catch((error) => {
