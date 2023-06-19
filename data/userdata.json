@@ -5,8 +5,13 @@
       "tvseries": {
         "tt0995011": {
           "title": "The Electric Company",
-          "date": "2023-06-18T15:31:08.226Z",
-          "episode": {}
+          "date": "2023-06-19T11:47:32.065Z",
+          "episode": {
+            "tt1374258": "1-0",
+            "tt1360329": "1-1",
+            "tt1374257": "1-3",
+            "tt1439413": "1-11"
+          }
         },
         "tt17500926": {
           "title": "Bestseller",
@@ -52,6 +57,14 @@
         "tt16152972": {
           "title": "Harry Potter and the Cursed Child: Toronto Show",
           "date": "2023-06-18T15:44:34.913Z"
+        },
+        "tt13879630": {
+          "title": "The Harry Potter Unofficial Quiz",
+          "date": "2023-06-19T11:46:25.867Z"
+        },
+        "tt13155056": {
+          "title": "Darla's Book Club: Discussing the Harry Potter Series",
+          "date": "2023-06-19T11:46:40.661Z"
         }
       }
     }
@@ -83,6 +96,10 @@
         "tt6402468": {
           "title": "Blood Red Sky",
           "date": "2023-06-18T15:31:19.414Z"
+        },
+        "tt18362444": {
+          "title": "The Year of the Dog",
+          "date": "2023-06-19T11:49:29.861Z"
         }
       }
     }
