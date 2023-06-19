@@ -96,6 +96,7 @@ function addarticle(movie, documentelement, type) {
   // Create the heading element
   const headingElement = document.createElement("h1");
   headingElement.textContent = movie.titleText.text;
+  headingElement.setAttribute('id', 'toph2');
 
   // Append the image and heading elements to the link element
   linkElement.appendChild(imageElement);

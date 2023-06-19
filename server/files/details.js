@@ -104,7 +104,16 @@ function addarticle(movie) {
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;
 
-  // Create the image element
+  const movieContainer = document.createElement("div");
+  movieContainer.className = "movieContainer";
+
+  const paraContainer = document.createElement("div");
+  paraContainer.className = "paraContainer";
+
+  // Create elements for movie details
+  const titleElement = document.createElement("h2");
+  titleElement.textContent = content.titleText.text;
+
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
   if (movie.primaryImage && movie.primaryImage.url) {
@@ -178,15 +187,19 @@ function add(article, button) {
   });
 }
 
-function remove(article, button) {
-  removeWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Add";
-      button.setAttribute("data-action", "add"); // Change the action to "add"
-    }
-  });
+  paraContainer.appendChild(plotElement);
+  paraContainer.appendChild(ratingElement);
+  paraContainer.appendChild(releaseDateElement);
+
+  movieContainer.appendChild(titleElement);
+  movieContainer.appendChild(imageElement);
+  movieContainer.appendChild(paraContainer);
+  
+
+  // Append movie details to the <main> element
+ 
+  mainElement.appendChild(movieContainer); 
+ 
 }
 function displaySeasonAndEpisode(watchlist, data) {
   const articleElement = document.querySelector("article");

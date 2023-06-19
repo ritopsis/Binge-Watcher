@@ -127,3 +127,41 @@ article {
   border-radius: 10px;
   text-decoration-color: aliceblue;
 }
+
+.movieContainer {
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 13% auto; 
+  grid-template-rows: auto auto; 
+  grid-template-areas: 
+      "header header"
+      "image paragraph";
+}
+
+h2 {
+  margin-bottom: 10px;
+  grid-area: header;
+}
+
+img {
+  grid-area: image;
+}
+
+.paraContainer {
+  
+  grid-area: paragraph;
+  margin-left: 20px;
+}
+
+.paraContainer p {
+  margin-bottom: 15px;
+}
+
+button {
+  margin-left: 10px;
+  margin-bottom: 1px;
+}
+
+main {
+  padding: 10px;
+}
