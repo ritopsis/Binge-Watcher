@@ -138,3 +138,6 @@ article {
   text-decoration-color: aliceblue;
 }
 
+#titleLink {
+  text-decoration: none;
+}

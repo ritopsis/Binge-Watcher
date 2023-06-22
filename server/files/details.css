@@ -141,3 +141,7 @@ article {
   border-radius: 10px;
   text-decoration-color: aliceblue;
 }
+
+#titleLink {
+  text-decoration: none;
+}
