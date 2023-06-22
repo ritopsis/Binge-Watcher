@@ -29,12 +29,13 @@ window.onload = function () {
           watchlist = JSON.parse(xhr.responseText);
           const biography = document.getElementById("biography");
           if (watchlist["biography"]) {
+            //If the User wrote a biography
             biography.textContent = "About me: " + watchlist["biography"];
-            const user = document.getElementById("user");
-            user.textContent = usernameofsearch + "'s Watchlist";
-            loggin = true;
-            content();
           }
+          const user = document.getElementById("user");
+          user.textContent = usernameofsearch + "'s Watchlist";
+          loggin = true;
+          content();
         } else if (xhr.status === 404) {
           const mainElement = document.querySelector("main");
           const elementsToDelete = Array.from(mainElement.children).filter(
@@ -78,12 +79,14 @@ function content() {
       let tvseries = watchlist.watchlist.tvseries;
       console.log(tvseries);
       for (let serieId in tvseries) {
+        console.log(tvseries[serieId].title);
         addarticle(tvseries[serieId].title, serieId, ".series");
       }
     }
     if (watchlist.watchlist.movies) {
       let movies = watchlist.watchlist.movies;
       for (let movieId in movies) {
+        console.log(movies[movieId].title);
         addarticle(movies[movieId].title, movieId, ".movies");
       }
     }

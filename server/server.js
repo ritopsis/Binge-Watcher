@@ -106,13 +106,13 @@ app.get("/series", function (req, res) {
 
 app.get("/watchlist", function (req, res) {
   if (req.session.username) {
-    fs.readFile(userdataPath, "utf-8", (err, data) => {
+    readFile(userdataPath, (err, data) => {
       if (err) {
         console.error("Error:", err);
         res.status(500).send("Internal Server Error");
         return;
       }
-      const jsonData = JSON.parse(data);
+      const jsonData = data;
       res.status(200).json(jsonData[req.session.username]);
     });
   } else {
@@ -122,13 +122,13 @@ app.get("/watchlist", function (req, res) {
 
 app.get("/watchlist/:userid", function (req, res) {
   if (req.session.username) {
-    fs.readFile(userdataPath, "utf-8", (err, data) => {
+    readFile(userdataPath, (err, data) => {
       if (err) {
         console.error("Error:", err);
         res.status(500).send("Internal Server Error");
         return;
       }
-      const jsonData = JSON.parse(data);
+      const jsonData = data;
       if (jsonData[req.params.userid]) {
         res.status(200).json(jsonData[req.params.userid]);
       } else {
@@ -169,7 +169,6 @@ app.get("/logout", function (req, res) {
 });
 
 app.get("/episodes/:seriesID", function (req, res) {
-  //provides episode numbers and episode id's
   const options = {
     method: "GET",
     headers: {
@@ -314,7 +313,7 @@ app.post("/register", function (req, res) {
       res.status(409).send("Username already taken");
     } else {
       jsonData[username] = password;
-      writeinFile(registerPath, jsonData, (err) => {
+      writeFile(registerPath, jsonData, (err) => {
         if (err) {
           console.error("Error:", err);
           res.status(500).send("Internal Server Error");
@@ -336,7 +335,7 @@ app.post("/register", function (req, res) {
             biography: "",
             watchlist: { tvseries: {}, movies: {} },
           };
-          writeinFile(userdataPath, userjsonData, (err) => {
+          writeFile(userdataPath, userjsonData, (err) => {
             if (err) {
               console.error("Error:", err);
               res.status(500).send("Internal Server Error");
@@ -377,21 +376,16 @@ app.post("/addepwatchlist", function (req, res) {
         watchlist.tvseries[id]["episode"][tconst] =
           req.body.seasonNumber + "-" + req.body.episodeNumber;
       }
-
-      fs.writeFile(
-        userdataPath,
-        JSON.stringify(jsonData, null, 2),
-        "utf8",
-        (err) => {
-          if (err) {
-            console.error("Error:", err);
-            res.status(500).send("Internal Server Error");
-            return;
-          }
+      writeFile(userdataPath, jsonData, (err, response) => {
+        if (err) {
+          console.error("Error:", err);
+          res.status(500).send("Internal Server Error");
+          return;
+        } else {
           console.log("File saved successfully.");
           res.sendStatus(200);
         }
-      );
+      });
     } else {
       res.sendStatus(401);
     }
@@ -494,19 +488,6 @@ app.delete("/removeepwatchlist", function (req, res) {
   });
 });
 
-function writeinFile(filename, jsonData, callback) {
-  fs.writeFile(filename, JSON.stringify(jsonData, null, 2), "utf8", (err) => {
-    //jsonData, null, 2 <- better formatting of json in registeredaccounts.json
-    if (err) {
-      console.error("Error:", err);
-      callback(err);
-      return;
-    }
-    console.log("File saved successfully.");
-    callback(null);
-  });
-}
-
 app.delete("/removewatchlist", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
@@ -544,6 +525,34 @@ app.delete("/removewatchlist", function (req, res) {
     }
   });
 });
+
+//Functions
+// Function for writing to a file
+function writeFile(filename, jsonData, callback) {
+  fs.writeFile(filename, JSON.stringify(jsonData, null, 2), "utf8", (err) => {
+    //jsonData, null, 2 <- better formatting of json in registeredaccounts.json
+    if (err) {
+      console.error("Error:", err);
+      callback(err);
+      return;
+    }
+    console.log("File saved successfully.");
+    callback(null);
+  });
+}
+
+// Function for reading a file
+function readFile(filePath, callback) {
+  fs.readFile(filePath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      callback(err, null);
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    callback(null, jsonData);
+  });
+}
 
 app.listen(3000);
 

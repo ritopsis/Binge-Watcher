@@ -3,110 +3,83 @@
     "biography": "Boom boom",
     "watchlist": {
       "tvseries": {
-        "tt0995011": {
-          "title": "The Electric Company",
-          "date": "2023-06-19T11:47:32.065Z",
-          "episode": {
-            "tt1374258": "1-0",
-            "tt1360329": "1-1",
-            "tt1374257": "1-3",
-            "tt1439413": "1-11"
-          }
-        },
         "tt17500926": {
           "title": "Bestseller",
-          "date": "2023-06-18T15:41:52.891Z",
+          "date": "2023-06-22T09:39:28.383Z",
           "episode": {
-            "tt17528616": "1-1",
-            "tt17538142": "1-2",
-            "tt17545400": "1-3",
-            "tt17545444": "1-4",
-            "tt17545570": "1-5",
-            "tt17545614": "1-6",
-            "tt17548164": "1-7",
             "tt17550716": "1-8"
           }
         },
-        "tt0088582": {
-          "title": "Night Heat",
-          "date": "2023-06-18T15:42:03.648Z",
+        "tt0092324": {
+          "title": "Blackadder the Third",
+          "date": "2023-06-22T09:37:45.729Z",
+          "episode": {}
+        },
+        "tt4574334": {
+          "title": "Stranger Things",
+          "date": "2023-06-22T09:37:46.680Z",
+          "episode": {}
+        },
+        "tt0988818": {
+          "title": "Gintama",
+          "date": "2023-06-22T09:39:00.068Z",
+          "episode": {}
+        },
+        "tt5753856": {
+          "title": "Dark",
+          "date": "2023-06-22T09:39:01.040Z",
+          "episode": {}
+        },
+        "tt0472954": {
+          "title": "It's Always Sunny in Philadelphia",
+          "date": "2023-06-22T09:39:13.643Z",
           "episode": {
-            "tt0660887": "1-3",
-            "tt0660892": "1-2",
-            "tt0660886": "1-1"
+            "tt2294790": "1-0",
+            "tt0612823": "1-1",
+            "tt0612824": "1-3",
+            "tt0612819": "1-4",
+            "tt0612821": "1-6",
+            "tt0786802": "2-1",
+            "tt0793926": "2-4",
+            "tt0789481": "2-5",
+            "tt0829804": "2-6",
+            "tt0833358": "2-7",
+            "tt0833359": "2-8",
+            "tt0826387": "2-9",
+            "tt0818015": "2-3",
+            "tt0818156": "2-2",
+            "tt0612818": "1-7",
+            "tt0612822": "1-5",
+            "tt0612820": "1-2"
           }
         },
-        "tt5421602": {
-          "title": "Anne",
-          "date": "2023-06-19T14:37:38.626Z",
+        "tt0047708": {
+          "title": "Alfred Hitchcock Presents",
+          "date": "2023-06-22T09:57:35.744Z",
           "episode": {
-            "tt7217162": "2-10"
+            "tt0508235": "1-1",
+            "tt0508232": "1-2",
+            "tt0508360": "1-3",
+            "tt0508154": "1-4",
+            "tt0508183": "1-5",
+            "tt0508240": "1-6"
           }
         },
-        "tt0185906": {
-          "title": "Band of Brothers",
-          "date": "2023-06-19T14:44:59.463Z",
-          "episode": {}
-        },
-        "tt6763664": {
-          "title": "The Haunting of Hill House",
-          "date": "2023-06-19T14:46:16.997Z",
-          "episode": {}
-        },
-        "tt0423731": {
-          "title": "Samurai chanpurû",
-          "date": "2023-06-22T09:10:42.656Z",
-          "episode": {}
-        },
-        "tt0995832": {
-          "title": "Generation Kill",
-          "date": "2023-06-22T09:10:49.205Z",
-          "episode": {}
-        },
-        "tt2401256": {
-          "title": "The Night Of",
-          "date": "2023-06-22T09:10:58.652Z",
-          "episode": {}
-        },
-        "tt1508238": {
-          "title": "Apocalypse: La 2ème guerre mondiale",
-          "date": "2023-06-22T09:10:59.521Z",
-          "episode": {}
-        },
-        "tt0367279": {
-          "title": "Arrested Development",
-          "date": "2023-06-22T09:11:00.273Z",
-          "episode": {}
-        },
-        "tt5288312": {
-          "title": "Skam",
-          "date": "2023-06-22T09:13:14.194Z",
-          "episode": {}
-        },
-        "tt6108262": {
-          "title": "Senke nad Balkanom",
-          "date": "2023-06-22T09:13:42.385Z",
-          "episode": {}
-        },
-        "tt0053488": {
-          "title": "The Bugs Bunny Show",
-          "date": "2023-06-22T09:13:43.094Z",
-          "episode": {}
-        },
-        "tt2244495": {
-          "title": "The Eric Andre Show",
-          "date": "2023-06-22T09:13:43.952Z",
-          "episode": {}
-        },
-        "tt0086661": {
-          "title": "The Adventures of Sherlock Holmes",
-          "date": "2023-06-22T09:13:44.528Z",
-          "episode": {}
-        },
-        "tt1355642": {
-          "title": "Hagane no renkinjutsushi",
-          "date": "2023-06-22T09:15:05.065Z",
-          "episode": {}
+        "tt3398540": {
+          "title": "Haikyuu!!",
+          "date": "2023-06-22T09:58:02.239Z",
+          "episode": {
+            "tt4461850": "1-1",
+            "tt4461852": "1-2",
+            "tt4461856": "1-3",
+            "tt4461860": "1-4",
+            "tt4461874": "1-5",
+            "tt4461876": "1-6",
+            "tt4461882": "1-7",
+            "tt4461884": "1-8",
+            "tt4468272": "1-9",
+            "tt4468276": "1-10"
+          }
         }
       },
       "movies": {
@@ -205,6 +178,57 @@
           "title": "Birds of Prey: And the Fantabulous Emancipation of One Harley Quinn"
         }
       }
+    }
+  },
+  "s": {
+    "biography": "",
+    "watchlist": {
+      "tvseries": {},
+      "movies": {}
+    }
+  },
+  "p": {
+    "biography": "",
+    "watchlist": {
+      "tvseries": {
+        "tt6763664": {
+          "title": "The Haunting of Hill House",
+          "date": "2023-06-22T09:44:43.882Z",
+          "episode": {}
+        }
+      },
+      "movies": {
+        "tt11686490": {
+          "title": "The Deep House",
+          "date": "2023-06-22T09:43:05.093Z"
+        },
+        "tt7556122": {
+          "title": "The Old Guard",
+          "date": "2023-06-22T09:43:07.074Z"
+        },
+        "tt5078852": {
+          "title": "Lansky",
+          "date": "2023-06-22T09:43:08.576Z"
+        },
+        "tt10293406": {
+          "title": "The Power of the Dog",
+          "date": "2023-06-22T09:43:09.282Z"
+        }
+      }
+    }
+  },
+  "q": {
+    "biography": "",
+    "watchlist": {
+      "tvseries": {},
+      "movies": {}
+    }
+  },
+  "g": {
+    "biography": "",
+    "watchlist": {
+      "tvseries": {},
+      "movies": {}
     }
   }
 }
