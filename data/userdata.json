@@ -1,230 +1,43 @@
 {
   "a": {
-    "biography": "Boom boom",
+    "biography": "ssds",
     "watchlist": {
       "tvseries": {
-        "tt17500926": {
-          "title": "Bestseller",
-          "date": "2023-06-22T09:39:28.383Z",
-          "episode": {
-            "tt17550716": "1-8"
-          }
-        },
-        "tt0092324": {
-          "title": "Blackadder the Third",
-          "date": "2023-06-22T09:37:45.729Z",
+        "tt1230180": {
+          "title": "The Angry Video Game Nerd",
+          "date": "2023-06-22T10:36:16.357Z",
           "episode": {}
         },
-        "tt4574334": {
-          "title": "Stranger Things",
-          "date": "2023-06-22T09:37:46.680Z",
-          "episode": {}
-        },
-        "tt0988818": {
-          "title": "Gintama",
-          "date": "2023-06-22T09:39:00.068Z",
-          "episode": {}
-        },
-        "tt5753856": {
-          "title": "Dark",
-          "date": "2023-06-22T09:39:01.040Z",
-          "episode": {}
-        },
-        "tt0472954": {
-          "title": "It's Always Sunny in Philadelphia",
-          "date": "2023-06-22T09:39:13.643Z",
+        "tt0090509": {
+          "title": "The Return of Sherlock Holmes",
+          "date": "2023-06-22T10:36:19.279Z",
           "episode": {
-            "tt2294790": "1-0",
-            "tt0612823": "1-1",
-            "tt0612824": "1-3",
-            "tt0612819": "1-4",
-            "tt0612821": "1-6",
-            "tt0786802": "2-1",
-            "tt0793926": "2-4",
-            "tt0789481": "2-5",
-            "tt0829804": "2-6",
-            "tt0833358": "2-7",
-            "tt0833359": "2-8",
-            "tt0826387": "2-9",
-            "tt0818015": "2-3",
-            "tt0818156": "2-2",
-            "tt0612818": "1-7",
-            "tt0612822": "1-5",
-            "tt0612820": "1-2"
-          }
-        },
-        "tt0047708": {
-          "title": "Alfred Hitchcock Presents",
-          "date": "2023-06-22T09:57:35.744Z",
-          "episode": {
-            "tt0508235": "1-1",
-            "tt0508232": "1-2",
-            "tt0508360": "1-3",
-            "tt0508154": "1-4",
-            "tt0508183": "1-5",
-            "tt0508240": "1-6"
-          }
-        },
-        "tt3398540": {
-          "title": "Haikyuu!!",
-          "date": "2023-06-22T09:58:02.239Z",
-          "episode": {
-            "tt4461850": "1-1",
-            "tt4461852": "1-2",
-            "tt4461856": "1-3",
-            "tt4461860": "1-4",
-            "tt4461874": "1-5",
-            "tt4461876": "1-6",
-            "tt4461882": "1-7",
-            "tt4461884": "1-8",
-            "tt4468272": "1-9",
-            "tt4468276": "1-10"
+            "tt0685622": "1-1",
+            "tt0685626": "1-2",
+            "tt0210968": "1-3"
           }
         }
       },
       "movies": {
-        "tt13412252": {
-          "title": "Ashin of the North",
-          "date": "2023-06-18T15:31:09.515Z"
+        "tt14812782": {
+          "title": "Hit the Road",
+          "date": "2023-06-22T10:36:15.053Z"
         },
-        "tt14992922": {
-          "title": "The Tinder Swindler",
-          "date": "2023-06-18T15:31:10.121Z"
-        },
-        "tt9691136": {
-          "title": "Shadow in the Cloud",
-          "date": "2023-06-18T15:31:10.705Z"
-        },
-        "tt16152642": {
-          "title": "Harry Potter and the Cursed Child: Melbourne Show",
-          "date": "2023-06-18T15:44:34.226Z"
-        },
-        "tt16152972": {
-          "title": "Harry Potter and the Cursed Child: Toronto Show",
-          "date": "2023-06-18T15:44:34.913Z"
-        },
-        "tt13879630": {
-          "title": "The Harry Potter Unofficial Quiz",
-          "date": "2023-06-19T11:46:25.867Z"
-        },
-        "tt13155056": {
-          "title": "Darla's Book Club: Discussing the Harry Potter Series",
-          "date": "2023-06-19T11:46:40.661Z"
-        },
-        "tt9347730": {
-          "title": "Candyman",
-          "date": "2023-06-19T14:38:53.979Z"
-        },
-        "tt10199914": {
-          "title": "The Boys in the Band",
-          "date": "2023-06-19T14:42:59.770Z"
-        },
-        "tt10944596": {
-          "title": "Here Today",
-          "date": "2023-06-19T14:47:34.620Z"
-        },
-        "tt6772802": {
-          "title": "Hillbilly Elegy",
-          "date": "2023-06-22T09:13:31.871Z"
-        },
-        "tt1918734": {
-          "title": "2067",
-          "date": "2023-06-22T09:14:55.596Z"
+        "tt21298322": {
+          "title": "Big Sky River",
+          "date": "2023-06-22T10:36:44.056Z"
         }
       }
-    }
-  },
-  "t": {
-    "biography": "asd",
-    "watchlist": {
-      "tvseries": {
-        "tt0088582": {
-          "title": "Night Heat",
-          "date": "2023-06-18T15:31:20.389Z",
-          "episode": {}
-        },
-        "tt0361192": {
-          "title": "Hunter",
-          "date": "2023-06-18T15:31:22.802Z",
-          "episode": {}
-        }
-      },
-      "movies": {
-        "tt15384272": {
-          "title": "Smuk",
-          "date": "2023-06-18T15:31:17.960Z"
-        },
-        "tt16085592": {
-          "title": "Tall Girl 2",
-          "date": "2023-06-18T15:31:18.559Z"
-        },
-        "tt6402468": {
-          "title": "Blood Red Sky",
-          "date": "2023-06-18T15:31:19.414Z"
-        },
-        "tt1201607": {
-          "title": "Harry Potter and the Deathly Hallows: Part 2"
-        },
-        "tt0926084": {
-          "title": "Harry Potter and the Deathly Hallows: Part 1"
-        },
-        "tt1781796": {
-          "title": "Creating the World of Harry Potter, Part 4: Sound and Music"
-        },
-        "tt2076822": {
-          "title": "Chaos Walking"
-        },
-        "tt7713068": {
-          "title": "Birds of Prey: And the Fantabulous Emancipation of One Harley Quinn"
-        }
-      }
-    }
-  },
-  "s": {
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
     }
   },
   "p": {
-    "biography": "",
-    "watchlist": {
-      "tvseries": {
-        "tt6763664": {
-          "title": "The Haunting of Hill House",
-          "date": "2023-06-22T09:44:43.882Z",
-          "episode": {}
-        }
-      },
-      "movies": {
-        "tt11686490": {
-          "title": "The Deep House",
-          "date": "2023-06-22T09:43:05.093Z"
-        },
-        "tt7556122": {
-          "title": "The Old Guard",
-          "date": "2023-06-22T09:43:07.074Z"
-        },
-        "tt5078852": {
-          "title": "Lansky",
-          "date": "2023-06-22T09:43:08.576Z"
-        },
-        "tt10293406": {
-          "title": "The Power of the Dog",
-          "date": "2023-06-22T09:43:09.282Z"
-        }
-      }
-    }
-  },
-  "q": {
-    "biography": "",
+    "biography": "a",
     "watchlist": {
       "tvseries": {},
       "movies": {}
     }
   },
-  "g": {
+  "pp": {
     "biography": "",
     "watchlist": {
       "tvseries": {},
