@@ -8,6 +8,7 @@ import { createNavButton } from "./createElements.js";
 
 let watchlist = null;
 let loggin = null;
+let totalMedia = 5;
 
 window.onload = function () {
   const menuItems = document.getElementById("menuItems");
@@ -50,7 +51,7 @@ function content() {
         );
     }
   };
-  xhr.open("GET", "/pop_movies", true);
+  xhr.open("GET", `/pop_media?limit=${totalMedia}&list=top_rated_250`, true);
   xhr.send();
 
   const xhrShows = new XMLHttpRequest();
@@ -68,7 +69,11 @@ function content() {
         );
     }
   };
-  xhrShows.open("GET", "/pop_series", true);
+  xhrShows.open(
+    "GET",
+    `/pop_media?limit=${totalMedia}&list=top_rated_series_250`,
+    true
+  );
   xhrShows.send();
 }
 

@@ -29,26 +29,11 @@ const options = {
   },
 };
 
-app.get("/pop_movies", function (req, res) {
-  fetch(
-    "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=top_rated_250",
-    options
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const searchResults = data.results;
-      res.send(searchResults);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
-app.get("/pop_series", function (req, res) {
-  fetch(
-    "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=top_rated_series_250",
-    options
-  )
+app.get("/pop_media", function (req, res) {
+  const totalMedia = req.query.limit; // number of medias we want to have
+  const mediaList = req.query.list; // from a medialist (movielist,serielist)
+  const URL = `https://moviesdatabase.p.rapidapi.com/titles/random?list=${mediaList}&limit=${totalMedia}`;
+  fetch(URL, options)
     .then((response) => response.json())
     .then((data) => {
       const searchResults = data.results;
@@ -60,6 +45,7 @@ app.get("/pop_series", function (req, res) {
 });
 
 app.get("/watchlist", isAuthenticated, function (req, res) {
+  // retrieve the watchlist of the logged-in user
   readFile(userdataPath, (err, data) => {
     if (err) {
       console.error("Error:", err);
@@ -72,6 +58,7 @@ app.get("/watchlist", isAuthenticated, function (req, res) {
 });
 
 app.get("/watchlist/:userid", isAuthenticated, function (req, res) {
+  // retrieve the watchlist of a user with username
   readFile(userdataPath, (err, data) => {
     if (err) {
       console.error("Error:", err);
@@ -87,23 +74,8 @@ app.get("/watchlist/:userid", isAuthenticated, function (req, res) {
   });
 });
 
-app.get("/episodes/:seriesID", function (req, res) {
-  const seriesID = req.params.seriesID;
-  const URL = "https://moviesdatabase.p.rapidapi.com/titles/series/" + seriesID;
-
-  fetch(URL, options)
-    .then((response) => response.json())
-    .then((data) => {
-      const searchResults = data.results;
-      res.send(searchResults);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
 app.get("/details/:id", function (req, res) {
-  //provides information about the movie/show
+  // retrieve information about a media item (a movie or a serie)
   const detail = req.params.id;
   const URL =
     "https://moviesdatabase.p.rapidapi.com/titles/" +
@@ -121,18 +93,34 @@ app.get("/details/:id", function (req, res) {
     });
 });
 
-app.get("/titles/:input", function (req, res) {
-  const searchinput = req.params.input;
-  const searchtype = req.query.type;
-  const searchsite = req.query.site;
-  //provides information about the movie/show
-  const URL = `https://moviesdatabase.p.rapidapi.com/titles/search/title/${encodeURIComponent(
-    searchinput
-  )}?page=${searchsite}&titleType=${searchtype}&limit=10`;
+app.get("/episodes/:seriesID", function (req, res) {
+  // retrieve all episodes from a serie
+  const seriesID = req.params.seriesID;
+  const URL = "https://moviesdatabase.p.rapidapi.com/titles/series/" + seriesID;
+
   fetch(URL, options)
     .then((response) => response.json())
     .then((data) => {
-      //const searchResults = data.results;
+      const searchResults = data.results;
+      res.send(searchResults);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+app.get("/titles/:input", function (req, res) {
+  // retrieve media titles with provided search-input and media-type
+  const searchinput = req.params.input;
+  const searchtype = req.query.type;
+  const searchsite = req.query.site;
+  const URL = `https://moviesdatabase.p.rapidapi.com/titles/search/title/${encodeURIComponent(
+    searchinput
+  )}?page=${searchsite}&titleType=${searchtype}&limit=10`;
+
+  fetch(URL, options)
+    .then((response) => response.json())
+    .then((data) => {
       res.send(data);
     })
     .catch((error) => {
@@ -141,10 +129,12 @@ app.get("/titles/:input", function (req, res) {
 });
 
 app.get("/loggedin", isAuthenticated, function (req, res) {
+  // check if current user is logged-in
   res.status(200).send(req.session.username);
 });
 
 app.get("/logout", isAuthenticated, function (req, res) {
+  // destroy session of logged-in user
   req.session.destroy((err) => {
     if (err) {
       console.error("Error while destroying session:", err);
@@ -208,18 +198,13 @@ app.post("/login", function (req, res) {
       res.status(500).send("Internal Server Error");
       return;
     }
-    if (!data) {
-      //toDO was macht das?
-      res.status(401).send("Wrong Username/Password!");
+    const jsonData = data;
+    if (jsonData[username] == password) {
+      console.log("login success");
+      req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
+      res.status(200).send("Login");
     } else {
-      const jsonData = data;
-      if (jsonData[username] == password) {
-        console.log("login success");
-        req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
-        res.status(200).send("Login");
-      } else {
-        res.status(401).send("Wrong Username/Password!");
-      }
+      res.status(401).send("Wrong Username/Password!");
     }
   });
 });
@@ -326,7 +311,6 @@ app.put("/changebio", isAuthenticated, function (req, res) {
 });
 
 // DELETE-Methods
-
 app.delete("/removewatchlist", isAuthenticated, function (req, res) {
   readFile(userdataPath, (err, data) => {
     if (err) {
@@ -387,8 +371,8 @@ app.delete("/removeepwatchlist", isAuthenticated, function (req, res) {
   });
 });
 
-//Functions
-// Function for writing to a file
+// Functions
+//Function for writing to a file
 function writeFile(filename, jsonData, callback) {
   fs.writeFile(filename, JSON.stringify(jsonData, null, 2), "utf8", (err) => {
     //jsonData, null, 2 <- better formatting of json in registeredaccounts.json
@@ -402,7 +386,7 @@ function writeFile(filename, jsonData, callback) {
   });
 }
 
-// Function for reading a file
+//Function for reading a file
 function readFile(filePath, callback) {
   fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
