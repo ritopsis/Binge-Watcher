@@ -26,7 +26,7 @@ window.onload = function () {
       createNavButton("My Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       loggin = true;
-      getwatchlist(function (error, response) {
+      getwatchlist(null, function (error, response) {
         if (response) {
           watchlist = JSON.parse(response);
         }
