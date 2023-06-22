@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const fs = require("fs"); //For file creation/reading
 const session = require("express-session");
-
+const config = require("./config.js");
 const registerPath = path.join("data", "registeredaccounts.json");
 const userdataPath = path.join("data", "userdata.json");
 
@@ -21,15 +21,15 @@ app.use(
 );
 
 // GET-Methods
-app.get("/pop_movies", function (req, res) {
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": config.rapidApiKey,
+    "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+  },
+};
 
+app.get("/pop_movies", function (req, res) {
   fetch(
     "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=top_rated_250",
     options
@@ -45,14 +45,6 @@ app.get("/pop_movies", function (req, res) {
 });
 
 app.get("/pop_series", function (req, res) {
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
-
   fetch(
     "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=top_rated_series_250",
     options
@@ -96,13 +88,6 @@ app.get("/watchlist/:userid", isAuthenticated, function (req, res) {
 });
 
 app.get("/episodes/:seriesID", function (req, res) {
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
   const seriesID = req.params.seriesID;
   const URL = "https://moviesdatabase.p.rapidapi.com/titles/series/" + seriesID;
 
@@ -119,14 +104,6 @@ app.get("/episodes/:seriesID", function (req, res) {
 
 app.get("/details/:id", function (req, res) {
   //provides information about the movie/show
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
-
   const detail = req.params.id;
   const URL =
     "https://moviesdatabase.p.rapidapi.com/titles/" +
@@ -149,14 +126,6 @@ app.get("/titles/:input", function (req, res) {
   const searchtype = req.query.type;
   const searchsite = req.query.site;
   //provides information about the movie/show
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
-
   const URL = `https://moviesdatabase.p.rapidapi.com/titles/search/title/${encodeURIComponent(
     searchinput
   )}?page=${searchsite}&titleType=${searchtype}&limit=10`;
