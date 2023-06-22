@@ -289,24 +289,45 @@ app.post("/addepwatchlist", isAuthenticated, function (req, res) {
 
 // PUT-Methods
 app.put("/changebio", isAuthenticated, function (req, res) {
-  readFile(userdataPath, (err, data) => {
+  readFile(userdataPath, async (err, data) => {
     if (err) {
       console.error("Error:", err);
       res.status(500).send("Internal Server Error");
       return;
     }
     const jsonData = data;
-    jsonData[req.session.username]["biography"] = req.body.biography;
+    const url =
+      "https://neutrinoapi-bad-word-filter.p.rapidapi.com/bad-word-filter";
+    postoptions = {
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "X-RapidAPI-Key": "820810d92fmsh47306384f1838ccp1ad0a6jsnb891ca3b29ec",
+        "X-RapidAPI-Host": "neutrinoapi-bad-word-filter.p.rapidapi.com",
+      },
+      body: new URLSearchParams({
+        content: req.body.biography,
+        "censor-character": "*",
+      }),
+    };
 
-    writeFile(userdataPath, jsonData, (err) => {
-      if (err) {
-        console.error("Error:", err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
-      console.log("File saved successfully.");
-      res.sendStatus(200);
-    });
+    try {
+      const response = await fetch(url, postoptions);
+      const result = await response.text();
+      console.log(result);
+      text = JSON.parse(result);
+      jsonData[req.session.username]["biography"] = text["censored-content"];
+      writeFile(userdataPath, jsonData, (err) => {
+        if (err) {
+          console.error("Error:", err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        res.sendStatus(200).json(text);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   });
 });
 
