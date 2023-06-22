@@ -21,6 +21,8 @@ app.use(
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, "files")));
 
+// GET-Methoden
+
 app.get("/movie", function (req, res) {
   const options = {
     method: "GET",
@@ -137,185 +139,6 @@ app.get("/watchlist/:userid", function (req, res) {
   } else {
     res.status(401).send("Unauthorized");
   }
-});
-
-app.post("/addepwatchlist", function (req, res) {
-  fs.readFile(userdataPath, "utf-8", (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    const jsonData = JSON.parse(data);
-    if (req.session.username) {
-      const watchlist = jsonData[req.session.username].watchlist;
-      const id = req.body.id;
-      const tconst = req.body.tconst;
-      const title = req.body.title;
-
-      if (watchlist.tvseries[id]) {
-        watchlist.tvseries[id]["date"] = new Date().toISOString();
-        watchlist.tvseries[id]["episode"][tconst] =
-          req.body.seasonNumber + "-" + req.body.episodeNumber;
-      } else {
-        watchlist.tvseries[id] = {};
-        watchlist.tvseries[id]["title"] = title;
-        watchlist.tvseries[id]["date"] = new Date().toISOString();
-        watchlist.tvseries[id]["episode"] = {};
-        watchlist.tvseries[id]["episode"][tconst] =
-          req.body.seasonNumber + "-" + req.body.episodeNumber;
-      }
-
-      fs.writeFile(
-        userdataPath,
-        JSON.stringify(jsonData, null, 2),
-        "utf8",
-        (err) => {
-          if (err) {
-            console.error("Error:", err);
-            res.status(500).send("Internal Server Error");
-            return;
-          }
-          console.log("File saved successfully.");
-          res.sendStatus(200);
-        }
-      );
-    } else {
-      res.sendStatus(401);
-    }
-  });
-});
-
-app.delete("/removeepwatchlist", function (req, res) {
-  fs.readFile(userdataPath, "utf-8", (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-
-    const jsonData = JSON.parse(data);
-    if (req.session.username) {
-      const watchlist = jsonData[req.session.username].watchlist;
-      const id = req.body.id;
-      const tconst = req.body.tconst;
-
-      if (watchlist.tvseries[id]) {
-        delete watchlist.tvseries[id]["episode"][tconst];
-
-        fs.writeFile(
-          userdataPath,
-          JSON.stringify(jsonData, null, 2),
-          "utf8",
-          (err) => {
-            if (err) {
-              console.error("Error:", err);
-              res.status(500).send("Internal Server Error");
-              return;
-            }
-            console.log("File saved successfully.");
-            res.sendStatus(200);
-          }
-        );
-      } else {
-        res.sendStatus(404); // Not found - tconst does not exist in the watchlist
-      }
-    } else {
-      res.sendStatus(401); // Unauthorized
-    }
-  });
-});
-
-app.post("/register", function (req, res) {
-  const { username, password } = req.body;
-
-  fs.readFile(registerPath, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-
-    let jsonData = {};
-    if (data) {
-      jsonData = JSON.parse(data);
-    }
-
-    if (jsonData[username]) {
-      res.status(409).send("Username already taken");
-    } else {
-      jsonData[username] = password;
-      writeinFile(registerPath, jsonData, (err) => {
-        if (err) {
-          console.error("Error:", err);
-          res.status(500).send("Internal Server Error");
-          return;
-        }
-        fs.readFile(userdataPath, "utf-8", (err, userdata) => {
-          if (err) {
-            console.error("Error:", err);
-            res.status(500).send("Internal Server Error");
-            return;
-          }
-
-          let userjsonData = {};
-          if (userdata) {
-            userjsonData = JSON.parse(userdata);
-          }
-
-          userjsonData[username] = {
-            biography: "",
-            watchlist: { tvseries: {}, movies: {} },
-          };
-          writeinFile(userdataPath, userjsonData, (err) => {
-            if (err) {
-              console.error("Error:", err);
-              res.status(500).send("Internal Server Error");
-              return;
-            }
-            console.log("User created");
-            res.status(200).send("User created");
-          });
-        });
-      });
-    }
-  });
-});
-
-function writeinFile(filename, jsonData, callback) {
-  fs.writeFile(filename, JSON.stringify(jsonData, null, 2), "utf8", (err) => {
-    //jsonData, null, 2 <- better formatting of json in registeredaccounts.json
-    if (err) {
-      console.error("Error:", err);
-      callback(err);
-      return;
-    }
-    console.log("File saved successfully.");
-    callback(null);
-  });
-}
-
-app.post("/login", function (req, res) {
-  const { username, password } = req.body;
-  fs.readFile(registerPath, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    if (!data) {
-      res.status(401).send("Wrong Username/Password!");
-    } else {
-      const jsonData = JSON.parse(data);
-      if (jsonData[username] == password) {
-        console.log("login success");
-        req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
-        res.status(200).send("Login");
-      } else {
-        res.status(401).send("Wrong Username/Password!");
-      }
-    }
-  });
 });
 
 app.get("/loggedin", function (req, res) {
@@ -472,8 +295,63 @@ app.post("/addwatchlist", function (req, res) {
   });
 });
 
-app.delete("/removewatchlist", function (req, res) {
-  console.log("yuhu");
+app.post("/register", function (req, res) {
+  const { username, password } = req.body;
+
+  fs.readFile(registerPath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    let jsonData = {};
+    if (data) {
+      jsonData = JSON.parse(data);
+    }
+
+    if (jsonData[username]) {
+      res.status(409).send("Username already taken");
+    } else {
+      jsonData[username] = password;
+      writeinFile(registerPath, jsonData, (err) => {
+        if (err) {
+          console.error("Error:", err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        fs.readFile(userdataPath, "utf-8", (err, userdata) => {
+          if (err) {
+            console.error("Error:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+
+          let userjsonData = {};
+          if (userdata) {
+            userjsonData = JSON.parse(userdata);
+          }
+
+          userjsonData[username] = {
+            biography: "",
+            watchlist: { tvseries: {}, movies: {} },
+          };
+          writeinFile(userdataPath, userjsonData, (err) => {
+            if (err) {
+              console.error("Error:", err);
+              res.status(500).send("Internal Server Error");
+              return;
+            }
+            console.log("User created");
+            res.status(200).send("User created");
+          });
+        });
+      });
+    }
+  });
+});
+
+app.post("/addepwatchlist", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
       console.error("Error:", err);
@@ -484,13 +362,22 @@ app.delete("/removewatchlist", function (req, res) {
     if (req.session.username) {
       const watchlist = jsonData[req.session.username].watchlist;
       const id = req.body.id;
+      const tconst = req.body.tconst;
+      const title = req.body.title;
+
       if (watchlist.tvseries[id]) {
-        delete watchlist.tvseries[id];
+        watchlist.tvseries[id]["date"] = new Date().toISOString();
+        watchlist.tvseries[id]["episode"][tconst] =
+          req.body.seasonNumber + "-" + req.body.episodeNumber;
       } else {
-        if (watchlist.movies[id]) {
-          delete watchlist.movies[id];
-        }
+        watchlist.tvseries[id] = {};
+        watchlist.tvseries[id]["title"] = title;
+        watchlist.tvseries[id]["date"] = new Date().toISOString();
+        watchlist.tvseries[id]["episode"] = {};
+        watchlist.tvseries[id]["episode"][tconst] =
+          req.body.seasonNumber + "-" + req.body.episodeNumber;
       }
+
       fs.writeFile(
         userdataPath,
         JSON.stringify(jsonData, null, 2),
@@ -511,6 +398,29 @@ app.delete("/removewatchlist", function (req, res) {
   });
 });
 
+app.post("/login", function (req, res) {
+  const { username, password } = req.body;
+  fs.readFile(registerPath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    if (!data) {
+      res.status(401).send("Wrong Username/Password!");
+    } else {
+      const jsonData = JSON.parse(data);
+      if (jsonData[username] == password) {
+        console.log("login success");
+        req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
+        res.status(200).send("Login");
+      } else {
+        res.status(401).send("Wrong Username/Password!");
+      }
+    }
+  });
+});
+
 app.put("/changebio", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
@@ -522,6 +432,98 @@ app.put("/changebio", function (req, res) {
     if (req.session.username) {
       jsonData[req.session.username]["biography"] = req.body.biography;
 
+      fs.writeFile(
+        userdataPath,
+        JSON.stringify(jsonData, null, 2),
+        "utf8",
+        (err) => {
+          if (err) {
+            console.error("Error:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+          console.log("File saved successfully.");
+          res.sendStatus(200);
+        }
+      );
+    } else {
+      res.sendStatus(401);
+    }
+  });
+});
+
+app.delete("/removeepwatchlist", function (req, res) {
+  fs.readFile(userdataPath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    const jsonData = JSON.parse(data);
+    if (req.session.username) {
+      const watchlist = jsonData[req.session.username].watchlist;
+      const id = req.body.id;
+      const tconst = req.body.tconst;
+
+      if (watchlist.tvseries[id]) {
+        delete watchlist.tvseries[id]["episode"][tconst];
+
+        fs.writeFile(
+          userdataPath,
+          JSON.stringify(jsonData, null, 2),
+          "utf8",
+          (err) => {
+            if (err) {
+              console.error("Error:", err);
+              res.status(500).send("Internal Server Error");
+              return;
+            }
+            console.log("File saved successfully.");
+            res.sendStatus(200);
+          }
+        );
+      } else {
+        res.sendStatus(404); // Not found - tconst does not exist in the watchlist
+      }
+    } else {
+      res.sendStatus(401); // Unauthorized
+    }
+  });
+});
+
+function writeinFile(filename, jsonData, callback) {
+  fs.writeFile(filename, JSON.stringify(jsonData, null, 2), "utf8", (err) => {
+    //jsonData, null, 2 <- better formatting of json in registeredaccounts.json
+    if (err) {
+      console.error("Error:", err);
+      callback(err);
+      return;
+    }
+    console.log("File saved successfully.");
+    callback(null);
+  });
+}
+
+app.delete("/removewatchlist", function (req, res) {
+  console.log("yuhu");
+  fs.readFile(userdataPath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = JSON.parse(data);
+    if (req.session.username) {
+      const watchlist = jsonData[req.session.username].watchlist;
+      const id = req.body.id;
+      if (watchlist.tvseries[id]) {
+        delete watchlist.tvseries[id];
+      } else {
+        if (watchlist.movies[id]) {
+          delete watchlist.movies[id];
+        }
+      }
       fs.writeFile(
         userdataPath,
         JSON.stringify(jsonData, null, 2),

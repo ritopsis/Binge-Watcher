@@ -121,7 +121,6 @@ function addarticle(content) {
   // Create elements for movie details
   const titleElement = document.createElement("h2");
   titleElement.textContent = title;
-  
 
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
@@ -138,7 +137,7 @@ function addarticle(content) {
   // Create the heading element
   const headingElement = document.createElement("h1");
   headingElement.textContent = title;
-  headingElement.setAttribute('id', 'detailsTitle');
+  headingElement.setAttribute("id", "detailsTitle");
 
   // Append the image and heading elements to the link element
   linkElement.appendChild(imageElement);
