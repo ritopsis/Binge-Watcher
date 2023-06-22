@@ -15,7 +15,7 @@ window.onload = function () {
     }
     if (response) {
       username = response;
-      getwatchlist(function (error, response) {
+      getwatchlist(null, function (error, response) {
         if (response) {
           watchlist = JSON.parse(response);
           const biographyInput = document.getElementById("biography-input");

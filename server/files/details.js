@@ -70,7 +70,7 @@ window.onload = function () {
       createNavButton("My Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       const watchlistPromise = new Promise((resolve, reject) => {
-        getwatchlist(function (error, response) {
+        getwatchlist(null, function (error, response) {
           if (error) {
             console.log("Error:", error);
             reject(error);

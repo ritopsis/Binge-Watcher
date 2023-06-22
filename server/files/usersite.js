@@ -4,6 +4,7 @@ import {
   addWatchlist,
   removeWatchlist,
 } from "./user.js";
+
 import { createNavButton } from "./createElements.js";
 let watchlist = null;
 let loggin = null;
