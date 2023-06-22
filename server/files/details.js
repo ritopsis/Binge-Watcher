@@ -100,18 +100,15 @@ function addarticle(content) {
   const articleElement = document.createElement("article");
   const title = content.titleText.text;
   let type = content.titleType.id.toLowerCase();
-  if (type == "tvminiseries") {
-    type = "tvseries";
-  } else {
-    type = "movies";
-  }
+  type = type == "tvminiseries" || type == "tvseries" ? "tvseries" : "movies"; //Ternärer Operator
+
   articleElement.id = content.id;
   articleElement.setAttribute("data-type", content.titleType.id.toLowerCase());
   articleElement.setAttribute("data-name", title);
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + content.id;
-  linkElement.setAttribute('id', 'titleLink');
+  linkElement.setAttribute("id", "titleLink");
 
   const movieContainer = document.createElement("div");
   movieContainer.className = "movieContainer";

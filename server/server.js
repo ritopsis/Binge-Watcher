@@ -21,8 +21,7 @@ app.use(
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, "files")));
 
-// GET-Methoden
-
+// GET-Methods
 app.get("/movie", function (req, res) {
   const options = {
     method: "GET",
@@ -246,6 +245,7 @@ app.get("/titles/:input", function (req, res) {
     });
 });
 
+// POST-Methods
 app.post("/addwatchlist", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
@@ -421,6 +421,7 @@ app.post("/login", function (req, res) {
   });
 });
 
+// PUT-Methods
 app.put("/changebio", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
@@ -452,6 +453,7 @@ app.put("/changebio", function (req, res) {
   });
 });
 
+// DELETE-Methods
 app.delete("/removeepwatchlist", function (req, res) {
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
@@ -506,7 +508,6 @@ function writeinFile(filename, jsonData, callback) {
 }
 
 app.delete("/removewatchlist", function (req, res) {
-  console.log("yuhu");
   fs.readFile(userdataPath, "utf-8", (err, data) => {
     if (err) {
       console.error("Error:", err);
