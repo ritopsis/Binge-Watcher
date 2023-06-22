@@ -145,3 +145,23 @@ article {
 #titleLink {
   text-decoration: none;
 }
+
+.movieDetails {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color:rgb(255, 255, 255);
+  font-size: larger;
+}
+
+.episodes {
+  border-style:ridge;
+  margin-bottom: 2px;
+  border-color: black;
+  color: white;
+}
+
+.watchedButton {
+  margin-left: 10px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+}

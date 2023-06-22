@@ -164,20 +164,24 @@ function addarticle(content) {
     articleElement.appendChild(buttonElement);
   }
 
+  const movieDetails = document.createElement("div");
+  movieDetails.className = "movieDetails";
+
   if (content.plot) {
     const plotElement = document.createElement("p");
     plotElement.textContent = content.plot.plotText.plainText;
-    articleElement.appendChild(plotElement);
+    movieDetails.appendChild(plotElement);
   }
   const ratingElement = document.createElement("p");
   ratingElement.textContent = `Rating: ${content.ratingsSummary.aggregateRating}`;
+  movieDetails.appendChild(ratingElement);
 
   const releaseDateElement = document.createElement("p");
   releaseDateElement.textContent = `Release Date: ${content.releaseDate.month}/${content.releaseDate.day}/${content.releaseDate.year}`;
+  movieDetails.appendChild(releaseDateElement);
 
-  articleElement.appendChild(ratingElement);
-  articleElement.appendChild(releaseDateElement);
-
+  articleElement.appendChild(movieDetails);
+  
   // Add the article element to the document
   const topMoviesElement = document.querySelector("main");
   topMoviesElement.appendChild(articleElement);
@@ -218,10 +222,12 @@ function displaySeasonAndEpisode(watchlist, data) {
 
     if (!isNaN(seasonNumber) && !isNaN(episodeNumber)) {
       const episodeElement = document.createElement("div");
+      episodeElement.className = "episodes";
       episodeElement.textContent = `Season ${seasonNumber}, Episode ${episodeNumber}`;
 
       if (watchlist) {
         const buttonElement = document.createElement("button");
+        buttonElement.className = "watchedButton";
         episodeElement.appendChild(buttonElement);
         if (watchlist.tvseries[id]?.episode.hasOwnProperty(episodeid)) {
           buttonElement.textContent = "Unwatched";
