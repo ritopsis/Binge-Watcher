@@ -6,8 +6,13 @@ const http = require("https");
 const { stringify } = require("querystring");
 const fs = require("fs"); //For file creation/reading
 const session = require("express-session");
-const registerPath = "data/registeredaccounts.json";
-const userdataPath = "data/userdata.json";
+const { isatty } = require("tty");
+
+const registerPath = path.join("data", "registeredaccounts.json");
+const userdataPath = path.join("data", "userdata.json");
+
+// Serve static content in directory 'files'
+app.use(express.static(path.join(__dirname, "files")));
 
 app.use(bodyParser.json());
 app.use(
@@ -18,69 +23,31 @@ app.use(
   })
 );
 
-// Serve static content in directory 'files'
-app.use(express.static(path.join(__dirname, "files")));
-
 // GET-Methods
-app.get("/movie", function (req, res) {
+app.get("/pop_movies", function (req, res) {
   const options = {
     method: "GET",
-    hostname: "moviesdatabase.p.rapidapi.com",
-    port: null,
-    path: "/titles/random?startYear=2020&sort=year.incr&limit=5&list=most_pop_movies",
     headers: {
       "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
       "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
     },
   };
-  http.get(options, (response) => {
-    let data = "";
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
 
-    response.on("end", () => {
-      const jsonData = JSON.parse(data);
-      const searchResults = jsonData.results;
+  fetch(
+    "https://moviesdatabase.p.rapidapi.com/titles/random?limit=5&list=top_rated_250",
+    options
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      const searchResults = data.results;
       res.send(searchResults);
+    })
+    .catch((error) => {
+      console.log(error);
     });
-
-    response.on("error", (error) => {
-      //console.log(error);
-    });
-  });
 });
 
-app.get("/serie", function (req, res) {
-  const options = {
-    method: "GET",
-    hostname: "moviesdatabase.p.rapidapi.com",
-    port: null,
-    path: "/titles/random?startYear=2020&sort=year.incr&limit=5&list=top_rated_250",
-    headers: {
-      "X-RapidAPI-Key": "76867fecdfmsh75cb9bf136a9876p14a9fejsn43dec68f9b54",
-      "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-    },
-  };
-  http.get(options, (response) => {
-    let data = "";
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
-
-    response.on("end", () => {
-      const jsonData = JSON.parse(data);
-      const searchResults = jsonData.results;
-      res.send(searchResults);
-    });
-
-    response.on("error", (error) => {
-      //console.log(error);
-    });
-  });
-});
-
-app.get("/series", function (req, res) {
+app.get("/pop_series", function (req, res) {
   const options = {
     method: "GET",
     headers: {
@@ -96,7 +63,6 @@ app.get("/series", function (req, res) {
     .then((response) => response.json())
     .then((data) => {
       const searchResults = data.results;
-      console.log(searchResults);
       res.send(searchResults);
     })
     .catch((error) => {
@@ -104,60 +70,38 @@ app.get("/series", function (req, res) {
     });
 });
 
-app.get("/watchlist", function (req, res) {
-  if (req.session.username) {
-    readFile(userdataPath, (err, data) => {
-      if (err) {
-        console.error("Error:", err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
-      const jsonData = data;
-      res.status(200).json(jsonData[req.session.username]);
-    });
-  } else {
-    res.status(401).send("Unauthorized");
-  }
+app.get("/watchlist", isAuthenticated, function (req, res) {
+  readFile(userdataPath, (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = data;
+    res.status(200).json(jsonData[req.session.username]);
+  });
 });
 
-app.get("/watchlist/:userid", function (req, res) {
-  if (req.session.username) {
-    readFile(userdataPath, (err, data) => {
-      if (err) {
-        console.error("Error:", err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
-      const jsonData = data;
-      if (jsonData[req.params.userid]) {
-        res.status(200).json(jsonData[req.params.userid]);
-      } else {
-        res.sendStatus(404);
-      }
-    });
-  } else {
-    res.status(401).send("Unauthorized");
-  }
+app.get("/watchlist/:userid", isAuthenticated, function (req, res) {
+  readFile(userdataPath, (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = data;
+    if (jsonData[req.params.userid]) {
+      res.status(200).json(jsonData[req.params.userid]);
+    } else {
+      res.sendStatus(404);
+    }
+  });
 });
 
-app.get("/loggedin", function (req, res) {
-  res.setHeader(
-    "Cache-Control",
-    "no-store, no-cache, must-revalidate, proxy-revalidate"
-  );
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-  res.setHeader("Surrogate-Control", "no-store");
-
-  if (req.session.username) {
-    // User is logged in
-    res.status(200).send(req.session.username);
-  } else {
-    // User is not logged in
-    res.status(401).send("Unauthorized");
-  }
+app.get("/loggedin", isAuthenticated, function (req, res) {
+  res.status(200).send(req.session.username);
 });
-app.get("/logout", function (req, res) {
+app.get("/logout", isAuthenticated, function (req, res) {
   req.session.destroy((err) => {
     if (err) {
       console.error("Error while destroying session:", err);
@@ -245,50 +189,6 @@ app.get("/titles/:input", function (req, res) {
 });
 
 // POST-Methods
-app.post("/addwatchlist", function (req, res) {
-  readFile(userdataPath, (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    const jsonData = data;
-    if (req.session.username) {
-      const watchlist = jsonData[req.session.username].watchlist;
-      const id = req.body.id;
-      const title = req.body.title;
-      const type = req.body.type;
-      console.log(type);
-
-      if (type == "tvseries") {
-        if (!watchlist.tvseries[id]) {
-          watchlist.tvseries[id] = {};
-          watchlist.tvseries[id]["title"] = title;
-          watchlist.tvseries[id]["date"] = new Date().toISOString();
-          watchlist.tvseries[id]["episode"] = {};
-        }
-      } else {
-        if (!watchlist.movies[id]) {
-          watchlist.movies[id] = {};
-          watchlist.movies[id]["title"] = title;
-          watchlist.movies[id]["date"] = new Date().toISOString();
-        }
-      }
-      writeFile(userdataPath, jsonData, (err) => {
-        if (err) {
-          console.error("Error:", err);
-          res.status(500).send("Internal Server Error");
-          return;
-        }
-        console.log("File saved successfully.");
-        res.sendStatus(200);
-      });
-    } else {
-      res.sendStatus(401);
-    }
-  });
-});
-
 app.post("/register", function (req, res) {
   const { username, password } = req.body;
 
@@ -339,48 +239,6 @@ app.post("/register", function (req, res) {
   });
 });
 
-app.post("/addepwatchlist", function (req, res) {
-  readFile(userdataPath, (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    const jsonData = data;
-    if (req.session.username) {
-      const watchlist = jsonData[req.session.username].watchlist;
-      const id = req.body.id;
-      const tconst = req.body.tconst;
-      const title = req.body.title;
-
-      if (watchlist.tvseries[id]) {
-        watchlist.tvseries[id]["date"] = new Date().toISOString();
-        watchlist.tvseries[id]["episode"][tconst] =
-          req.body.seasonNumber + "-" + req.body.episodeNumber;
-      } else {
-        watchlist.tvseries[id] = {};
-        watchlist.tvseries[id]["title"] = title;
-        watchlist.tvseries[id]["date"] = new Date().toISOString();
-        watchlist.tvseries[id]["episode"] = {};
-        watchlist.tvseries[id]["episode"][tconst] =
-          req.body.seasonNumber + "-" + req.body.episodeNumber;
-      }
-      writeFile(userdataPath, jsonData, (err) => {
-        if (err) {
-          console.error("Error:", err);
-          res.status(500).send("Internal Server Error");
-          return;
-        } else {
-          console.log("File saved successfully.");
-          res.sendStatus(200);
-        }
-      });
-    } else {
-      res.sendStatus(401);
-    }
-  });
-});
-
 app.post("/login", function (req, res) {
   const { username, password } = req.body;
   readFile(registerPath, (err, data) => {
@@ -405,8 +263,7 @@ app.post("/login", function (req, res) {
   });
 });
 
-// PUT-Methods
-app.put("/changebio", function (req, res) {
+app.post("/addwatchlist", isAuthenticated, function (req, res) {
   readFile(userdataPath, (err, data) => {
     if (err) {
       console.error("Error:", err);
@@ -414,26 +271,101 @@ app.put("/changebio", function (req, res) {
       return;
     }
     const jsonData = data;
-    if (req.session.username) {
-      jsonData[req.session.username]["biography"] = req.body.biography;
+    const watchlist = jsonData[req.session.username].watchlist;
+    const id = req.body.id;
+    const title = req.body.title;
+    const type = req.body.type;
+    console.log(type);
 
-      writeFile(userdataPath, jsonData, (err) => {
-        if (err) {
-          console.error("Error:", err);
-          res.status(500).send("Internal Server Error");
-          return;
-        }
+    if (type == "tvseries") {
+      if (!watchlist.tvseries[id]) {
+        watchlist.tvseries[id] = {};
+        watchlist.tvseries[id]["title"] = title;
+        watchlist.tvseries[id]["date"] = new Date().toISOString();
+        watchlist.tvseries[id]["episode"] = {};
+      }
+    } else {
+      if (!watchlist.movies[id]) {
+        watchlist.movies[id] = {};
+        watchlist.movies[id]["title"] = title;
+        watchlist.movies[id]["date"] = new Date().toISOString();
+      }
+    }
+    writeFile(userdataPath, jsonData, (err) => {
+      if (err) {
+        console.error("Error:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      console.log("File saved successfully.");
+      res.sendStatus(200);
+    });
+  });
+});
+
+app.post("/addepwatchlist", isAuthenticated, function (req, res) {
+  readFile(userdataPath, (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = data;
+    const watchlist = jsonData[req.session.username].watchlist;
+    const id = req.body.id;
+    const tconst = req.body.tconst;
+    const title = req.body.title;
+
+    if (watchlist.tvseries[id]) {
+      watchlist.tvseries[id]["date"] = new Date().toISOString();
+      watchlist.tvseries[id]["episode"][tconst] =
+        req.body.seasonNumber + "-" + req.body.episodeNumber;
+    } else {
+      watchlist.tvseries[id] = {};
+      watchlist.tvseries[id]["title"] = title;
+      watchlist.tvseries[id]["date"] = new Date().toISOString();
+      watchlist.tvseries[id]["episode"] = {};
+      watchlist.tvseries[id]["episode"][tconst] =
+        req.body.seasonNumber + "-" + req.body.episodeNumber;
+    }
+    writeFile(userdataPath, jsonData, (err) => {
+      if (err) {
+        console.error("Error:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      } else {
         console.log("File saved successfully.");
         res.sendStatus(200);
-      });
-    } else {
-      res.sendStatus(401);
+      }
+    });
+  });
+});
+
+// PUT-Methods
+app.put("/changebio", isAuthenticated, function (req, res) {
+  readFile(userdataPath, (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
     }
+    const jsonData = data;
+    jsonData[req.session.username]["biography"] = req.body.biography;
+
+    writeFile(userdataPath, jsonData, (err) => {
+      if (err) {
+        console.error("Error:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      console.log("File saved successfully.");
+      res.sendStatus(200);
+    });
   });
 });
 
 // DELETE-Methods
-app.delete("/removeepwatchlist", function (req, res) {
+app.delete("/removeepwatchlist", isAuthenticated, function (req, res) {
   readFile(userdataPath, (err, data) => {
     if (err) {
       console.error("Error:", err);
@@ -442,50 +374,13 @@ app.delete("/removeepwatchlist", function (req, res) {
     }
 
     const jsonData = data;
-    if (req.session.username) {
-      const watchlist = jsonData[req.session.username].watchlist;
-      const id = req.body.id;
-      const tconst = req.body.tconst;
+    const watchlist = jsonData[req.session.username].watchlist;
+    const id = req.body.id;
+    const tconst = req.body.tconst;
 
-      if (watchlist.tvseries[id]) {
-        delete watchlist.tvseries[id]["episode"][tconst];
+    if (watchlist.tvseries[id]) {
+      delete watchlist.tvseries[id]["episode"][tconst];
 
-        writeFile(userdataPath, jsonData, (err) => {
-          if (err) {
-            console.error("Error:", err);
-            res.status(500).send("Internal Server Error");
-            return;
-          }
-          console.log("File saved successfully.");
-          res.sendStatus(200);
-        });
-      } else {
-        res.sendStatus(404); // Not found - tconst does not exist in the watchlist
-      }
-    } else {
-      res.sendStatus(401); // Unauthorized
-    }
-  });
-});
-
-app.delete("/removewatchlist", function (req, res) {
-  readFile(userdataPath, (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    const jsonData = data;
-    if (req.session.username) {
-      const watchlist = jsonData[req.session.username].watchlist;
-      const id = req.body.id;
-      if (watchlist.tvseries[id]) {
-        delete watchlist.tvseries[id];
-      } else {
-        if (watchlist.movies[id]) {
-          delete watchlist.movies[id];
-        }
-      }
       writeFile(userdataPath, jsonData, (err) => {
         if (err) {
           console.error("Error:", err);
@@ -496,8 +391,37 @@ app.delete("/removewatchlist", function (req, res) {
         res.sendStatus(200);
       });
     } else {
-      res.sendStatus(401);
+      res.sendStatus(404); // Not found - tconst does not exist in the watchlist
     }
+  });
+});
+
+app.delete("/removewatchlist", isAuthenticated, function (req, res) {
+  readFile(userdataPath, (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = data;
+    const watchlist = jsonData[req.session.username].watchlist;
+    const id = req.body.id;
+    if (watchlist.tvseries[id]) {
+      delete watchlist.tvseries[id];
+    } else {
+      if (watchlist.movies[id]) {
+        delete watchlist.movies[id];
+      }
+    }
+    writeFile(userdataPath, jsonData, (err) => {
+      if (err) {
+        console.error("Error:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      console.log("File saved successfully.");
+      res.sendStatus(200);
+    });
   });
 });
 
@@ -531,6 +455,24 @@ function readFile(filePath, callback) {
       callback(null, {});
     }
   });
+}
+
+//To check if the user is loggedin
+function isAuthenticated(req, res, next) {
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.setHeader("Surrogate-Control", "no-store");
+  if (req.session && req.session.username) {
+    //Logged in
+    next();
+  } else {
+    //Not logged in!
+    res.status(401).send("Unauthorized");
+  }
 }
 
 app.listen(3000);

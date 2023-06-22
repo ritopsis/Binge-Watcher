@@ -16,6 +16,23 @@
             "tt0685626": "1-2",
             "tt0210968": "1-3"
           }
+        },
+        "tt0988818": {
+          "title": "Gintama",
+          "date": "2023-06-22T10:39:35.527Z",
+          "episode": {}
+        },
+        "tt4934214": {
+          "title": "Taskmaster",
+          "date": "2023-06-22T11:04:38.426Z",
+          "episode": {
+            "tt4950176": "1-1",
+            "tt4950200": "1-2",
+            "tt4956136": "1-4",
+            "tt4970856": "1-5",
+            "tt5070228": "2-1",
+            "tt5785478": "2-3"
+          }
         }
       },
       "movies": {
@@ -26,6 +43,38 @@
         "tt21298322": {
           "title": "Big Sky River",
           "date": "2023-06-22T10:36:44.056Z"
+        },
+        "tt13434562": {
+          "title": "A Wounded Fawn",
+          "date": "2023-06-22T10:39:32.454Z"
+        },
+        "tt10648342": {
+          "title": "Thor: Love and Thunder",
+          "date": "2023-06-22T10:39:33.424Z"
+        },
+        "tt0180093": {
+          "title": "Requiem for a Dream",
+          "date": "2023-06-22T11:04:30.299Z"
+        },
+        "tt6791350": {
+          "title": "Guardiani della Galassia Vol. 3",
+          "date": "2023-06-22T11:09:34.712Z"
+        },
+        "tt0133093": {
+          "title": "The Matrix",
+          "date": "2023-06-22T11:09:59.406Z"
+        },
+        "tt0095327": {
+          "title": "Hotaru no haka",
+          "date": "2023-06-22T11:10:01.105Z"
+        },
+        "tt0035446": {
+          "title": "Spionnage in het spel",
+          "date": "2023-06-22T11:10:01.849Z"
+        },
+        "tt0057012": {
+          "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+          "date": "2023-06-22T11:10:03.063Z"
         }
       }
     }

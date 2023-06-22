@@ -50,7 +50,7 @@ function content() {
         );
     }
   };
-  xhr.open("GET", "movie", true);
+  xhr.open("GET", "/pop_movies", true);
   xhr.send();
 
   const xhrShows = new XMLHttpRequest();
@@ -68,7 +68,7 @@ function content() {
         );
     }
   };
-  xhrShows.open("GET", "/series", true);
+  xhrShows.open("GET", "/pop_series", true);
   xhrShows.send();
 }
 
@@ -79,7 +79,7 @@ function addarticle(movie, documentelement, type) {
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;
-  linkElement.setAttribute('id', 'titleLink');
+  linkElement.setAttribute("id", "titleLink");
 
   // Create the image element
   const imageElement = document.createElement("img");
