@@ -218,23 +218,23 @@ app.post("/addwatchlist", isAuthenticated, function (req, res) {
     }
     const jsonData = data;
     const watchlist = jsonData[req.session.username].watchlist;
-    const id = req.body.id;
+    const mediaID = req.body.id;
     const title = req.body.title;
     const type = req.body.type;
     console.log(type);
 
     if (type == "tvseries") {
-      if (!watchlist.tvseries[id]) {
-        watchlist.tvseries[id] = {};
-        watchlist.tvseries[id]["title"] = title;
-        watchlist.tvseries[id]["date"] = new Date().toISOString();
-        watchlist.tvseries[id]["episode"] = {};
+      if (!watchlist.tvseries[mediaID]) {
+        watchlist.tvseries[mediaID] = {};
+        watchlist.tvseries[mediaID]["title"] = title;
+        watchlist.tvseries[mediaID]["date"] = new Date().toISOString();
+        watchlist.tvseries[mediaID]["episode"] = {};
       }
     } else {
-      if (!watchlist.movies[id]) {
-        watchlist.movies[id] = {};
-        watchlist.movies[id]["title"] = title;
-        watchlist.movies[id]["date"] = new Date().toISOString();
+      if (!watchlist.movies[mediaID]) {
+        watchlist.movies[mediaID] = {};
+        watchlist.movies[mediaID]["title"] = title;
+        watchlist.movies[mediaID]["date"] = new Date().toISOString();
       }
     }
     writeFile(userdataPath, jsonData, (err) => {
@@ -258,20 +258,20 @@ app.post("/addepwatchlist", isAuthenticated, function (req, res) {
     }
     const jsonData = data;
     const watchlist = jsonData[req.session.username].watchlist;
-    const id = req.body.id;
-    const tconst = req.body.tconst;
+    const mediaID = req.body.id;
+    const episodeID = req.body.tconst;
     const title = req.body.title;
 
-    if (watchlist.tvseries[id]) {
-      watchlist.tvseries[id]["date"] = new Date().toISOString();
-      watchlist.tvseries[id]["episode"][tconst] =
+    if (watchlist.tvseries[mediaID]) {
+      watchlist.tvseries[mediaID]["date"] = new Date().toISOString();
+      watchlist.tvseries[mediaID]["episode"][episodeID] =
         req.body.seasonNumber + "-" + req.body.episodeNumber;
     } else {
-      watchlist.tvseries[id] = {};
-      watchlist.tvseries[id]["title"] = title;
-      watchlist.tvseries[id]["date"] = new Date().toISOString();
-      watchlist.tvseries[id]["episode"] = {};
-      watchlist.tvseries[id]["episode"][tconst] =
+      watchlist.tvseries[mediaID] = {};
+      watchlist.tvseries[mediaID]["title"] = title;
+      watchlist.tvseries[mediaID]["date"] = new Date().toISOString();
+      watchlist.tvseries[mediaID]["episode"] = {};
+      watchlist.tvseries[mediaID]["episode"][episodeID] =
         req.body.seasonNumber + "-" + req.body.episodeNumber;
     }
     writeFile(userdataPath, jsonData, (err) => {
