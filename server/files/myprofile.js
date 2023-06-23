@@ -37,12 +37,12 @@ const biographyInput = document.getElementById("biography-input");
 
 saveButton.addEventListener("click", function () {
   const newBiography = biographyInput.value;
-  console.log("Biography saved:", newBiography);
-
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
-      console.log("saved");
+      console.log(xhr.responseText);
+      const result = JSON.parse(xhr.responseText);
+      biographyInput.value = result["censored-content"];
     } else {
     }
   };
