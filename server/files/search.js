@@ -5,11 +5,12 @@ import {
   removeWatchlist,
 } from "./user.js";
 import { createNavButton } from "./createElements.js";
-let watchlist = null;
-let loggin = null;
 
 window.onload = function () {
   const menuItems = document.getElementById("menuItems");
+  let loggin = null;
+  let watchlist = null;
+
   checkifloggedin(function (error, response) {
     if (error) {
       loggin = false;
@@ -18,7 +19,12 @@ window.onload = function () {
       const url = new URL(location.href);
       const params = new URLSearchParams(url.search);
       if (params.has("page") && params.has("title")) {
-        handleSearchRequest(params.get("title"), params.get("page"));
+        handleSearchRequest(
+          params.get("title"),
+          params.get("page"),
+          loggin,
+          watchlist
+        );
       }
     }
     if (response) {
@@ -33,7 +39,12 @@ window.onload = function () {
         const url = new URL(location.href);
         const params = new URLSearchParams(url.search);
         if (params.has("page") && params.has("title")) {
-          handleSearchRequest(params.get("title"), params.get("page"));
+          handleSearchRequest(
+            params.get("title"),
+            params.get("page"),
+            loggin,
+            watchlist
+          );
         }
       });
     }
@@ -51,7 +62,7 @@ document.getElementById("search").addEventListener("submit", function (event) {
   location.href = url;
 });
 
-function handleSearchRequest(title, page) {
+function handleSearchRequest(title, page, loggin, watchlist) {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
@@ -63,7 +74,7 @@ function handleSearchRequest(title, page) {
         mainElement.removeChild(mainElement.firstChild);
       }
       result.forEach((element) => {
-        addarticle(element, type);
+        addarticle(element, type, loggin, watchlist);
       });
       if (sresult.next) {
         if (Number(sresult.page) - 1 != 0) {
@@ -94,7 +105,7 @@ function handleSearchRequest(title, page) {
   xhr.send();
 }
 
-function addarticle(movie, type) {
+function addarticle(movie, type, loggin, watchlist) {
   if (type == "movie") {
     type = "movies";
   } else {
@@ -140,6 +151,7 @@ function addarticle(movie, type) {
   const topMoviesElement = document.querySelector("main");
   topMoviesElement.appendChild(articleElement);
 }
+
 function createButton(text) {
   // Create a button element
   var button = document.createElement("button");
@@ -160,6 +172,7 @@ function createButton(text) {
   // Append the button to the main element
   mainElement.appendChild(button);
 }
+
 function add(article, button) {
   addWatchlist(article, function (error, response) {
     if (error) {

@@ -323,7 +323,7 @@ app.put("/changebio", isAuthenticated, function (req, res) {
           res.status(500).send("Internal Server Error");
           return;
         }
-        res.sendStatus(200).json(text);
+        res.status(200).json(text);
       });
     } catch (error) {
       console.error(error);
