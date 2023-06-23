@@ -181,7 +181,7 @@ function addarticle(content) {
   movieDetails.appendChild(releaseDateElement);
 
   articleElement.appendChild(movieDetails);
-  
+
   // Add the article element to the document
   const topMoviesElement = document.querySelector("main");
   topMoviesElement.appendChild(articleElement);
@@ -213,6 +213,9 @@ function displaySeasonAndEpisode(watchlist, data) {
   const id = articleElement.id;
   const title = articleElement.dataset.name;
 
+  // Create an object to store episodes by season
+  const seasons = {};
+
   data.forEach((episode) => {
     const seasonNumber = episode.seasonNumber;
     const episodeNumber = episode.episodeNumber;
@@ -221,9 +224,40 @@ function displaySeasonAndEpisode(watchlist, data) {
     episode["title"] = title;
 
     if (!isNaN(seasonNumber) && !isNaN(episodeNumber)) {
+      // Check if the season exists in the seasons object, if not, create it
+      if (!seasons.hasOwnProperty(seasonNumber)) {
+        seasons[seasonNumber] = [];
+      }
+
+      // Add the episode to the respective season
+      seasons[seasonNumber].push(episode);
+    }
+  });
+
+  // Iterate over the seasons and create the season tabs and episodes
+  for (const seasonNumber in seasons) {
+    const seasonElement = document.createElement("div");
+    seasonElement.className = "season";
+
+    // Create a button for the season
+    const seasonButton = document.createElement("button");
+    seasonButton.textContent = `Season ${seasonNumber}`;
+    seasonButton.setAttribute("data-bs-toggle", "collapse");
+    seasonButton.setAttribute(
+      "data-bs-target",
+      `#season-${seasonNumber}-episodes`
+    );
+    seasonElement.appendChild(seasonButton);
+
+    const episodesContainer = document.createElement("div");
+    episodesContainer.className = "episodes-container collapse";
+    episodesContainer.setAttribute("id", `season-${seasonNumber}-episodes`);
+
+    // Create episode elements for the current season
+    seasons[seasonNumber].forEach((episode) => {
       const episodeElement = document.createElement("div");
       episodeElement.className = "episodes";
-      episodeElement.textContent = `Season ${seasonNumber}, Episode ${episodeNumber}`;
+      episodeElement.textContent = `Episode ${episode.episodeNumber}`;
 
       if (watchlist) {
         const buttonElement = document.createElement("button");
@@ -246,9 +280,13 @@ function displaySeasonAndEpisode(watchlist, data) {
           }
         });
       }
-      articleElement.appendChild(episodeElement);
-    }
-  });
+
+      episodesContainer.appendChild(episodeElement);
+    });
+
+    seasonElement.appendChild(episodesContainer);
+    articleElement.appendChild(seasonElement);
+  }
 }
 
 function removeEpWatchlist(episode, buttonElement) {
