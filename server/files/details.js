@@ -219,7 +219,6 @@ function displaySeasonAndEpisode(watchlist, data) {
   data.forEach((episode) => {
     const seasonNumber = episode.seasonNumber;
     const episodeNumber = episode.episodeNumber;
-    const episodeid = episode.tconst;
     episode["id"] = id;
     episode["title"] = title;
 
@@ -263,7 +262,7 @@ function displaySeasonAndEpisode(watchlist, data) {
         const buttonElement = document.createElement("button");
         buttonElement.className = "watchedButton";
         episodeElement.appendChild(buttonElement);
-        if (watchlist.tvseries[id]?.episode.hasOwnProperty(episodeid)) {
+        if (watchlist.tvseries[id]?.episode.hasOwnProperty(episode.tconst)) {
           buttonElement.textContent = "Unwatched";
           buttonElement.setAttribute("data-action", "remove");
         } else {
