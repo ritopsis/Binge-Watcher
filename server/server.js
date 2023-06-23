@@ -24,7 +24,7 @@ app.use(
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": config.rapidApiKey,
+    "X-RapidAPI-Key": config.rapidMoviesdatabaseApiKey,
     "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
   },
 };
@@ -302,7 +302,7 @@ app.put("/changebio", isAuthenticated, function (req, res) {
       method: "POST",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "820810d92fmsh47306384f1838ccp1ad0a6jsnb891ca3b29ec",
+        "X-RapidAPI-Key": config.rapidBadWordFilterbaseApiKey,
         "X-RapidAPI-Host": "neutrinoapi-bad-word-filter.p.rapidapi.com",
       },
       body: new URLSearchParams({
