@@ -116,7 +116,7 @@ app.get("/titles/:input", function (req, res) {
   const searchsite = req.query.site;
   const URL = `https://moviesdatabase.p.rapidapi.com/titles/search/title/${encodeURIComponent(
     searchinput
-  )}?page=${searchsite}&titleType=${searchtype}&limit=10`;
+  )}?page=${searchsite}&titleType=${searchtype}&limit=12`;
 
   fetch(URL, options)
     .then((response) => response.json())

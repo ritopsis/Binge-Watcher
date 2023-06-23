@@ -76,33 +76,35 @@ function handleSearchRequest(title, page, loggin, watchlist) {
       result.forEach((element) => {
         addarticle(element, type, loggin, watchlist);
       });
-      if (sresult.next) {
+
+      if (sresult.entries != 0) {
+        // entries are the amout of media that came back from the request
         if (Number(sresult.page) - 1 != 0) {
-          createPagination("Previous ", Number(sresult.page) - 1, false);
-          createPagination(null, Number(sresult.page) - 1, false);
+          // user is not at the first page
+          createPagination("Previous ", Number(sresult.page) - 1, false); // creates "Previous"-Button with text: "Previous"
+          createPagination(null, Number(sresult.page) - 1, false); // creates "Previous"-Button with text: previous Pagenumber
         }
-        createPagination(null, Number(sresult.page), true);
-        createPagination(null, Number(sresult.page) + 1, false);
-        createPagination("Next ", Number(sresult.page) + 1, false);
-      } else {
-        if (Number(sresult.page) - 1 != 1) {
-          createPagination("Previous ", Number(sresult.page) - 1, false);
-          createPagination(null, Number(sresult.page) - 1, false);
-          createPagination(null, Number(sresult.page), true);
-          createPagination("First", 1);
-        } else {
-          createPagination(null, Number(sresult.page), true);
+        createPagination(null, Number(sresult.page), true); // current page
+
+        if (sresult.next) {
+          //there is a next page
+          createPagination(null, Number(sresult.page) + 1, false); // next page with text: Pagenumber
+          createPagination("Next ", Number(sresult.page) + 1, false); // next page with text: "Next"
+        } else if (Number(sresult.page) - 1 != 0) {
+          // check again if we are not at the first page
+          createPagination("First", 1); // with "First" go back to the first page
         }
       }
     } else {
     }
   };
-  let type = null;
-  if (location.pathname == "/movies.html") {
-    type = "movie";
-  } else if (location.pathname == "/series.html") {
-    type = "tvSeries";
-  }
+  let type =
+    location.pathname == "/movies.html"
+      ? "movie"
+      : location.pathname == "/series.html"
+      ? "tvSeries"
+      : "";
+
   const url = new URL("/titles/" + title, location.href);
   url.searchParams.set("type", type);
   url.searchParams.set("site", page);
