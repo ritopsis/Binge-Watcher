@@ -78,15 +78,20 @@ function handleSearchRequest(title, page, loggin, watchlist) {
       });
       if (sresult.next) {
         if (Number(sresult.page) - 1 != 0) {
-          createButton(Number(sresult.page) - 1);
+          createPagination("Previous ", Number(sresult.page) - 1, false);
+          createPagination(null, Number(sresult.page) - 1, false);
         }
-        createButton(Number(sresult.page) + 1);
+        createPagination(null, Number(sresult.page), true);
+        createPagination(null, Number(sresult.page) + 1, false);
+        createPagination("Next ", Number(sresult.page) + 1, false);
       } else {
         if (Number(sresult.page) - 1 != 1) {
-          createButton(Number(sresult.page) - 1);
-          createButton(1);
+          createPagination("Previous ", Number(sresult.page) - 1, false);
+          createPagination(null, Number(sresult.page) - 1, false);
+          createPagination(null, Number(sresult.page), true);
+          createPagination("First", 1);
         } else {
-          createButton(1);
+          createPagination(null, Number(sresult.page), true);
         }
       }
     } else {
@@ -104,7 +109,36 @@ function handleSearchRequest(title, page, loggin, watchlist) {
   xhr.open("GET", url, true);
   xhr.send();
 }
+function createPagination(text, sitenumber, highlight) {
+  // Create the list item element
+  var listItem = document.createElement("li");
+  listItem.className = highlight ? "page-item active" : "page-item";
 
+  // Create the button element
+  var button = document.createElement("button");
+  button.className = "page-link";
+  button.type = "button";
+
+  // Append the button element to the list item element
+  listItem.appendChild(button);
+
+  button.textContent = text ? text : sitenumber;
+
+  // Add a click event listener to the button
+  button.addEventListener("click", function () {
+    const url = new URL(location.href);
+    const params = new URLSearchParams(url.search);
+    params.set("page", Number(sitenumber));
+    url.search = params.toString();
+    location.href = url;
+  });
+
+  // Find the parent container
+  var parentContainer = document.querySelector(".pagination");
+
+  // Append the list item element to the parent container
+  parentContainer.appendChild(listItem);
+}
 function addarticle(movie, type, loggin, watchlist) {
   if (type == "movie") {
     type = "movies";
@@ -150,27 +184,6 @@ function addarticle(movie, type, loggin, watchlist) {
   // Add the article element to the document
   const topMoviesElement = document.querySelector("main");
   topMoviesElement.appendChild(articleElement);
-}
-
-function createButton(text) {
-  // Create a button element
-  var button = document.createElement("button");
-  button.textContent = "Seite: " + text;
-
-  // Add a click event listener to the button
-  button.addEventListener("click", function () {
-    const url = new URL(location.href);
-    const params = new URLSearchParams(url.search);
-    params.set("page", Number(text));
-    url.search = params.toString();
-    location.href = url;
-  });
-
-  // Get the main element
-  var mainElement = document.querySelector("main");
-
-  // Append the button to the main element
-  mainElement.appendChild(button);
 }
 
 function add(article, button) {
