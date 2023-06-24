@@ -7,6 +7,7 @@ import {
 
 import { createNavButton } from "./createElements.js";
 let watchlist = null;
+let watchlistofuser = null;
 let loggin = null;
 let username = null;
 window.onload = function () {
@@ -21,22 +22,28 @@ window.onload = function () {
       if (username == usernameofsearch && usernameofsearch) {
         window.location.href = "myprofile.html";
       }
-      let nav = document.querySelector("nav");
+      const nav = document.getElementById("nav_btn");
       createNavButton("My Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
         if (xhr.status === 200) {
-          watchlist = JSON.parse(xhr.responseText);
+          watchlistofuser = JSON.parse(xhr.responseText);
           const biography = document.getElementById("biography");
-          if (watchlist["biography"]) {
+          if (watchlistofuser["biography"]) {
             //If the User wrote a biography
-            biography.textContent = "About me: " + watchlist["biography"];
+            biography.textContent = "About me: " + watchlistofuser["biography"];
           }
           const user = document.getElementById("user");
           user.textContent = usernameofsearch + "'s Watchlist";
-          loggin = true;
-          content();
+          getwatchlist(null, function (error, response) {
+            if (response) {
+              watchlist = JSON.parse(response);
+              loggin = true;
+              content();
+            } else {
+            }
+          });
         } else if (xhr.status === 404) {
           const mainElement = document.querySelector("main");
           const elementsToDelete = Array.from(mainElement.children).filter(
@@ -73,34 +80,44 @@ searchButton.addEventListener("click", function () {
 });
 
 function content() {
-  console.log(watchlist.watchlist.tvseries);
-  console.log(watchlist.watchlist.movies);
-  if (watchlist && loggin) {
-    if (watchlist.watchlist.tvseries) {
-      let tvseries = watchlist.watchlist.tvseries;
-      console.log(tvseries);
+  if (watchlistofuser) {
+    if (watchlistofuser.watchlist.tvseries) {
+      if (Object.keys(watchlistofuser.watchlist.tvseries).length > 0) {
+        // Create and append h1 for Series
+        const seriesHeader = document.createElement("h1");
+        seriesHeader.textContent = "Series:";
+        document.getElementById("series").appendChild(seriesHeader);
+      }
+
+      let tvseries = watchlistofuser.watchlist.tvseries;
       for (let serieId in tvseries) {
-        console.log(tvseries[serieId].title);
-        addarticle(tvseries[serieId].title, serieId, ".series");
+        addmedia(tvseries[serieId].title, serieId, null, ".series");
       }
     }
-    if (watchlist.watchlist.movies) {
-      let movies = watchlist.watchlist.movies;
+    if (watchlistofuser.watchlist.movies) {
+      // Create and append h1 for Movies
+      if (Object.keys(watchlistofuser.watchlist.movies).length) {
+        const moviesHeader = document.createElement("h1");
+        moviesHeader.textContent = "Movies:";
+        document.getElementById("movies").appendChild(moviesHeader);
+      }
+
+      let movies = watchlistofuser.watchlist.movies;
       for (let movieId in movies) {
-        console.log(movies[movieId].title);
-        addarticle(movies[movieId].title, movieId, ".movies");
+        addmedia(movies[movieId].title, movieId, null, ".movies");
       }
     }
   }
 }
 
-function addarticle(title, contendid, documentelement) {
+function addmedia(title, serieId, episode, documentelement) {
+  const type = documentelement == ".movies" ? "movies" : "tvseries";
   const articleElement = document.createElement("article");
-  articleElement.id = contendid;
+  articleElement.id = serieId;
 
   // Create the link element
   const linkElement = document.createElement("a");
-  linkElement.href = "/media_details.html?id=" + contendid;
+  linkElement.href = "/media_details.html?id=" + serieId;
 
   // Create the heading element
   const headingElement = document.createElement("h1");
@@ -109,10 +126,58 @@ function addarticle(title, contendid, documentelement) {
   // Append the image and heading elements to the link element
   linkElement.appendChild(headingElement);
 
+  if (episode) {
+    const headingElement2 = document.createElement("h3");
+    headingElement2.textContent = episode;
+    linkElement.appendChild(headingElement2);
+  }
+
   // Append the link element to the article element
   articleElement.appendChild(linkElement);
+
+  if (loggin && watchlist) {
+    const buttonElement = document.createElement("button");
+    if (watchlist["watchlist"][type].hasOwnProperty(content.id)) {
+      buttonElement.textContent = "Remove";
+      buttonElement.setAttribute("data-action", "remove");
+    } else {
+      buttonElement.textContent = "Add";
+      buttonElement.setAttribute("data-action", "add");
+    }
+    buttonElement.addEventListener("click", function () {
+      const action = buttonElement.getAttribute("data-action");
+      if (action === "add") {
+        add(articleElement, buttonElement);
+      } else {
+        remove(articleElement, buttonElement);
+      }
+    });
+    articleElement.appendChild(buttonElement);
+  }
 
   // Add the article element to the document
   const topMoviesElement = document.querySelector(documentelement);
   topMoviesElement.appendChild(articleElement);
+}
+
+function add(article, button) {
+  addWatchlist(article, function (error, response) {
+    if (error) {
+      // Handle error
+    } else {
+      button.textContent = "Remove";
+      button.setAttribute("data-action", "remove"); // Change the action to "remove"
+    }
+  });
+}
+
+function remove(article, button) {
+  removeWatchlist(article, function (error, response) {
+    if (error) {
+      // Handle error
+    } else {
+      button.textContent = "Add";
+      button.setAttribute("data-action", "add"); // Change the action to "add"
+    }
+  });
 }

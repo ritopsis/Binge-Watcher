@@ -22,7 +22,7 @@ window.onload = function () {
           biographyInput.textContent = watchlist["biography"];
           loggin = true;
           content();
-          let nav = document.getElementById("nav_btn");
+          const nav = document.getElementById("nav_btn");
           createNavButton("My Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
         } else {
@@ -107,14 +107,14 @@ function content() {
           }
         }
         if (highestEpisode) {
-          addseries(
+          addmedia(
             sortedSeries[serieId].title,
             sortedSeries[serieId].id,
             highestEpisode.season + "-" + highestEpisode.episodeNumber,
             ".series"
           );
         } else {
-          addseries(
+          addmedia(
             sortedSeries[serieId].title,
             sortedSeries[serieId].id,
             null,
@@ -136,7 +136,7 @@ function content() {
         .sort(([, a], [, b]) => new Date(b.date) - new Date(a.date))
         .map(([key, value]) => ({ id: key, ...value }));
       for (let movieId in sortedMovies) {
-        addseries(
+        addmedia(
           sortedMovies[movieId].title,
           sortedMovies[movieId].id,
           null,
@@ -147,7 +147,7 @@ function content() {
   }
 }
 
-function addseries(title, serieId, episode, documentelement) {
+function addmedia(title, serieId, episode, documentelement) {
   const articleElement = document.createElement("article");
   articleElement.id = serieId;
 
