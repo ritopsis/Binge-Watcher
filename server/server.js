@@ -133,16 +133,20 @@ app.get("/loggedin", isAuthenticated, function (req, res) {
   res.status(200).send(req.session.username);
 });
 
-app.get("/logout", isAuthenticated, function (req, res) {
+app.get("/logout", function (req, res) {
   // destroy session of logged-in user
-  req.session.destroy((err) => {
-    if (err) {
-      console.error("Error while destroying session:", err);
-      res.status(500).send("Internal Server Error");
-    } else {
-      res.redirect("/");
-    }
-  });
+  if (req.session.username) {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error while destroying session:", err);
+        res.status(500).send("Internal Server Error");
+      } else {
+        res.redirect("/");
+      }
+    });
+  } else {
+    res.redirect("/");
+  }
 });
 
 // POST-Methods
