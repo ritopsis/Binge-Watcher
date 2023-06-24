@@ -1,6 +1,6 @@
 {
   "a": {
-    "biography": "Hey ******* I am bobo from *******",
+    "biography": "******",
     "watchlist": {
       "tvseries": {
         "tt1230180": {
@@ -46,7 +46,7 @@
         },
         "tt1353056": {
           "title": "RuPaul's Drag Race",
-          "date": "2023-06-23T16:24:38.457Z",
+          "date": "2023-06-24T16:32:04.133Z",
           "episode": {
             "tt1360987": "1-1",
             "tt1360989": "1-2",
@@ -56,7 +56,8 @@
             "tt1360985": "1-6",
             "tt1360988": "1-7",
             "tt1360990": "1-8",
-            "tt3635500": "1-9"
+            "tt3635500": "1-9",
+            "tt21805160": "15-1"
           }
         },
         "tt1606375": {
@@ -121,6 +122,36 @@
             "tt2373027": "1-2",
             "tt2373029": "1-3"
           }
+        },
+        "tt7562112": {
+          "title": "Pose",
+          "date": "2023-06-24T16:30:50.180Z",
+          "episode": {}
+        },
+        "tt2297757": {
+          "title": "Nathan for You",
+          "date": "2023-06-24T16:30:50.797Z",
+          "episode": {}
+        },
+        "tt4834232": {
+          "title": "Critical Role",
+          "date": "2023-06-24T16:30:51.573Z",
+          "episode": {}
+        },
+        "tt0417349": {
+          "title": "North & South",
+          "date": "2023-06-24T16:31:08.251Z",
+          "episode": {
+            "tt1326043": "1-4",
+            "tt1326042": "1-3",
+            "tt1326041": "1-2",
+            "tt1326040": "1-1"
+          }
+        },
+        "tt0088509": {
+          "title": "Dragon Ball: Doragon bôru",
+          "date": "2023-06-24T16:31:14.139Z",
+          "episode": {}
         }
       },
       "movies": {
@@ -191,6 +222,26 @@
         "tt0264464": {
           "title": "Catch Me If You Can",
           "date": "2023-06-22T12:39:31.074Z"
+        },
+        "tt0031381": {
+          "title": "Gejaagd door de wind",
+          "date": "2023-06-24T16:30:48.636Z"
+        },
+        "tt0061512": {
+          "title": "Cool Hand Luke",
+          "date": "2023-06-24T16:30:49.173Z"
+        },
+        "tt15356258": {
+          "title": "Pokémon Evolutions",
+          "date": "2023-06-24T16:30:57.116Z"
+        },
+        "tt15416672": {
+          "title": "Pokémon Master Journeys: The Series",
+          "date": "2023-06-24T16:30:57.957Z"
+        },
+        "tt16438832": {
+          "title": "Oshiri o satsueishichau Touhoku Kiritan no Pokemon sunappu",
+          "date": "2023-06-24T16:30:58.683Z"
         }
       }
     }

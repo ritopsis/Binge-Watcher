@@ -20,8 +20,8 @@ nav {
 
 body {
   background-color: rgba(0, 0, 0, 0.911);
-  background-image: url('Background-image.jpg');
-  background-size:cover;
+  background-image: url("image/Background-image.jpg");
+  background-size: cover;
   background-position: center;
   background-repeat: repeat;
   position: relative;
@@ -29,9 +29,8 @@ body {
   height: 100vh;
 }
 
-
 main {
-  margin: 12vh auto; 
+  margin: 12vh auto;
   padding: 20px;
   width: 25%;
   height: 40vh;
@@ -41,7 +40,6 @@ main {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.694);
   border-radius: 12px;
-
 }
 
 nav ul {
@@ -62,7 +60,6 @@ nav a {
   text-decoration-color: rgb(255, 0, 0);
   color: white;
 }
-
 
 .searchcontainer {
   margin-top: 24px;
@@ -110,7 +107,6 @@ article {
   flex: 0 0 200px;
   margin: 20px;
   padding: 16px;
-
 }
 
 .articleimage {
@@ -129,7 +125,6 @@ article {
   padding: 10px;
   border-radius: 12px;
 }
-
 
 .btn-outline-light {
   border-color: aliceblue;
