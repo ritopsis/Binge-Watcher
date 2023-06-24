@@ -153,7 +153,7 @@ function addarticle(movie, type, loggin, watchlist) {
   articleElement.setAttribute("data-type", type);
 
   const linkElement = document.createElement("a");
-  linkElement.href = "/details.html?id=" + movie.id;
+  linkElement.href = "/media_details.html?id=" + movie.id;
 
   // Create the image element
   const imageElement = document.createElement("img");

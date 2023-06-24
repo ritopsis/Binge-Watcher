@@ -100,7 +100,7 @@ function addarticle(title, contendid, documentelement) {
 
   // Create the link element
   const linkElement = document.createElement("a");
-  linkElement.href = "/details.html?id=" + contendid;
+  linkElement.href = "/media_details.html?id=" + contendid;
 
   // Create the heading element
   const headingElement = document.createElement("h1");

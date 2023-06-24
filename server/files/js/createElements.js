@@ -16,7 +16,7 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
 
   // Create the link element
   const linkElement = document.createElement("a");
-  linkElement.href = "/details.html?id=" + content.id;
+  linkElement.href = "/media_details.html?id=" + content.id;
   linkElement.setAttribute("id", "titleLink");
 
   // Create the image element

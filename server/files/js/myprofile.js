@@ -153,7 +153,7 @@ function addseries(title, serieId, episode, documentelement) {
 
   // Create the link element
   const linkElement = document.createElement("a");
-  linkElement.href = "/details.html?id=" + serieId;
+  linkElement.href = "/media_details.html?id=" + serieId;
 
   // Create the heading element
   const headingElement = document.createElement("h1");
