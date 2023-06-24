@@ -10,14 +10,41 @@
       crossorigin="anonymous"
     />
     <title>Binge-Watcher</title>
-    <link rel="stylesheet" href="index.css" />
-    <script type="module" src="user.js"></script>
-    <script type="module" src="index.js"></script>
+    <link rel="stylesheet" href="css/index.css" />
+    <script type="module" src="js/user.js"></script>
+    <script type="module" src="js/index.js"></script>
   </head>
-
   <body>
-    <header>
-      <h1 class="text-white">Binge-Watcher</h1>
+    <header class="banner-image">
+      <nav>
+        <div class="nav_left">
+          <img alt="logo" src="./image/logo.png" /><img />
+          <h1 class="text-white">Binge-Watcher</h1>
+        </div>
+        <div class="nav_right" id="nav_btn">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="series.html">TV Series</a></li>
+          <li><a href="movies.html">Movies</a></li>
+        </div>
+      </nav>
+      <div class="banner">
+        <div class="banner-content">
+          <h1>John Wick 3 : Parabellum</h1>
+          <div class="stats">
+            <h3>86.0/100</h3>
+          </div>
+          <p>
+            John Wick is on the run after killing a member of the international
+            assassins' guild, and with a $14 million price tag on his head, he
+            is the target of hit men and women everywhere.
+          </p>
+          <div>
+            <a href="/details.html?id=tt6146586">
+              <button>SHOW MORE</button>
+            </a>
+          </div>
+        </div>
+      </div>
     </header>
     <nav>
       <li class="btn btn-outline-light"><a href="index.html">Home</a></li>
@@ -25,12 +52,14 @@
       <li class="btn btn-outline-light"><a href="movies.html">Movies</a></li>
     </nav>
     <main>
-      <div class="topmovies">
-        <h2>Top Movies</h2>
-      </div>
-      <div class="topseries">
+      <section class="top-section" style="margin-bottom: 150px">
         <h2>Top Series</h2>
-      </div>
+        <div class="topseries top"></div>
+      </section>
+      <section class="top-section">
+        <h2>Top Movies</h2>
+        <div class="topmovies top"></div>
+      </section>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
