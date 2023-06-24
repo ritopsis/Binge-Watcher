@@ -99,9 +99,9 @@ function handleSearchRequest(title, page, loggin, watchlist) {
     }
   };
   let type =
-    location.pathname == "/movies.html"
+    location.pathname == "/movie_search.html"
       ? "movie"
-      : location.pathname == "/series.html"
+      : location.pathname == "/tvserie_search.html"
       ? "tvSeries"
       : "";
 
