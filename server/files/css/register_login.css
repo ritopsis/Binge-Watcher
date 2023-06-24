@@ -82,6 +82,9 @@ nav a:hover {
   color: white;
   text-decoration: none;
 }
+.nav_left a h1 {
+  font-weight: 500;
+}
 
 h1 {
   margin: 40px auto;
