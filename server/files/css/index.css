@@ -97,6 +97,10 @@ nav a:hover {
   }
 }
 
+.banner-image a h1 {
+  color: white;
+}
+
 .banner {
   margin: auto;
   max-width: 1400px;
