@@ -3,47 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
+    <!--    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
-    />
+    -->
     <title>Binge-Watcher</title>
-    <link rel="stylesheet" href="myprofile.css" />
-    <script type="module" src="user.js"></script>
-    <script type="module" src="myprofile.js"></script>
+    <link rel="stylesheet" href="css/myprofile.css" />
+    <script type="module" src="js/user.js"></script>
+    <script type="module" src="js/myprofile.js"></script>
   </head>
 
   <body>
-    <header>
-      <h1 class="text-white">Binge-Watcher</h1>
-    </header>
     <nav>
-      <li class="btn btn-outline-light"><a href="index.html">Home</a></li>
-      <li class="btn btn-outline-light"><a href="series.html">TV Series</a></li>
-      <li class="btn btn-outline-light"><a href="movies.html">Movies</a></li>
+      <div class="nav_left">
+        <img alt="logo" src="./image/logo.png" /><img />
+        <h1>Binge-Watcher</h1>
+      </div>
+      <div class="nav_right" id="nav_btn">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="series.html">TV Series</a></li>
+        <li><a href="movies.html">Movies</a></li>
+      </div>
     </nav>
     <main>
       <div class="searchuser">
-        <h2 class="text-white">Search for User</h2>
-        <input type="text" id="searchuser-input" placeholder="Username..." />
-        <button id="search-button">Search</button>
+        <h1>Search for User</h1>
+        <div>
+          <input type="text" id="searchuser-input" placeholder="Username..." />
+          <button id="search-button">Search</button>
+        </div>
       </div>
-      <h1 class="text-white" id="user">Your Watchlist</h1>
       <div class="biography">
-        <h2 class="text-white">Biography</h2>
-        <textarea id="biography-input" rows="1" cols="50" maxlength="50">
-        This is the default biography.
-        </textarea>
-        <button id="save-biography-button">Save</button>
+        <h1>Biography</h1>
+        <div class="bio-inner">
+          <textarea id="biography-input" rows="1" cols="50" maxlength="50">
+            This is the default biography.
+          </textarea>
+          <button id="save-biography-button">Save</button>
+        </div>
       </div>
-      <div class="series">
-        <h2 class="text-white">Series</h2>
-      </div>
-      <div class="movies">
-        <h2 class="text-white">Movies</h2>
-      </div>
+      <h1 class="watchlist-h1" id="user">Your Watchlist</h1>
+      <div id="series"></div>
+      <div class="series list"></div>
+      <div id="movies"></div>
+      <div class="movies list"></div>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
