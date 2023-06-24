@@ -52,7 +52,7 @@ window.onload = function () {
   checkifloggedin(function (error, response) {
     if (error) {
       console.log("Error:", error);
-      let nav = document.querySelector("nav");
+      let nav = document.getElementById("nav_btn");
       createNavButton("Login", "register_login.html", nav);
       Promise.all([informationPromise])
         .then(([informationPromise]) => {
@@ -66,7 +66,7 @@ window.onload = function () {
         });
     } else {
       loggin = true;
-      let nav = document.querySelector("nav");
+      let nav = document.getElementById("nav_btn");
       createNavButton("My Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       const watchlistPromise = new Promise((resolve, reject) => {
@@ -99,91 +99,72 @@ window.onload = function () {
 function addarticle(content) {
   const articleElement = document.createElement("article");
   const title = content.titleText.text;
+
   let type = content.titleType.id.toLowerCase();
-  type = type == "tvminiseries" || type == "tvseries" ? "tvseries" : "movies"; //Ternärer Operator
+  type = type == "tvminiseries" || type == "tvseries" ? "tvseries" : "movies"; //Ternary Operator
 
   articleElement.id = content.id;
-  articleElement.setAttribute("data-type", content.titleType.id.toLowerCase());
+  articleElement.setAttribute("data-type", type);
   articleElement.setAttribute("data-name", title);
-  // Create the link element
-  const linkElement = document.createElement("a");
-  linkElement.href = "/details.html?id=" + content.id;
-  linkElement.setAttribute("id", "titleLink");
 
-  const movieContainer = document.createElement("div");
-  movieContainer.className = "movieContainer";
+  const divWrapper = document.createElement("div");
+  divWrapper.classList.add("main-article");
 
-  const paraContainer = document.createElement("div");
-  paraContainer.className = "paraContainer";
-
-  // Create elements for movie details
-  const titleElement = document.createElement("h2");
-  titleElement.textContent = title;
-
+  // Create the image element
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
   if (content.primaryImage && content.primaryImage.url) {
     imageElement.src = content.primaryImage.url;
-    imageElement.alt = "Movie Image";
   } else {
     imageElement.src =
       "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fb3ef66312333.5691dd2253378.jpg";
-    imageElement.loading = "lazy";
-    imageElement.alt = "Alternative Image";
   }
+  imageElement.alt = "Movie Image";
+  divWrapper.appendChild(imageElement);
 
-  // Create the heading element
-  const headingElement = document.createElement("h1");
-  headingElement.textContent = title;
-  headingElement.setAttribute("id", "detailsTitle");
+  const divElement = document.createElement("div");
 
-  // Append the image and heading elements to the link element
-  linkElement.appendChild(imageElement);
-  linkElement.appendChild(headingElement);
+  // Create the title element
+  const titleElement = document.createElement("h1");
+  titleElement.id = "detailsTitle";
+  titleElement.textContent = title;
+  divElement.appendChild(titleElement);
 
-  // Append the link element to the article element
-  articleElement.appendChild(linkElement);
+  // Create the release date element
+  const releaseDateElement = document.createElement("p");
+  releaseDateElement.className = "release";
+  releaseDateElement.textContent = `Release Date: ${content.releaseDate.month}/${content.releaseDate.day}/${content.releaseDate.year}`;
+  divElement.appendChild(releaseDateElement);
 
-  if (loggin && watchlist) {
-    const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][type]?.hasOwnProperty(content.id)) {
-      buttonElement.textContent = "Remove";
-      buttonElement.setAttribute("data-action", "remove");
-    } else {
-      buttonElement.textContent = "Add";
-      buttonElement.setAttribute("data-action", "add");
-    }
-    buttonElement.addEventListener("click", function () {
-      const action = buttonElement.getAttribute("data-action");
-      if (action === "add") {
-        add(articleElement, buttonElement);
-      } else {
-        remove(articleElement, buttonElement);
-      }
-    });
-    articleElement.appendChild(buttonElement);
-  }
-
-  const movieDetails = document.createElement("div");
-  movieDetails.className = "movieDetails";
-
+  // Create the plot element
   if (content.plot) {
     const plotElement = document.createElement("p");
     plotElement.textContent = content.plot.plotText.plainText;
-    movieDetails.appendChild(plotElement);
+    divElement.appendChild(plotElement);
   }
+
+  // Create the movie details element
+  const movieDetails = document.createElement("div");
+  movieDetails.className = "movieDetails";
+  divElement.appendChild(movieDetails);
+  divWrapper.appendChild(divElement);
+
+  // Create the rating element
+  const ratingDivElement = document.createElement("div");
+  ratingDivElement.className = "rating";
   const ratingElement = document.createElement("p");
-  ratingElement.textContent = `Rating: ${content.ratingsSummary.aggregateRating}`;
-  movieDetails.appendChild(ratingElement);
+  ratingElement.textContent = content.ratingsSummary.aggregateRating;
+  ratingDivElement.appendChild(document.createTextNode("Rating:"));
+  ratingDivElement.appendChild(ratingElement);
+  divWrapper.appendChild(ratingDivElement);
+  articleElement.appendChild(divWrapper);
 
-  const releaseDateElement = document.createElement("p");
-  releaseDateElement.textContent = `Release Date: ${content.releaseDate.month}/${content.releaseDate.day}/${content.releaseDate.year}`;
-  movieDetails.appendChild(releaseDateElement);
-
-  articleElement.appendChild(movieDetails);
-
+  const seasonsContainer = document.createElement("div");
+  seasonsContainer.id = "seasons-container";
+  seasonsContainer.classList.add("seasons-container");
   // Add the article element to the document
   const topMoviesElement = document.querySelector("main");
+  articleElement.appendChild(seasonsContainer);
   topMoviesElement.appendChild(articleElement);
 }
 
@@ -209,7 +190,6 @@ function remove(article, button) {
 }
 function displaySeasonAndEpisode(watchlist, data) {
   const articleElement = document.querySelector("article");
-  console.log(articleElement);
   const id = articleElement.id;
   const title = articleElement.dataset.name;
 
@@ -233,6 +213,10 @@ function displaySeasonAndEpisode(watchlist, data) {
     }
   });
 
+  // Create the additional container
+  const additionalContainer = document.createElement("div");
+  additionalContainer.className = "additional-container";
+
   // Iterate over the seasons and create the season tabs and episodes
   for (const seasonNumber in seasons) {
     const seasonElement = document.createElement("div");
@@ -250,13 +234,15 @@ function displaySeasonAndEpisode(watchlist, data) {
 
     const episodesContainer = document.createElement("div");
     episodesContainer.className = "episodes-container collapse";
-    episodesContainer.setAttribute("id", `season-${seasonNumber}-episodes`);
+    episodesContainer.id = `season-${seasonNumber}-episodes`;
 
     // Create episode elements for the current season
     seasons[seasonNumber].forEach((episode) => {
       const episodeElement = document.createElement("div");
       episodeElement.className = "episodes";
-      episodeElement.textContent = `Episode ${episode.episodeNumber}`;
+      const episodeH1 = document.createElement("h1");
+      episodeH1.textContent = `Episode ${episode.episodeNumber}`;
+      episodeElement.appendChild(episodeH1);
 
       if (watchlist) {
         const buttonElement = document.createElement("button");
@@ -284,8 +270,11 @@ function displaySeasonAndEpisode(watchlist, data) {
     });
 
     seasonElement.appendChild(episodesContainer);
-    articleElement.appendChild(seasonElement);
+    additionalContainer.appendChild(seasonElement);
   }
+
+  // Append the additional container to the seasons-container
+  document.getElementById("seasons-container").appendChild(additionalContainer);
 }
 
 function removeEpWatchlist(episode, buttonElement) {

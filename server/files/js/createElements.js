@@ -2,7 +2,6 @@ import { addWatchlist, removeWatchlist } from "./user.js";
 
 export function createNavButton(text, link, navElement) {
   let listItem = document.createElement("li");
-  listItem.classList.add("btn", "btn-outline-light");
   let anchor = document.createElement("a");
   anchor.href = link;
   anchor.textContent = text;
@@ -14,6 +13,7 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
   const articleElement = document.createElement("article");
   articleElement.id = content.id;
   articleElement.setAttribute("data-type", type);
+
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + content.id;
@@ -22,15 +22,22 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
   // Create the image element
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
-  if (content.primaryImage && content.primaryImage.url) {
-    imageElement.src = content.primaryImage.url;
-    imageElement.alt = "Movie Image";
-  } else {
-    imageElement.src =
-      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fb3ef66312333.5691dd2253378.jpg";
-    imageElement.loading = "lazy";
+  imageElement.src = content.primaryImage && content.primaryImage.url;
+  imageElement.alt = "Movie Image";
+  imageElement.loading = "lazy";
+
+  // Add an onerror event to handle image loading failure
+  imageElement.onerror = function () {
+    imageElement.src = "./image/poster.png";
     imageElement.alt = "Alternative Image";
-  }
+  };
+
+  console.log(content);
+
+  // Create the Release Year element
+  const releaseElement = document.createElement("h3");
+  releaseElement.textContent = content.releaseYear.year;
+  releaseElement.setAttribute("id", "toph2");
 
   // Create the heading element
   const headingElement = document.createElement("h1");
@@ -39,6 +46,7 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
 
   // Append the image and heading elements to the link element
   linkElement.appendChild(imageElement);
+  linkElement.appendChild(releaseElement);
   linkElement.appendChild(headingElement);
 
   // Append the link element to the article element
@@ -68,6 +76,7 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
   const topMoviesElement = document.querySelector(documentelement);
   topMoviesElement.appendChild(articleElement);
 }
+
 function add(article, button) {
   addWatchlist(article, function (error, response) {
     if (error) {

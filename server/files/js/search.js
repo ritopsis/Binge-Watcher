@@ -14,7 +14,7 @@ window.onload = function () {
   checkifloggedin(function (error, response) {
     if (error) {
       loggin = false;
-      let nav = document.querySelector("nav");
+      let nav = document.getElementById("nav_btn");
       createNavButton("Login", "register_login.html", nav);
       const url = new URL(location.href);
       const params = new URLSearchParams(url.search);
@@ -28,7 +28,7 @@ window.onload = function () {
       }
     }
     if (response) {
-      let nav = document.querySelector("nav");
+      let nav = document.getElementById("nav_btn");
       createNavButton("My Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       loggin = true;
@@ -81,7 +81,7 @@ function handleSearchRequest(title, page, loggin, watchlist) {
         // entries are the amout of media that came back from the request
         if (Number(sresult.page) - 1 != 0) {
           // user is not at the first page
-          createPagination("Previous ", Number(sresult.page) - 1, false); // creates "Previous"-Button with text: "Previous"
+          createPagination("Back ", Number(sresult.page) - 1, false); // creates "Previous"-Button with text: "Previous"
           createPagination(null, Number(sresult.page) - 1, false); // creates "Previous"-Button with text: previous Pagenumber
         }
         createPagination(null, Number(sresult.page), true); // current page
@@ -147,21 +147,39 @@ function addarticle(movie, type, loggin, watchlist) {
   } else {
     type = "tvseries";
   }
+
   const articleElement = document.createElement("article");
   articleElement.id = movie.id;
-  articleElement.setAttribute("type", type);
-  // Create the link element
+  articleElement.setAttribute("data-type", type);
+
   const linkElement = document.createElement("a");
   linkElement.href = "/details.html?id=" + movie.id;
 
-  // Create the heading element
-  const headingElement = document.createElement("h1");
-  headingElement.textContent = movie.titleText.text;
+  // Create the image element
+  const imageElement = document.createElement("img");
+  imageElement.classList.add("articleimage");
+  imageElement.src = movie.primaryImage && movie.primaryImage.url;
+  imageElement.alt = "Movie Image";
+  imageElement.loading = "lazy";
 
-  // Append the image and heading elements to the link element
-  linkElement.appendChild(headingElement);
+  // Add an onerror event to handle image loading failure
+  imageElement.onerror = function () {
+    imageElement.src = "./image/poster.png";
+    imageElement.alt = "Alternative Image";
+  };
 
-  // Append the link element to the article element
+  const h3Element = document.createElement("h3");
+  h3Element.id = "toph2";
+  h3Element.textContent = movie.year; // add your year here
+
+  const h1Element = document.createElement("h1");
+  h1Element.id = "toph2";
+  h1Element.textContent = movie.titleText.text;
+
+  linkElement.appendChild(imageElement);
+  linkElement.appendChild(h3Element);
+  linkElement.appendChild(h1Element);
+
   articleElement.appendChild(linkElement);
 
   if (loggin && watchlist) {

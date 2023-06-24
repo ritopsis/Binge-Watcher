@@ -22,7 +22,7 @@ window.onload = function () {
           biographyInput.textContent = watchlist["biography"];
           loggin = true;
           content();
-          let nav = document.querySelector("nav");
+          let nav = document.getElementById("nav_btn");
           createNavButton("My Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
         } else {
@@ -69,6 +69,13 @@ function content() {
   userElement.textContent = "Your Watchlist: " + username;
   if (watchlist && loggin) {
     if (watchlist.watchlist.tvseries) {
+      if (Object.keys(watchlist.watchlist.tvseries).length > 0) {
+        // Create and append h1 for Series
+        const seriesHeader = document.createElement("h1");
+        seriesHeader.textContent = "Series:";
+        document.getElementById("series").appendChild(seriesHeader);
+      }
+
       let tvseries = watchlist.watchlist.tvseries;
 
       const sortedSeries = Object.entries(tvseries)
@@ -117,11 +124,17 @@ function content() {
       }
     }
     if (watchlist.watchlist.movies) {
+      // Create and append h1 for Movies
+      if (Object.keys(watchlist.watchlist.movies).length) {
+        const moviesHeader = document.createElement("h1");
+        moviesHeader.textContent = "Movies:";
+        document.getElementById("movies").appendChild(moviesHeader);
+      }
+
       let movies = watchlist.watchlist.movies;
       const sortedMovies = Object.entries(movies)
         .sort(([, a], [, b]) => new Date(b.date) - new Date(a.date))
         .map(([key, value]) => ({ id: key, ...value }));
-      console.log(sortedMovies);
       for (let movieId in sortedMovies) {
         addseries(
           sortedMovies[movieId].title,

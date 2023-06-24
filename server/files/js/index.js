@@ -12,7 +12,7 @@ window.onload = function () {
     if (error) {
       content();
       loggin = false;
-      let nav = document.querySelector("nav");
+      let nav = document.getElementById("nav_btn");
       createNavButton("Login", "register_login.html", nav);
     }
     if (response) {
@@ -21,7 +21,7 @@ window.onload = function () {
           watchlist = JSON.parse(response);
           loggin = true;
           content();
-          let nav = document.querySelector("nav");
+          let nav = document.getElementById("nav_btn");
           createNavButton("My Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
         } else {
