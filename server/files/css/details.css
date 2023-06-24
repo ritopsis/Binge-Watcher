@@ -1,167 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 * {
-  margin: 0;
-  padding: 0;
+  color: black;
+  font-family: "DM Sans", sans-serif;
 }
 
-header {
-  background-color: rgba(0, 138, 148, 0);
-  text-align: center;
-  padding: 20px;
+h1 {
+  margin: 0;
 }
-header h1 {
-  font-size: 64px;
+
+h2 {
+  margin: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  all: unset;
+}
+
+ul,
+ol,
+li {
+  list-style-type: none;
+  list-style-position: inside;
 }
 
 nav {
+  padding: 15px 0;
+  font-size: 24px;
+  font-weight: 700;
   display: flex;
-  justify-content: center;
-  background-color: rgba(98, 98, 98, 0);
+  align-items: center;
+  flex-direction: row;
+  max-width: 1400px;
+  justify-content: space-between;
+  margin: auto;
 }
 
-body {
-  background-color: rgba(0, 0, 0, 0.911);
-  background-image: url("image/Background-image.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: repeat;
-  position: relative;
-  width: 100%;
-  height: 100vh;
-}
-
-main {
-  margin: 128px;
-  margin-top: 16px;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(0, 127, 147, 0);
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-nav li {
-  display: inline;
-  margin-right: 40px;
+nav h1 {
+  font-size: 24px;
 }
 
 nav a {
-  font-size: 24px;
-  padding: 10px;
-  text-decoration: none;
-  text-decoration-color: rgb(255, 0, 0);
-  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.searchcontainer {
-  margin-top: 24px;
+nav a:hover {
+  color: gray;
+}
+
+.nav_left {
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 24px;
 }
 
-.search-form {
+.nav_right {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 16px;
+  gap: 24px;
+  color: white;
+  text-underline: none;
+}
+
+.main-article img {
+  max-height: 500px;
+}
+
+.main-article {
+  align-items: center;
+  justify-content: space-around;
   display: flex;
 }
 
-.search-input {
-  padding: 10px;
-  width: 600px;
+.release {
+  margin: 15px 0;
+  color: gray;
 }
 
-.search-button {
-  padding: 8px;
+.main-article div {
+  max-width: 50%;
 }
 
-article {
-  background-color: rgba(168, 226, 255, 0);
-  border-radius: 16px;
-  flex: 0 0 200px;
-  margin: 20px;
-  padding: 16px;
+.main-article h1 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.main-article p {
+  font-size: 18px;
+}
+
+.rating {
+  padding: 15px;
+  font-size: 26px;
+  font-weight: 700;
   text-align: center;
-  block-size: 10%;
 }
 
-.topmovies,
-.topseries {
-  margin: 24px;
+.rating p {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.seasons-container {
+  width: 1400px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.additional-container {
+  display: inline-block;
   justify-content: center;
+  gap: 30px;
+}
+
+.season {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.episodes-container {
+  background: black;
+  color: white;
+  border-radius: 6px;
+  margin-top: 10px;
+  padding: 10px;
   display: flex;
-  background-color: rgba(0, 127, 147, 0);
-  flex-wrap: wrap;
-}
-
-.topmovies article,
-.topseries article {
-  background-color: rgba(0, 0, 0, 0.75);
-  border-radius: 12px;
-  flex: 0 0 200px;
-  margin: 14px;
-  padding: 10px;
-}
-
-.articleimage {
-  border-radius: 8px;
-  width: 150px;
-  height: 200px;
-}
-
-.topmovies h2,
-.topseries h2 {
-  width: 100%;
+  flex-direction: column;
   text-align: center;
-  margin-bottom: 8px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: rgb(255, 255, 255);
-  padding: 10px;
-  border-radius: 12px;
-}
-
-#toph2 {
-  background-color: rgb(0, 0, 0, 0);
-  text-align: center;
-  font-size: x-large;
-  color: rgb(255, 255, 255);
-}
-
-#detailsTitle {
-  background-color: rgb(0, 0, 0, 0);
-  text-align: center;
-  font-size: x-large;
-  color: rgb(255, 255, 255);
-}
-
-.btn-outline-light {
-  border-color: aliceblue;
-  border-radius: 10px;
-  text-decoration-color: aliceblue;
-}
-
-#titleLink {
-  text-decoration: none;
-}
-
-.movieDetails {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  color: rgb(255, 255, 255);
-  font-size: larger;
+  gap: 13px;
 }
 
 .episodes {
-  border-style: ridge;
-  margin-bottom: 2px;
-  border-color: black;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   color: white;
 }
 
+.episodes h1 {
+  font-size: 14px;
+  color: white;
+  padding: 10px 30px;
+}
+
 .watchedButton {
-  margin-left: 10px;
-  margin-bottom: 3px;
-  border-radius: 5px;
+  margin: 0;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 30px;
+  border-radius: 6px;
+  border: 2px solid black;
+  color: white;
+  background-color: #000000;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #252525;
+}
+
+button[data-action="remove"] {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  background-color: #000000;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+button[data-action="remove"]:hover {
+  background-color: #c9c9c9;
+}
+
+button[data-action="add"] {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 28px;
+  border-radius: 6px;
+  border: 2px solid #000000;
+  color: #000000;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+button[data-action="add"]:hover {
+  background-color: #252525;
+}
+
+main {
+  display: flex !important;
+  align-items: center;
+  min-height: calc(100vh - 160px);
+  max-width: 1400px;
+  margin: auto auto 60px auto;
+  flex-grow: 1;
 }
