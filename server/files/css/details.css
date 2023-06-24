@@ -3,6 +3,9 @@
   color: black;
   font-family: "DM Sans", sans-serif;
 }
+body {
+  background-color: rgb(241, 241, 241);
+}
 
 h1,
 h2,

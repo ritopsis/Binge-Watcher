@@ -7,12 +7,11 @@ let loggin = null;
 let totalMedia = 5;
 
 window.onload = function () {
-  const menuItems = document.getElementById("menuItems");
+  const nav = document.getElementById("nav_btn");
   checkifloggedin(function (error, response) {
     if (error) {
       content();
       loggin = false;
-      let nav = document.getElementById("nav_btn");
       createNavButton("Login", "register_login.html", nav);
     }
     if (response) {
@@ -21,7 +20,6 @@ window.onload = function () {
           watchlist = JSON.parse(response);
           loggin = true;
           content();
-          let nav = document.getElementById("nav_btn");
           createNavButton("My Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
         } else {
