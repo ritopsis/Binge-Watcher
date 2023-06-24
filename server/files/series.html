@@ -3,29 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
+    <!--    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
-    />
+    -->
     <title>Binge-Watcher</title>
-    <link rel="stylesheet" href="search.css" />
-    <script type="module" src="user.js"></script>
-    <script type="module" src="search.js"></script>
+    <link rel="stylesheet" href="css/search.css" />
+    <script type="module" src="js/user.js"></script>
+    <script type="module" src="js/search.js"></script>
   </head>
 
   <body>
-    <header>
-      <h1 class="text-white">Binge-Watcher</h1>
-    </header>
     <nav>
-      <li class="btn btn-outline-light"><a href="index.html">Home</a></li>
-      <li class="btn btn-outline-light"><a href="series.html">TV Series</a></li>
-      <li class="btn btn-outline-light"><a href="movies.html">Movies</a></li>
+      <div class="nav_left">
+        <img alt="logo" src="./image/logo.png" /><img />
+        <h1>Binge-Watcher</h1>
+      </div>
+      <div class="nav_right" id="nav_btn">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="series.html">TV Series</a></li>
+        <li><a href="movies.html">Movies</a></li>
+      </div>
     </nav>
     <div class="searchcontainer">
-      <h1 class="text-white">Serien</h1>
+      <h1>Search for Series</h1>
       <form id="search" class="search-form">
         <input
           type="text"
@@ -37,9 +40,9 @@
       </form>
     </div>
     <main></main>
-    <nav>
-      <ul class="pagination">
-    </nav>
+    <footer>
+      <ul class="pagination"></ul>
+    </footer>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
