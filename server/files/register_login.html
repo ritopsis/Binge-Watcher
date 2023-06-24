@@ -3,32 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
+    <!--    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
+     rel="stylesheet"
+     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+     crossorigin="anonymous"
+-->
     <title>Binge-Watcher</title>
-    <link rel="stylesheet" href="register_login.css" />
-    <script type="module" src="user.js"></script>
-    <script type="module" src="register_login.js"></script>
+    <link rel="stylesheet" href="css/register_login.css" />
+    <script type="module" src="js/user.js"></script>
+    <script type="module" src="js/register_login.js"></script>
   </head>
 
   <body>
-    <header>
-      <h1 class="text-white">Binge-Watcher</h1>
-    </header>
     <nav>
-      <li class="btn btn-outline-light"><a href="index.html">Home</a></li>
-      <li class="btn btn-outline-light"><a href="series.html">TV Series</a></li>
-      <li class="btn btn-outline-light"><a href="movies.html">Movies</a></li>
-      <li class="btn btn-outline-light">
-        <a href="register_login.html">Login</a>
-      </li>
+      <div class="nav_left">
+        <img alt="logo" src="./image/logo.png" /><img />
+        <h1>Binge-Watcher</h1>
+      </div>
+      <div class="nav_right" id="nav_btn">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="series.html">TV Series</a></li>
+        <li><a href="movies.html">Movies</a></li>
+      </div>
     </nav>
     <main>
       <form id="registrationForm">
+        <h1 class="text-white">Register</h1>
         <label class="text-white" , for="username">Username:</label>
         <input type="text" id="username" name="username" required /><br />
 
@@ -38,7 +39,7 @@
         <button class="btn btn-outline-light" , type="submit">Register</button>
       </form>
       <form id="loginForm">
-        <h2 class="text-white">Login</h2>
+        <h1 class="text-white">Login</h1>
         <label class="text-white" , for="lusername">Username:</label>
         <input type="text" id="lusername" name="lusername" required /><br />
 
