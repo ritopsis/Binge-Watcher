@@ -111,15 +111,18 @@ function addarticle(content) {
   divWrapper.classList.add("main-article");
 
   // Create the image element
+  // Create the image element
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
-  if (content.primaryImage && content.primaryImage.url) {
-    imageElement.src = content.primaryImage.url;
-  } else {
-    imageElement.src =
-      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fb3ef66312333.5691dd2253378.jpg";
-  }
+  imageElement.src = content.primaryImage && content.primaryImage.url;
   imageElement.alt = "Movie Image";
+  imageElement.loading = "lazy";
+
+  // Add an onerror event to handle image loading failure
+  imageElement.onerror = function () {
+    imageElement.src = "./image/poster.png";
+    imageElement.alt = "Alternative Image";
+  };
   divWrapper.appendChild(imageElement);
 
   const divElement = document.createElement("div");
@@ -158,6 +161,26 @@ function addarticle(content) {
   ratingDivElement.appendChild(ratingElement);
   divWrapper.appendChild(ratingDivElement);
   articleElement.appendChild(divWrapper);
+
+  if (loggin && watchlist) {
+    const buttonElement = document.createElement("button");
+    if (watchlist["watchlist"][type].hasOwnProperty(content.id)) {
+      buttonElement.textContent = "Remove";
+      buttonElement.setAttribute("data-action", "remove");
+    } else {
+      buttonElement.textContent = "Add";
+      buttonElement.setAttribute("data-action", "add");
+    }
+    buttonElement.addEventListener("click", function () {
+      const action = buttonElement.getAttribute("data-action");
+      if (action === "add") {
+        add(articleElement, buttonElement);
+      } else {
+        remove(articleElement, buttonElement);
+      }
+    });
+    articleElement.appendChild(buttonElement);
+  }
 
   const seasonsContainer = document.createElement("div");
   seasonsContainer.id = "seasons-container";
