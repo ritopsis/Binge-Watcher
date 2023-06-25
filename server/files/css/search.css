@@ -200,3 +200,83 @@ li button {
   color: white;
   background: black;
 }
+@media (max-width: 768px) {
+  main {
+    padding: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .articleimage {
+    width: 144px;
+    height: 205px;
+  }
+
+  nav {
+    padding: 27px 12px;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center; /* Change align-items to flex-start */
+    flex-direction: column; /* Change flex-direction to column */
+    max-width: 1400px;
+    justify-content: space-between;
+  }
+
+  .nav_left {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .main-article {
+    margin-top: 30px;
+    align-items: start;
+    flex-direction: column;
+    width: calc(100vw - 12px);
+  }
+
+  .main-article div {
+    max-width: 95%;
+  }
+
+  #detailsTitle {
+    font-size: 24px;
+    margin-top: 15px;
+  }
+
+  .main-article p {
+    font-size: 14px;
+  }
+
+  .release {
+    font-size: 12px;
+  }
+
+  .rating {
+    margin: 15px 0;
+    padding: 0;
+    gap: 10px;
+    display: flex;
+  }
+
+  .rating p {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .searchcontainer {
+    padding: 12px 0;
+    align-items: center;
+  }
+
+  .searchcontainer input {
+    width: calc(100vw - 120px);
+  }
+
+  .search-form {
+    gap: 7px;
+    margin: auto;
+    display: flex;
+  }
+}
