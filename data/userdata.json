@@ -40,5 +40,19 @@
       "tvseries": {},
       "movies": {}
     }
+  },
+  "hamza": {
+    "biography": "",
+    "watchlist": {
+      "tvseries": {},
+      "movies": {}
+    }
+  },
+  "appolin": {
+    "biography": "",
+    "watchlist": {
+      "tvseries": {},
+      "movies": {}
+    }
   }
 }

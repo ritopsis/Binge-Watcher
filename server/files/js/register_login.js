@@ -33,6 +33,8 @@ document
         } else if (xhr.status === 409) {
           //409 -> Username is taken
           messageElement.textContent = xhr.responseText;
+        } else if (xhr.status === 400) {
+          messageElement.textContent = xhr.responseText;
         } else {
           console.log(xhr.status);
         }
@@ -52,8 +54,10 @@ document
     event.preventDefault(); // Prevent form submission
 
     // Get the form values
-    const username = document.getElementById("lusername").value.toLowerCase();
-    const password = document.getElementById("lpassword").value;
+    const username = document
+      .getElementById("login_username")
+      .value.toLowerCase();
+    const password = document.getElementById("login_password").value;
 
     // Create an object to hold the data
     const data = {

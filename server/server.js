@@ -153,6 +153,19 @@ app.get("/logout", function (req, res) {
 app.post("/register", function (req, res) {
   const { username, password } = req.body;
 
+  // Check if username and password is longer than 4 characters
+  if (username.length >= 3 || password.length >= 3) {
+    //check if username contains any special characters
+    const specialChars = /[^a-zA-Z0-9]/;
+    if (specialChars.test(username)) {
+      res.status(400).send("Username should only contain letters and numbers.");
+    }
+  } else {
+    res
+      .status(400)
+      .send("Both Username and Password must be at least 4 characters long.");
+  }
+
   readFile(registerPath, (err, data) => {
     if (err) {
       console.error("Error:", err);
