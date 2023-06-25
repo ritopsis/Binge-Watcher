@@ -20,7 +20,7 @@ window.onload = function () {
           watchlist = JSON.parse(response);
           loggin = true;
           content();
-          createNavButton("My Profile", "myprofile.html", nav);
+          createNavButton("Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
         } else {
         }

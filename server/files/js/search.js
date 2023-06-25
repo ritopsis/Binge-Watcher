@@ -29,7 +29,7 @@ window.onload = function () {
     }
     if (response) {
       let nav = document.getElementById("nav_btn");
-      createNavButton("My Profile", "myprofile.html", nav);
+      createNavButton("Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       loggin = true;
       getwatchlist(null, function (error, response) {

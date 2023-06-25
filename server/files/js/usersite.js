@@ -23,7 +23,7 @@ window.onload = function () {
         window.location.href = "myprofile.html";
       }
       const nav = document.getElementById("nav_btn");
-      createNavButton("My Profile", "myprofile.html", nav);
+      createNavButton("Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {

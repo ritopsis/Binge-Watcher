@@ -67,7 +67,7 @@ window.onload = function () {
     } else {
       loggin = true;
       let nav = document.getElementById("nav_btn");
-      createNavButton("My Profile", "myprofile.html", nav);
+      createNavButton("Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       const watchlistPromise = new Promise((resolve, reject) => {
         getwatchlist(null, function (error, response) {

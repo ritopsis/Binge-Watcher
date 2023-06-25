@@ -23,7 +23,7 @@ window.onload = function () {
           loggin = true;
           content();
           const nav = document.getElementById("nav_btn");
-          createNavButton("My Profile", "myprofile.html", nav);
+          createNavButton("Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
         } else {
         }
