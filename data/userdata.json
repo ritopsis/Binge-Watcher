@@ -1,9 +1,63 @@
 {
   "a": {
-    "biography": "",
+    "biography": "Hallo I am so cool",
     "watchlist": {
-      "tvseries": {},
-      "movies": {}
+      "tvseries": {
+        "tt2571774": {
+          "title": "Africa",
+          "date": "2023-06-25T10:40:07.720Z",
+          "episode": {
+            "tt2638010": "1-1",
+            "tt2652676": "1-2",
+            "tt2652678": "1-3",
+            "tt2652680": "1-4",
+            "tt2652694": "1-6",
+            "tt2652692": "1-5"
+          }
+        },
+        "tt0158417": {
+          "title": "Mahabharat",
+          "date": "2023-06-25T10:39:57.736Z",
+          "episode": {}
+        },
+        "tt0290978": {
+          "title": "The Office",
+          "date": "2023-06-25T10:39:58.087Z",
+          "episode": {}
+        },
+        "tt6769208": {
+          "title": "Blue Planet II",
+          "date": "2023-06-25T10:39:58.519Z",
+          "episode": {}
+        },
+        "tt3032476": {
+          "title": "Better Call Saul",
+          "date": "2023-06-25T10:39:58.775Z",
+          "episode": {}
+        }
+      },
+      "movies": {
+        "tt0055630": {
+          "title": "Yôjinbô",
+          "date": "2023-06-25T10:39:59.776Z"
+        },
+        "tt0087843": {
+          "title": "Once Upon a Time in America",
+          "date": "2023-06-25T10:40:00.104Z"
+        },
+        "tt1454029": {
+          "title": "The Help",
+          "date": "2023-06-25T10:40:00.399Z"
+        },
+        "tt0107048": {
+          "title": "Groundhog Day",
+          "date": "2023-06-25T10:40:00.735Z"
+        },
+        "tt8503618": {
+          "title": "Hamilton",
+          "date": "2023-06-25T10:40:01.072Z"
+        }
+      }
     }
   },
   "admin": {
@@ -42,10 +96,109 @@
     }
   },
   "hamza": {
-    "biography": "",
+    "biography": "Hamza hier check that ****** out",
     "watchlist": {
-      "tvseries": {},
-      "movies": {}
+      "tvseries": {
+        "tt0988818": {
+          "title": "Gintama",
+          "date": "2023-06-25T10:40:17.352Z",
+          "episode": {}
+        },
+        "tt8595766": {
+          "title": "Yeh Meri Family",
+          "date": "2023-06-25T10:40:18.242Z",
+          "episode": {}
+        },
+        "tt5290382": {
+          "title": "Mindhunter",
+          "date": "2023-06-25T10:40:18.503Z",
+          "episode": {}
+        },
+        "tt1513168": {
+          "title": "Through the Wormhole",
+          "date": "2023-06-25T10:40:19.287Z",
+          "episode": {}
+        },
+        "tt0120570": {
+          "title": "From the Earth to the Moon",
+          "date": "2023-06-25T10:40:19.560Z",
+          "episode": {}
+        },
+        "tt0795176": {
+          "title": "Planet Earth",
+          "date": "2023-06-25T10:40:54.104Z",
+          "episode": {}
+        },
+        "tt2303687": {
+          "title": "Line of Duty",
+          "date": "2023-06-25T10:40:54.440Z",
+          "episode": {}
+        },
+        "tt4082744": {
+          "title": "Detectorists",
+          "date": "2023-06-25T10:40:54.992Z",
+          "episode": {}
+        },
+        "tt0264235": {
+          "title": "Curb Your Enthusiasm",
+          "date": "2023-06-25T10:40:55.392Z",
+          "episode": {}
+        }
+      },
+      "movies": {
+        "tt2571774": {
+          "title": "Africa",
+          "date": "2023-06-25T10:40:39.880Z"
+        },
+        "tt0158417": {
+          "title": "Mahabharat",
+          "date": "2023-06-25T10:40:40.304Z"
+        },
+        "tt0290978": {
+          "title": "The Office",
+          "date": "2023-06-25T10:40:40.727Z"
+        },
+        "tt6769208": {
+          "title": "Blue Planet II",
+          "date": "2023-06-25T10:40:41.287Z"
+        },
+        "tt3032476": {
+          "title": "Better Call Saul",
+          "date": "2023-06-25T10:40:42.239Z"
+        },
+        "tt0087843": {
+          "title": "Once Upon a Time in America",
+          "date": "2023-06-25T10:40:42.783Z"
+        },
+        "tt0055630": {
+          "title": "Yôjinbô",
+          "date": "2023-06-25T10:40:43.128Z"
+        },
+        "tt8503618": {
+          "title": "Hamilton",
+          "date": "2023-06-25T10:40:43.480Z"
+        },
+        "tt1454029": {
+          "title": "The Help",
+          "date": "2023-06-25T10:40:44.048Z"
+        },
+        "tt0107048": {
+          "title": "Groundhog Day",
+          "date": "2023-06-25T10:40:44.440Z"
+        },
+        "tt0043014": {
+          "title": "Sunset Boulevard",
+          "date": "2023-06-25T10:40:56.951Z"
+        },
+        "tt0110413": {
+          "title": "Léon",
+          "date": "2023-06-25T10:40:57.215Z"
+        },
+        "tt0073195": {
+          "title": "De zomer van de witte haai",
+          "date": "2023-06-25T10:40:57.591Z"
+        }
+      }
     }
   },
   "appolin": {
