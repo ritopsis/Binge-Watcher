@@ -160,7 +160,9 @@ app.post("/register", function (req, res) {
       return;
     }
     if (data[username]) {
-      res.status(409).send("Username already taken");
+      res
+        .status(409)
+        .send("Username is already taken. Please choose a different username.");
     } else {
       data[username] = password;
       writeFile(registerPath, data, (err) => {
@@ -208,7 +210,7 @@ app.post("/login", function (req, res) {
       req.session.username = username; //by adding an attribute to the session, it will be saved in the session store
       res.status(200).send("Login");
     } else {
-      res.status(401).send("Wrong Username/Password!");
+      res.status(401).send("Incorrect username or password.");
     }
   });
 });

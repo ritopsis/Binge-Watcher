@@ -121,3 +121,8 @@ form {
   width: 40%;
   margin: auto;
 }
+
+#register_message,
+#login_message {
+  color: #be123c;
+}

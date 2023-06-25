@@ -185,6 +185,7 @@ function addarticle(content) {
   const seasonsContainer = document.createElement("div");
   seasonsContainer.id = "seasons-container";
   seasonsContainer.classList.add("seasons-container");
+  seasonsContainer.scrollTop = seasonsContainer.scrollHeight;
   // Add the article element to the document
   const topMoviesElement = document.querySelector("main");
   articleElement.appendChild(seasonsContainer);

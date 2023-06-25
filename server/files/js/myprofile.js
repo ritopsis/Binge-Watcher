@@ -164,7 +164,7 @@ function addmedia(title, serieId, episode, documentelement) {
 
   if (episode) {
     const headingElement2 = document.createElement("h3");
-    headingElement2.textContent = episode;
+    headingElement2.textContent = "Last watched: " + episode;
     linkElement.appendChild(headingElement2);
   }
 
