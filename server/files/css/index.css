@@ -31,7 +31,7 @@ button a:hover {
 }
 
 nav {
-  padding-top: 15px;
+  padding: 15px 12px;
   font-size: 24px;
   font-weight: 700;
   display: flex;
@@ -168,6 +168,9 @@ nav a:hover {
 }
 
 .top {
+  overflow-y: hidden;
+  overflow-x: auto;
+  gap: 10px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   flex-direction: row;
@@ -231,4 +234,57 @@ button[data-action="add"] {
 
 button[data-action="add"]:hover {
   background-color: #252525;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  main {
+    padding: 0 12px;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+
+  nav {
+    padding: 27px 12px;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center; /* Change align-items to flex-start */
+    flex-direction: column; /* Change flex-direction to column */
+    max-width: 1400px;
+    justify-content: space-between;
+  }
+
+  .nav_left {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .stats {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .banner {
+    margin-top: 70px;
+    height: auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .banner-content {
+    max-width: 100%;
+  }
+
+  .banner-content h1 {
+    font-size: 36px;
+  }
+
+  .banner-content p {
+    font-size: 12px;
+  }
+
+  .banner-content button {
+    font-size: 12px;
+  }
 }
