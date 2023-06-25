@@ -44,7 +44,7 @@ main {
 }
 
 nav {
-  padding-top: 15px;
+  padding: 27px 12px;
   font-size: 24px;
   font-weight: 700;
   display: flex;
@@ -56,6 +56,8 @@ nav {
 }
 
 nav h1 {
+  margin: 0;
+  padding: 0;
   font-size: 24px;
 }
 
@@ -122,7 +124,29 @@ form {
   margin: auto;
 }
 
-#register_message,
-#login_message {
-  color: #be123c;
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+
+  form {
+    padding: 20px 0;
+    width: 90%;
+  }
+
+  nav {
+    padding: 27px 12px;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center; /* Change align-items to flex-start */
+    flex-direction: column; /* Change flex-direction to column */
+    max-width: 1400px;
+    justify-content: space-between;
+  }
+
+  .nav_left {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
 }

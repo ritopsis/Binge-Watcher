@@ -36,7 +36,7 @@ button a:hover {
 }
 
 nav {
-  padding-top: 15px;
+  padding: 27px 12px;
   font-size: 24px;
   font-weight: 700;
   display: flex;
@@ -320,4 +320,66 @@ li button {
   width: 560px;
   height: 150px;
   margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  #ai-output {
+    width: calc(100vw - 12px);
+  }
+  nav {
+    padding: 27px 12px;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 1400px;
+    justify-content: space-between;
+  }
+
+  .nav_left {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  .list {
+    align-items: normal;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+  .main-article {
+    margin-top: 30px;
+    align-items: start;
+    flex-direction: column;
+    width: calc(100vw - 12px);
+  }
+
+  .main-article div {
+    max-width: 95%;
+  }
+
+  .main-article p {
+    font-size: 14px;
+  }
+
+  .search-form {
+    gap: 7px;
+    margin: auto;
+    display: flex;
+  }
+
+  .searchuser input {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .searchuser button {
+    width: 100%;
+    max-width: 200px;
+  }
 }
