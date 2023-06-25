@@ -315,6 +315,39 @@ app.post("/addepwatchlist", isAuthenticated, function (req, res) {
   });
 });
 
+app.post("/recommends", isAuthenticated, function (req, res) {
+  const URL = "https://chatgpt53.p.rapidapi.com/";
+  const chatoption = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "X-RapidAPI-Key": config.rapidChatGPTApiKey,
+      "X-RapidAPI-Host": "chatgpt53.p.rapidapi.com",
+    },
+    body: JSON.stringify({
+      messages: [
+        {
+          role: "user",
+          content:
+            "Give me 5 " +
+            req.body.type +
+            "recommendations based on this" +
+            req.body.mediaNames,
+        },
+      ],
+    }),
+  };
+
+  fetch(URL, chatoption)
+    .then((response) => response.json())
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 // PUT-Methods
 app.put("/changebio", isAuthenticated, function (req, res) {
   readFile(userdataPath, async (err, data) => {

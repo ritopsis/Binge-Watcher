@@ -32,6 +32,20 @@ window.onload = function () {
   });
 };
 
+document
+  .getElementById("recommend-movies")
+  .addEventListener("click", function () {
+    this.disabled = true;
+    recommend("movies", this);
+  });
+
+document
+  .getElementById("recommend-tvseries")
+  .addEventListener("click", function () {
+    this.disabled = true;
+    recommend("tvseries", this);
+  });
+
 const saveButton = document.getElementById("save-biography-button");
 const biographyInput = document.getElementById("biography-input");
 
@@ -211,4 +225,45 @@ function remove(article, button) {
       button.setAttribute("data-action", "add"); // Change the action to "add"
     }
   });
+}
+function recommend(type, buttenElement) {
+  const aitextboxeElement = document.getElementById("ai-output");
+  if (loggin && watchlist) {
+    let content = "";
+    if (type == "tvseries") {
+      if (watchlist.watchlist.tvseries) {
+        let tvseries = watchlist.watchlist.tvseries;
+        for (let serieId in tvseries) {
+          content += tvseries[serieId].title + " , ";
+        }
+      }
+    } else {
+      if (watchlist.watchlist.movies) {
+        let movies = watchlist.watchlist.movies;
+        for (let movieId in movies) {
+          content += movies[movieId].title + " , ";
+        }
+      }
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        buttenElement.disable = false;
+        const result = JSON.parse(xhr.responseText);
+        console.log(result);
+        aitextboxeElement.textContent = result.choices[0].message.content;
+      } else {
+        console.log(xhr.status);
+      }
+    };
+    const data = {
+      type: type,
+      mediaNames: content,
+    };
+    xhr.open("POST", "recommends", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    aitextboxeElement.textContent = "Loading...";
+    xhr.send(JSON.stringify(data));
+  }
 }
