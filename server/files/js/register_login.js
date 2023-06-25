@@ -1,7 +1,8 @@
 import { checkifloggedin } from "./user.js";
 
 window.onload = function () {
-  checkifloggedin(function (error, response) {
+  checkifloggedin(function (err, response) {
+    //if the user is logged -> go back to homepage!
     if (response) {
       window.location.href = "index.html";
     }
@@ -16,7 +17,7 @@ document
 
     // Get the form values
     const username = document.getElementById("username").value.toLowerCase();
-    const password = document.getElementById("password");
+    const password = document.getElementById("password").value;
 
     // Create an object to hold the data
     if (validateUsernameAndPassword(username, password)) {
@@ -52,7 +53,7 @@ document
 
     // Get the form values
     const username = document.getElementById("lusername").value.toLowerCase();
-    const password = document.getElementById("lpassword");
+    const password = document.getElementById("lpassword").value;
 
     // Create an object to hold the data
     const data = {
@@ -72,7 +73,7 @@ function login(data) {
       } else if (xhr.status === 401) {
         const messageElement = document.getElementById("login_message");
         messageElement.textContent = xhr.responseText;
-        console.log(xhr.responseText); //Wrong Username/Password
+        console.log(xhr.responseText);
       } else {
         console.log(xhr.status);
       }
