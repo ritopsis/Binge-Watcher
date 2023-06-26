@@ -5,4 +5,5 @@ module.exports = {
     "820810d92fmsh47306384f1838ccp1ad0a6jsnb891ca3b29ec",
   //limited requests!
   rapidChatGPTApiKey: "",
+  secret: "bingigis",
 };

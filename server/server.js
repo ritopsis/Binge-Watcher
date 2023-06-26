@@ -4,26 +4,17 @@ const bodyParser = require("body-parser");
 const app = express();
 const fs = require("fs"); //For file creation/reading
 const session = require("express-session");
-const config = require("./config.js");
+const config = require(path.join(__dirname, "config.js"));
 const registerPath = path.join("data", "registeredaccounts.json");
 const userdataPath = path.join("data", "userdata.json");
 
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, "files")));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
 app.use(bodyParser.json());
 app.use(
   session({
-    secret: "mysecret", // Secret key used to sign the session ID cookie
+    secret: config.secret, // Secret key used to sign the session ID cookie
     resave: false, // Forces the session to be saved back to the session store, even if it wasn't modified during the request
     saveUninitialized: false, //uninitialized sessions will not be saved in the session store
   })
@@ -200,6 +191,7 @@ app.post("/register", function (req, res) {
             return;
           }
           userdata[username] = {
+            private: false,
             biography: "",
             watchlist: { tvseries: {}, movies: {} },
           };
@@ -452,6 +444,28 @@ app.delete("/removeepwatchlist", isAuthenticated, function (req, res) {
     }
   });
 });
+// PATCH-Methods
+app.patch("/privacy", isAuthenticated, function (req, res) {
+  const setting = req.body.settings;
+  readFile(userdataPath, (err, data) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const jsonData = data;
+    jsonData[req.session.username].private = setting;
+    writeFile(userdataPath, jsonData, (err) => {
+      if (err) {
+        console.error("Error:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      console.log("File saved successfully.");
+      res.sendStatus(200);
+    });
+  });
+});
 
 // Functions
 //Function for writing to a file
@@ -502,6 +516,15 @@ function isAuthenticated(req, res, next) {
     res.status(401).send("Unauthorized");
   }
 }
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 app.listen(3000);
 

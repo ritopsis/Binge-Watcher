@@ -18,8 +18,10 @@ window.onload = function () {
       getwatchlist(null, function (error, response) {
         if (response) {
           watchlist = JSON.parse(response);
-          const biographyInput = document.getElementById("biography-input");
-          biographyInput.textContent = watchlist["biography"];
+          document.getElementById("set-privacy-button").textContent =
+            watchlist.private ? "Set public" : "Set private";
+          document.getElementById("biography-input").textContent =
+            watchlist["biography"];
           loggin = true;
           content();
           const nav = document.getElementById("nav_btn");
@@ -44,6 +46,28 @@ document
   .addEventListener("click", function () {
     this.disabled = true;
     recommend("tvseries", this);
+  });
+
+document
+  .getElementById("set-privacy-button")
+  .addEventListener("click", function () {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log(xhr.responseText);
+        document.getElementById("set-privacy-button").textContent = setting
+          ? "Set public"
+          : "Set private";
+      } else {
+      }
+    };
+    let setting = this.textContent == "Set public" ? false : true;
+    const data = {
+      settings: setting,
+    };
+    xhr.open("PATCH", "/privacy", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(data));
   });
 
 const saveButton = document.getElementById("save-biography-button");

@@ -29,21 +29,39 @@ window.onload = function () {
       xhr.onload = function () {
         if (xhr.status === 200) {
           watchlistofuser = JSON.parse(xhr.responseText);
-          const biography = document.getElementById("biography");
-          if (watchlistofuser["biography"]) {
-            //If the User wrote a biography
-            biography.textContent = "About me: " + watchlistofuser["biography"];
-          }
-          const user = document.getElementById("user");
-          user.textContent = usernameofsearch + "'s Watchlist";
-          getwatchlist(null, function (error, response) {
-            if (response) {
-              watchlist = JSON.parse(response);
-              loggin = true;
-              content();
-            } else {
+          if (!watchlistofuser.private) {
+            const biography = document.getElementById("biography");
+            if (watchlistofuser["biography"]) {
+              //If the User wrote a biography
+              biography.textContent =
+                "About me: " + watchlistofuser["biography"];
             }
-          });
+            const user = document.getElementById("user");
+            user.textContent = usernameofsearch + "'s Watchlist";
+            getwatchlist(null, function (error, response) {
+              if (response) {
+                watchlist = JSON.parse(response);
+                loggin = true;
+                content();
+              } else {
+              }
+            });
+          } else {
+            const mainElement = document.querySelector("main");
+            const elementsToDelete = Array.from(mainElement.children).filter(
+              (child) => {
+                return !child.classList.contains("searchuser");
+              }
+            );
+
+            // Remove each element
+            elementsToDelete.forEach((element) => {
+              mainElement.removeChild(element);
+            });
+            let linkElement = document.createElement("h1");
+            linkElement.textContent = "The user is private!";
+            mainElement.appendChild(linkElement);
+          }
         } else if (xhr.status === 404) {
           const mainElement = document.querySelector("main");
           const elementsToDelete = Array.from(mainElement.children).filter(
@@ -57,7 +75,7 @@ window.onload = function () {
             mainElement.removeChild(element);
           });
           let linkElement = document.createElement("h1");
-          linkElement.textContent = "NOT FOUND!";
+          linkElement.textContent = "There is no user with this username.";
           mainElement.appendChild(linkElement);
         } else {
         }

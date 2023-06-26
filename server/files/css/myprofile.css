@@ -285,7 +285,8 @@ li button {
   justify-content: center;
 }
 
-.recommend button {
+.recommend button,
+#set-privacy-button {
   margin: 10px;
   max-width: 100%;
   padding: 10px 16px;
@@ -297,7 +298,8 @@ li button {
   background-color: #be123c;
   transition: background-color 0.3s ease;
 }
-.recommend button:hover {
+.recommend button:hover,
+#set-privacy-button:hover {
   background-color: #8a102e;
 }
 .content-recommend {

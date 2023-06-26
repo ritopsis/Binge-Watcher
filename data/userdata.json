@@ -1,284 +1,114 @@
 {
-  "a": {
-    "biography": "****",
-    "watchlist": {
-      "tvseries": {
-        "tt2571774": {
-          "title": "Africa",
-          "date": "2023-06-25T10:40:07.720Z",
-          "episode": {
-            "tt2638010": "1-1",
-            "tt2652676": "1-2",
-            "tt2652678": "1-3",
-            "tt2652680": "1-4",
-            "tt2652694": "1-6",
-            "tt2652692": "1-5"
-          }
-        },
-        "tt0158417": {
-          "title": "Mahabharat",
-          "date": "2023-06-25T10:39:57.736Z",
-          "episode": {}
-        },
-        "tt0290978": {
-          "title": "The Office",
-          "date": "2023-06-25T10:39:58.087Z",
-          "episode": {}
-        },
-        "tt6769208": {
-          "title": "Blue Planet II",
-          "date": "2023-06-25T10:39:58.519Z",
-          "episode": {}
-        },
-        "tt3032476": {
-          "title": "Better Call Saul",
-          "date": "2023-06-25T10:39:58.775Z",
-          "episode": {}
-        },
-        "tt2100976": {
-          "title": "Impractical Jokers",
-          "date": "2023-06-25T15:21:59.116Z",
-          "episode": {}
-        },
-        "tt9174558": {
-          "title": "Dopesick",
-          "date": "2023-06-25T15:21:59.436Z",
-          "episode": {}
-        },
-        "tt0403778": {
-          "title": "Long Way Round",
-          "date": "2023-06-25T15:21:59.964Z",
-          "episode": {}
-        },
-        "tt9544034": {
-          "title": "The Family Man",
-          "date": "2023-06-25T15:22:00.260Z",
-          "episode": {}
-        },
-        "tt0088484": {
-          "title": "Blackadder II",
-          "date": "2023-06-25T15:22:00.539Z",
-          "episode": {}
-        },
-        "tt0863046": {
-          "title": "Flight of the Conchords",
-          "date": "2023-06-25T15:23:23.691Z",
-          "episode": {
-            "tt1047196": "1-5",
-            "tt1047195": "1-6",
-            "tt1031780": "1-7",
-            "tt1011396": "1-8",
-            "tt1292590": "2-1",
-            "tt1313334": "2-2",
-            "tt1313335": "2-3",
-            "tt1313336": "2-4",
-            "tt1355997": "2-6",
-            "tt1355998": "2-7",
-            "tt1006987": "1-1",
-            "tt1034827": "1-2",
-            "tt1004298": "1-4",
-            "tt0982049": "1-3",
-            "tt1313337": "2-5",
-            "tt1357679": "2-10",
-            "tt1357681": "2-9",
-            "tt1357680": "2-8",
-            "tt1036019": "1-9",
-            "tt1033815": "1-10",
-            "tt1095775": "1-11",
-            "tt1078392": "1-12"
-          }
-        }
-      },
-      "movies": {
-        "tt0055630": {
-          "title": "Yôjinbô",
-          "date": "2023-06-25T10:39:59.776Z"
-        },
-        "tt0087843": {
-          "title": "Once Upon a Time in America",
-          "date": "2023-06-25T10:40:00.104Z"
-        },
-        "tt1454029": {
-          "title": "The Help",
-          "date": "2023-06-25T10:40:00.399Z"
-        },
-        "tt0107048": {
-          "title": "Groundhog Day",
-          "date": "2023-06-25T10:40:00.735Z"
-        },
-        "tt8503618": {
-          "title": "Hamilton",
-          "date": "2023-06-25T10:40:01.072Z"
-        },
-        "tt0042192": {
-          "title": "All About Eve",
-          "date": "2023-06-25T15:22:01.619Z"
-        },
-        "tt1187043": {
-          "title": "3 Idiots",
-          "date": "2023-06-25T15:22:01.899Z"
-        },
-        "tt0211915": {
-          "title": "Le fabuleux destin d'Amélie Poulain",
-          "date": "2023-06-25T15:22:02.197Z"
-        },
-        "tt0079470": {
-          "title": "Monty Python's Life of Brian",
-          "date": "2023-06-25T15:22:02.540Z"
-        },
-        "tt10872600": {
-          "title": "Spider-Man: No Way Home",
-          "date": "2023-06-25T15:22:03.396Z"
-        }
-      }
-    }
-  },
-  "admin": {
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
-    }
-  },
-  "Penny": {
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
-    }
-  },
-  "apps": {
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
-    }
-  },
-  "appse": {
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
-    }
-  },
-  "aasdasd": {
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
-    }
-  },
   "hamza": {
-    "biography": "Hamza hier check that ****** out",
+    "private": false,
+    "biography": "",
     "watchlist": {
       "tvseries": {
-        "tt0988818": {
-          "title": "Gintama",
-          "date": "2023-06-25T10:40:17.352Z",
-          "episode": {}
-        },
-        "tt8595766": {
-          "title": "Yeh Meri Family",
-          "date": "2023-06-25T10:40:18.242Z",
-          "episode": {}
-        },
-        "tt5290382": {
-          "title": "Mindhunter",
-          "date": "2023-06-25T10:40:18.503Z",
+        "tt0112159": {
+          "title": "Neon Genesis Evangelion",
+          "date": "2023-06-26T09:47:12.948Z",
           "episode": {}
         },
         "tt1513168": {
           "title": "Through the Wormhole",
-          "date": "2023-06-25T10:40:19.287Z",
+          "date": "2023-06-26T09:47:13.363Z",
           "episode": {}
         },
-        "tt0120570": {
-          "title": "From the Earth to the Moon",
-          "date": "2023-06-25T10:40:19.560Z",
+        "tt1856010": {
+          "title": "House of Cards",
+          "date": "2023-06-26T09:47:15.684Z",
           "episode": {}
         },
-        "tt0795176": {
-          "title": "Planet Earth",
-          "date": "2023-06-25T10:40:54.104Z",
+        "tt0098936": {
+          "title": "Twin Peaks",
+          "date": "2023-06-26T09:47:15.995Z",
           "episode": {}
         },
-        "tt2303687": {
-          "title": "Line of Duty",
-          "date": "2023-06-25T10:40:54.440Z",
-          "episode": {}
-        },
-        "tt4082744": {
-          "title": "Detectorists",
-          "date": "2023-06-25T10:40:54.992Z",
-          "episode": {}
-        },
-        "tt0264235": {
-          "title": "Curb Your Enthusiasm",
-          "date": "2023-06-25T10:40:55.392Z",
+        "tt0141842": {
+          "title": "The Sopranos",
+          "date": "2023-06-26T09:48:27.803Z",
           "episode": {}
         }
       },
       "movies": {
-        "tt2571774": {
-          "title": "Africa",
-          "date": "2023-06-25T10:40:39.880Z"
+        "tt0093058": {
+          "title": "Full Metal Jacket",
+          "date": "2023-06-26T09:47:14.467Z"
         },
-        "tt0158417": {
-          "title": "Mahabharat",
-          "date": "2023-06-25T10:40:40.304Z"
+        "tt0097576": {
+          "title": "Indiana Jones and the Last Crusade",
+          "date": "2023-06-26T09:47:14.763Z"
         },
-        "tt0290978": {
-          "title": "The Office",
-          "date": "2023-06-25T10:40:40.727Z"
+        "tt0071315": {
+          "title": "Chinatown",
+          "date": "2023-06-26T09:47:15.068Z"
         },
-        "tt6769208": {
-          "title": "Blue Planet II",
-          "date": "2023-06-25T10:40:41.287Z"
+        "tt6763664": {
+          "title": "The Haunting of Hill House",
+          "date": "2023-06-26T09:48:25.718Z"
         },
-        "tt3032476": {
-          "title": "Better Call Saul",
-          "date": "2023-06-25T10:40:42.239Z"
-        },
-        "tt0087843": {
-          "title": "Once Upon a Time in America",
-          "date": "2023-06-25T10:40:42.783Z"
-        },
-        "tt0055630": {
-          "title": "Yôjinbô",
-          "date": "2023-06-25T10:40:43.128Z"
-        },
-        "tt8503618": {
-          "title": "Hamilton",
-          "date": "2023-06-25T10:40:43.480Z"
-        },
-        "tt1454029": {
-          "title": "The Help",
-          "date": "2023-06-25T10:40:44.048Z"
-        },
-        "tt0107048": {
-          "title": "Groundhog Day",
-          "date": "2023-06-25T10:40:44.440Z"
-        },
-        "tt0043014": {
-          "title": "Sunset Boulevard",
-          "date": "2023-06-25T10:40:56.951Z"
-        },
-        "tt0110413": {
-          "title": "Léon",
-          "date": "2023-06-25T10:40:57.215Z"
-        },
-        "tt0073195": {
-          "title": "De zomer van de witte haai",
-          "date": "2023-06-25T10:40:57.591Z"
+        "tt0979432": {
+          "title": "Boardwalk Empire",
+          "date": "2023-06-26T09:48:26.212Z"
         }
       }
     }
   },
-  "appolin": {
+  "lukas": {
+    "private": false,
     "biography": "",
     "watchlist": {
       "tvseries": {},
       "movies": {}
+    }
+  },
+  "timmy": {
+    "private": false,
+    "biography": "",
+    "watchlist": {
+      "tvseries": {},
+      "movies": {}
+    }
+  },
+  "a": {
+    "private": false,
+    "biography": "Hallo I am soo coool",
+    "watchlist": {
+      "tvseries": {
+        "tt6763664": {
+          "title": "The Haunting of Hill House",
+          "date": "2023-06-26T09:46:51.142Z",
+          "episode": {}
+        },
+        "tt0979432": {
+          "title": "Boardwalk Empire",
+          "date": "2023-06-26T09:46:53.579Z",
+          "episode": {}
+        },
+        "tt0141842": {
+          "title": "The Sopranos",
+          "date": "2023-06-26T09:46:57.308Z",
+          "episode": {
+            "tt0705264": "6-1",
+            "tt0705258": "6-2",
+            "tt0763238": "6-3"
+          }
+        }
+      },
+      "movies": {
+        "tt0042876": {
+          "title": "Rashômon",
+          "date": "2023-06-26T09:46:52.252Z"
+        },
+        "tt1392214": {
+          "title": "Prisoners",
+          "date": "2023-06-26T09:46:52.556Z"
+        },
+        "tt0078748": {
+          "title": "Alien",
+          "date": "2023-06-26T09:46:52.909Z"
+        }
+      }
     }
   }
 }
