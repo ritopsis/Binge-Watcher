@@ -4,7 +4,7 @@ module.exports = {
   rapidBadWordFilterbaseApiKey:
     "820810d92fmsh47306384f1838ccp1ad0a6jsnb891ca3b29ec",
   //limited requests!
-  rapidChatGPTApiKey: "",
+  rapidChatGPTApiKey: "820810d92fmsh47306384f1838ccp1ad0a6jsnb891ca3b29ec",
   secret: "bingigis",
 };
 //loaded dynamically at runtime.
