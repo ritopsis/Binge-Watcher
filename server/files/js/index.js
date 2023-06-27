@@ -15,7 +15,7 @@ window.onload = function () {
       createNavButton("Login", "register_login.html", nav);
     }
     if (response) {
-      getwatchlist(null, function (error, response) {
+      getwatchlist(function (error, response) {
         if (response) {
           watchlist = JSON.parse(response);
           loggin = true;

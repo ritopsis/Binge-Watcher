@@ -15,7 +15,7 @@ window.onload = function () {
     }
     if (response) {
       username = response;
-      getwatchlist(null, function (error, response) {
+      getwatchlist(function (error, response) {
         if (response) {
           watchlist = JSON.parse(response);
           document.getElementById("set-privacy-button").textContent =

@@ -38,7 +38,7 @@ window.onload = function () {
             }
             const user = document.getElementById("user");
             user.textContent = usernameofsearch + "'s Watchlist";
-            getwatchlist(null, function (error, response) {
+            getwatchlist(function (error, response) {
               if (response) {
                 watchlist = JSON.parse(response);
                 loggin = true;

@@ -11,31 +11,18 @@ export function checkifloggedin(callback) {
   xhr.open("GET", "loggedin", true);
   xhr.send();
 }
-export function getwatchlist(username, callback) {
-  if (username) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        callback(null, xhr.responseText);
-      } else {
-        callback("Error: " + xhr.status, null);
-      }
-    };
-    xhr.open("GET", `watchlist/${username}`, true);
-    xhr.send();
-  } else {
-    //get watchlist of the loggedin user (identification: session)
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        callback(null, xhr.responseText);
-      } else {
-        callback("Error: " + xhr.status, null);
-      }
-    };
-    xhr.open("GET", "watchlist", true);
-    xhr.send();
-  }
+export function getwatchlist(callback) {
+  //get watchlist of the loggedin user (identification: session)
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      callback(null, xhr.responseText);
+    } else {
+      callback("Error: " + xhr.status, null);
+    }
+  };
+  xhr.open("GET", "watchlist", true);
+  xhr.send();
 }
 
 export function addWatchlist(article, callback) {
