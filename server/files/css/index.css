@@ -236,6 +236,10 @@ button[data-action="add"]:hover {
   background-color: #252525;
 }
 
+main {
+  margin-bottom: 100px;
+}
+
 /* Mobile Optimization */
 @media (max-width: 768px) {
   main {

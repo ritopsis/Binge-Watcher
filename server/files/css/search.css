@@ -31,7 +31,7 @@ button a:hover {
 }
 
 nav {
-  padding-top: 15px;
+  padding: 27px 12px;
   font-size: 24px;
   font-weight: 700;
   display: flex;

@@ -71,8 +71,8 @@
     }
   },
   "a": {
-    "private": false,
-    "biography": "Hallo I am soo coool",
+    "private": true,
+    "biography": "Hallo I am soo coool ****",
     "watchlist": {
       "tvseries": {
         "tt6763664": {
@@ -93,13 +93,31 @@
             "tt0705258": "6-2",
             "tt0763238": "6-3"
           }
+        },
+        "tt0096697": {
+          "title": "The Simpsons",
+          "date": "2023-06-26T13:46:29.994Z",
+          "episode": {}
+        },
+        "tt0367279": {
+          "title": "Arrested Development",
+          "date": "2023-06-26T13:46:50.889Z",
+          "episode": {
+            "tt0515236": "1-1",
+            "tt0515256": "1-2",
+            "tt0515212": "1-3",
+            "tt0515223": "1-4",
+            "tt0515253": "2-1",
+            "tt0515254": "2-2",
+            "tt0515209": "2-3",
+            "tt0515219": "2-4",
+            "tt0515243": "2-5",
+            "tt0515250": "3-1",
+            "tt0515249": "3-2"
+          }
         }
       },
       "movies": {
-        "tt0042876": {
-          "title": "Rashômon",
-          "date": "2023-06-26T09:46:52.252Z"
-        },
         "tt1392214": {
           "title": "Prisoners",
           "date": "2023-06-26T09:46:52.556Z"
@@ -107,6 +125,18 @@
         "tt0078748": {
           "title": "Alien",
           "date": "2023-06-26T09:46:52.909Z"
+        },
+        "tt0081505": {
+          "title": "The Shining",
+          "date": "2023-06-26T13:46:34.888Z"
+        },
+        "tt0071562": {
+          "title": "The Godfather: Part II",
+          "date": "2023-06-26T13:46:35.392Z"
+        },
+        "tt0103064": {
+          "title": "Terminator 2: Judgment Day",
+          "date": "2023-06-26T13:46:35.736Z"
         }
       }
     }
