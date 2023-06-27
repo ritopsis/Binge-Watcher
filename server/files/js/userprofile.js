@@ -49,23 +49,14 @@ window.onload = function () {
           } else {
             const mainElement = document.querySelector("main");
             document.getElementById("watchlist_info").remove();
-            let linkElement = document.createElement("h1");
+            let linkElement = document.createElement("h3");
             linkElement.textContent = "The user is private!";
             mainElement.appendChild(linkElement);
           }
         } else if (xhr.status === 404) {
           const mainElement = document.querySelector("main");
-          const elementsToDelete = Array.from(mainElement.children).filter(
-            (child) => {
-              return !child.classList.contains("searchuser");
-            }
-          );
-
-          // Remove each element
-          elementsToDelete.forEach((element) => {
-            mainElement.removeChild(element);
-          });
-          let linkElement = document.createElement("h1");
+          document.getElementById("watchlist_info").remove();
+          let linkElement = document.createElement("h3");
           linkElement.textContent = "There is no user with this username.";
           mainElement.appendChild(linkElement);
         } else {

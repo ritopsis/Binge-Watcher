@@ -342,46 +342,45 @@ app.post("/recommends", isAuthenticated, function (req, res) {
 
 // PUT-Methods
 app.put("/changebio", isAuthenticated, function (req, res) {
-  readFile(userdataPath, async (err, data) => {
-    if (err) {
-      console.error("Error:", err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    const jsonData = data;
-    const url =
-      "https://neutrinoapi-bad-word-filter.p.rapidapi.com/bad-word-filter";
-    postoptions = {
-      method: "POST",
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": config.rapidBadWordFilterbaseApiKey,
-        "X-RapidAPI-Host": "neutrinoapi-bad-word-filter.p.rapidapi.com",
-      },
-      body: new URLSearchParams({
-        content: req.body.biography,
-        "censor-character": "*",
-      }),
-    };
-
-    try {
-      const response = await fetch(url, postoptions);
-      const result = await response.text();
-      console.log(result);
-      text = JSON.parse(result);
-      jsonData[req.session.username]["biography"] = text["censored-content"];
-      writeFile(userdataPath, jsonData, (err) => {
+  const URL =
+    "https://neutrinoapi-bad-word-filter.p.rapidapi.com/bad-word-filter";
+  postoptions = {
+    method: "POST",
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+      "X-RapidAPI-Key": config.rapidBadWordFilterbaseApiKey,
+      "X-RapidAPI-Host": "neutrinoapi-bad-word-filter.p.rapidapi.com",
+    },
+    body: new URLSearchParams({
+      content: req.body.biography,
+      "censor-character": "*",
+    }),
+  };
+  fetch(URL, postoptions)
+    .then((response) => response.json())
+    .then((resdata) => {
+      const text = resdata;
+      readFile(userdataPath, (err, data) => {
         if (err) {
           console.error("Error:", err);
           res.status(500).send("Internal Server Error");
           return;
         }
-        res.status(200).json(text);
+        const jsonData = data;
+        jsonData[req.session.username]["biography"] = text["censored-content"];
+        writeFile(userdataPath, jsonData, (err) => {
+          if (err) {
+            console.error("Error:", err);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+          res.status(200).json(text);
+        });
       });
-    } catch (error) {
-      console.error(error);
-    }
-  });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 // DELETE-Methods
