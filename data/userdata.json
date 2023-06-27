@@ -1,6 +1,6 @@
 {
   "hamza": {
-    "private": false,
+    "private": true,
     "biography": "",
     "watchlist": {
       "tvseries": {
@@ -71,7 +71,7 @@
     }
   },
   "a": {
-    "private": true,
+    "private": false,
     "biography": "Hallo I am soo coool ****",
     "watchlist": {
       "tvseries": {
@@ -93,11 +93,6 @@
             "tt0705258": "6-2",
             "tt0763238": "6-3"
           }
-        },
-        "tt0096697": {
-          "title": "The Simpsons",
-          "date": "2023-06-26T13:46:29.994Z",
-          "episode": {}
         },
         "tt0367279": {
           "title": "Arrested Development",

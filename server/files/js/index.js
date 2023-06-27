@@ -1,4 +1,4 @@
-import { checkifloggedin, getwatchlist } from "./user.js";
+import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
 
 import { createNavButton, addarticle } from "./createElements.js";
 

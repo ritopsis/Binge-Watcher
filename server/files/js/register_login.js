@@ -1,4 +1,4 @@
-import { checkifloggedin } from "./user.js";
+import { checkifloggedin } from "./requestFunctions.js";
 
 window.onload = function () {
   checkifloggedin(function (err, response) {

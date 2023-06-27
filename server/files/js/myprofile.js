@@ -3,7 +3,7 @@ import {
   getwatchlist,
   addWatchlist,
   removeWatchlist,
-} from "./user.js";
+} from "./requestFunctions.js";
 import { createNavButton } from "./createElements.js";
 let watchlist = null;
 let loggin = null;
@@ -96,9 +96,9 @@ const searchButton = document.getElementById("search-button");
 const searchuserinput = document.getElementById("searchuser-input");
 
 searchButton.addEventListener("click", function () {
-  const suserinput = searchuserinput.value;
+  const suserinput = searchuserinput.value.toLowerCase();
   if (suserinput != username && suserinput) {
-    location.href = "/usersite.html?username=" + suserinput;
+    location.href = "/userprofile.html?username=" + suserinput;
   }
 });
 

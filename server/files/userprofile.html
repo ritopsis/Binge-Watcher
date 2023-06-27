@@ -9,11 +9,10 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-
     <title>Binge-Watcher</title>
     <link rel="stylesheet" href="css/myprofile.css" />
-    <script type="module" src="js/user.js"></script>
-    <script type="module" src="js/usersite.js"></script>
+    <script type="module" src="js/requestFunctions.js"></script>
+    <script type="module" src="js/userprofile.js"></script>
   </head>
 
   <body>
@@ -39,12 +38,14 @@
           <button id="search-button">Search</button>
         </div>
       </div>
+      <div id="watchlist_info">
       <h1 class="watchlist-h1" id="user">Your Watchlist</h1>
       <h2 id="biography">About me: nothing</h2>
       <div id="series"></div>
       <div class="series list"></div>
       <div id="movies"></div>
       <div class="movies list"></div>
+    </div>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -3,7 +3,7 @@ import {
   getwatchlist,
   addWatchlist,
   removeWatchlist,
-} from "./user.js";
+} from "./requestFunctions.js";
 
 import { createNavButton } from "./createElements.js";
 let watchlist = null;
@@ -18,7 +18,7 @@ window.onload = function () {
     if (response) {
       const urlParams = new URLSearchParams(window.location.search);
       const usernameofsearch = urlParams.get("username");
-      username = response;
+      username = response.toLowerCase();
       if (username == usernameofsearch && usernameofsearch) {
         window.location.href = "myprofile.html";
       }
@@ -48,16 +48,7 @@ window.onload = function () {
             });
           } else {
             const mainElement = document.querySelector("main");
-            const elementsToDelete = Array.from(mainElement.children).filter(
-              (child) => {
-                return !child.classList.contains("searchuser");
-              }
-            );
-
-            // Remove each element
-            elementsToDelete.forEach((element) => {
-              mainElement.removeChild(element);
-            });
+            document.getElementById("watchlist_info").remove();
             let linkElement = document.createElement("h1");
             linkElement.textContent = "The user is private!";
             mainElement.appendChild(linkElement);
@@ -80,7 +71,7 @@ window.onload = function () {
         } else {
         }
       };
-      xhr.open("GET", "watchlist/" + usernameofsearch, true);
+      xhr.open("GET", "watchlist/" + usernameofsearch.toLowerCase(), true);
       xhr.send();
     }
   });
@@ -92,7 +83,7 @@ const searchuserinput = document.getElementById("searchuser-input");
 searchButton.addEventListener("click", function () {
   const suserinput = searchuserinput.value;
   if (suserinput != username && suserinput != "") {
-    location.href = "/usersite.html?username=" + suserinput;
+    location.href = "/userprofile.html?username=" + suserinput;
   } else {
   }
 });

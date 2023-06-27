@@ -3,7 +3,7 @@ import {
   getwatchlist,
   addWatchlist,
   removeWatchlist,
-} from "./user.js";
+} from "./requestFunctions.js";
 import { createNavButton } from "./createElements.js";
 
 window.onload = function () {

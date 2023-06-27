@@ -1,4 +1,4 @@
-import { addWatchlist, removeWatchlist } from "./user.js";
+import { addWatchlist, removeWatchlist } from "./requestFunctions.js";
 
 export function createNavButton(text, link, navElement) {
   let listItem = document.createElement("li");
@@ -31,8 +31,6 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
     imageElement.src = "./image/poster.png";
     imageElement.alt = "Alternative Image";
   };
-
-  console.log(content);
 
   // Create the Release Year element
   const releaseElement = document.createElement("h3");
