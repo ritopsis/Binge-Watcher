@@ -101,7 +101,7 @@ function handleSearchRequest(title, page, loggin, watchlist) {
   let type =
     location.pathname == "/movie_search.html"
       ? "movie"
-      : location.pathname == "/tvserie_search.html"
+      : location.pathname == "/serie_search.html"
       ? "tvSeries"
       : "";
 
