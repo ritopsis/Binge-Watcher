@@ -12,10 +12,11 @@ const userdataPath = path.join("data", "userdata.json");
 app.use(express.static(path.join(__dirname, "files")));
 
 app.use(bodyParser.json());
+//middleware
 app.use(
   session({
-    secret: config.secret, // Secret key used to sign the session ID cookie
-    resave: false, // Forces the session to be saved back to the session store, even if it wasn't modified during the request
+    secret: config.secret, // secret key used to sign the session ID cookie
+    resave: false, // forces the session to be saved back to the session store, even if it wasn't modified during the request
     saveUninitialized: false, //uninitialized sessions will not be saved in the session store
   })
 );
@@ -130,7 +131,7 @@ app.get("/titles/:input", function (req, res) {
 
 app.get("/loggedin", isAuthenticated, function (req, res) {
   // check if current user is logged-in
-  res.status(200).send(req.session.username);
+  res.status(200).json(req.session.username);
 });
 
 app.get("/logout", function (req, res) {
@@ -201,7 +202,6 @@ app.post("/register", function (req, res) {
               res.status(500).send("Internal Server Error");
               return;
             }
-            console.log("User created");
             res.status(200).send("User created");
           });
         });
@@ -333,9 +333,10 @@ app.post("/recommends", isAuthenticated, function (req, res) {
   fetch(URL, chatoption)
     .then((response) => response.json())
     .then((data) => {
-      res.send(data);
+      res.status(200).json(data);
     })
     .catch((error) => {
+      res.status(500).send("Internal Server Error");
       console.log(error);
     });
 });
@@ -379,6 +380,7 @@ app.put("/changebio", isAuthenticated, function (req, res) {
       });
     })
     .catch((error) => {
+      res.status(500).send("Internal Server Error");
       console.log(error);
     });
 });
@@ -439,10 +441,11 @@ app.delete("/removeepwatchlist", isAuthenticated, function (req, res) {
         res.sendStatus(200);
       });
     } else {
-      res.sendStatus(404); // Not found - tconst does not exist in the watchlist
+      res.sendStatus(200); // Not found - means its already deleted :) idempotent
     }
   });
 });
+
 // PATCH-Methods
 app.patch("/privacy", isAuthenticated, function (req, res) {
   const setting = req.body.settings;
