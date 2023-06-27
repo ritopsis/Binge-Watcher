@@ -37,7 +37,7 @@ document
         } else if (xhr.status === 400) {
           messageElement.textContent = xhr.responseText;
         } else {
-          console.log(xhr.status);
+          console.error(xhr.status);
         }
       };
       xhr.open("POST", "register", true);
@@ -79,9 +79,8 @@ function login(data) {
       } else if (xhr.status === 401) {
         const messageElement = document.getElementById("login_message");
         messageElement.textContent = xhr.responseText;
-        console.log(xhr.responseText);
       } else {
-        console.log(xhr.status);
+        console.error(xhr.status);
       }
     };
     xhr.open("POST", "login", true);

@@ -21,7 +21,6 @@ window.onload = function () {
               content = result2;
               resolve(result);
             } else {
-              console.log(xhrEpisode.status);
               reject(xhrEpisode.status);
             }
           };
@@ -32,7 +31,7 @@ window.onload = function () {
           resolve(result);
         }
       } else {
-        console.log(xhr.status);
+        console.error(xhr.status);
         reject(xhr.status);
       }
     };
@@ -42,7 +41,7 @@ window.onload = function () {
 
   checkifloggedin(function (error, response) {
     if (error) {
-      console.log("Error:", error);
+      console.error("Error:", error);
       let nav = document.getElementById("nav_btn");
       createNavButton("Login", "register_login.html", nav);
       Promise.all([informationPromise])
@@ -53,7 +52,7 @@ window.onload = function () {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     } else {
       let nav = document.getElementById("nav_btn");
@@ -62,7 +61,7 @@ window.onload = function () {
       const watchlistPromise = new Promise((resolve, reject) => {
         getwatchlist(function (error, response) {
           if (error) {
-            console.log("Error:", error);
+            console.error("Error:", error);
             reject(error);
           } else {
             resolve(JSON.parse(response));
@@ -72,7 +71,6 @@ window.onload = function () {
 
       Promise.all([watchlistPromise, informationPromise])
         .then(([watchlistResult, informationPromise]) => {
-          console.log("Both requests finished");
           watchlist = watchlistResult;
           addarticle(informationPromise);
           if (informationPromise.titleType.isSeries) {
@@ -80,7 +78,7 @@ window.onload = function () {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     }
   });
@@ -137,9 +135,13 @@ function addarticle(content) {
 
   // create the plot element
   if (content.plot) {
-    const plotElement = document.createElement("p");
-    plotElement.textContent = content.plot.plotText.plainText;
-    divElement.appendChild(plotElement);
+    if (content.plot.plotText) {
+      if (content.plot.plotText.plainText) {
+        const plotElement = document.createElement("p");
+        plotElement.textContent = content.plot.plotText.plainText;
+        divElement.appendChild(plotElement);
+      }
+    }
   }
 
   // create the movie details element
@@ -152,7 +154,7 @@ function addarticle(content) {
   const ratingDivElement = document.createElement("div");
   ratingDivElement.className = "rating";
   const ratingElement = document.createElement("p");
-  console.log(content);
+
   ratingElement.textContent = content.ratingsSummary.aggregateRating
     ? content.ratingsSummary.aggregateRating
     : "0";
@@ -288,7 +290,7 @@ function removeEpWatchlist(episode, buttonElement) {
       buttonElement.textContent = "Watched";
       buttonElement.setAttribute("data-action", "add");
     } else {
-      console.log(xhr.status);
+      console.error(xhr.status);
     }
   };
 
@@ -304,7 +306,7 @@ function addEpWatchlist(episode, buttonElement) {
       buttonElement.textContent = "Unwatched";
       buttonElement.setAttribute("data-action", "remove");
     } else {
-      console.log(xhr.status);
+      console.error(xhr.status);
     }
   };
 

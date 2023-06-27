@@ -13,10 +13,11 @@ window.onload = function () {
         if (response) {
           const data = JSON.parse(response);
           const user_watchlist = data["watchlist"];
+          watchlist = user_watchlist;
           document.getElementById("set-privacy-button").textContent =
             user_watchlist.private ? "Set public" : "Set private";
           document.getElementById("biography-input").textContent =
-            user_watchlist["biography"];
+            data["biography"];
           content(user_watchlist);
           const nav = document.getElementById("nav_btn");
           createNavButton("Profile", "myprofile.html", nav);
@@ -30,15 +31,17 @@ window.onload = function () {
 
 document
   .getElementById("recommend-movies")
-  .addEventListener("click", function () {
-    this.disabled = true;
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    this.disable = true;
     recommend("movies", this);
   });
 
 document
   .getElementById("recommend-tvseries")
-  .addEventListener("click", function () {
-    this.disabled = true;
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    this.disable = true;
     recommend("tvseries", this);
   });
 
@@ -48,7 +51,6 @@ document
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
       if (xhr.status === 200) {
-        console.log(xhr.responseText);
         document.getElementById("set-privacy-button").textContent = setting
           ? "Set public"
           : "Set private";
@@ -72,7 +74,6 @@ saveButton.addEventListener("click", function () {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
-      console.log(xhr.responseText);
       const result = JSON.parse(xhr.responseText);
       biographyInput.value = result["censored-content"];
     } else {
@@ -228,15 +229,15 @@ function recommend(type, buttenElement) {
   if (watchlist) {
     let content = "";
     if (type == "tvseries") {
-      if (watchlist.watchlist.tvseries) {
-        let tvseries = watchlist.watchlist.tvseries;
+      if (watchlist.tvseries) {
+        let tvseries = watchlist.tvseries;
         for (let serieId in tvseries) {
           content += tvseries[serieId].title + " , ";
         }
       }
     } else {
-      if (watchlist.watchlist.movies) {
-        let movies = watchlist.watchlist.movies;
+      if (watchlist.movies) {
+        let movies = watchlist.movies;
         for (let movieId in movies) {
           content += movies[movieId].title + " , ";
         }
@@ -248,10 +249,9 @@ function recommend(type, buttenElement) {
       if (xhr.status === 200) {
         buttenElement.disable = false;
         const result = JSON.parse(xhr.responseText);
-        console.log(result);
         aitextboxeElement.textContent = result.choices[0].message.content;
       } else {
-        console.log(xhr.status);
+        console.error(xhr.status);
       }
     };
     const data = {

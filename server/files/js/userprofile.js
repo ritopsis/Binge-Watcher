@@ -36,7 +36,6 @@ window.onload = function () {
               if (response) {
                 const data = JSON.parse(response);
                 const user_watchlist = data["watchlist"];
-                console.log(user_watchlist);
                 content(user_watchlist, searchuser_watchlist);
               } else {
               }
