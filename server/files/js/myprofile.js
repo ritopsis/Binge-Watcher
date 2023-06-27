@@ -6,7 +6,6 @@ import {
 } from "./requestFunctions.js";
 import { createNavButton } from "./createElements.js";
 let watchlist = null;
-let loggin = null;
 let username = null;
 window.onload = function () {
   checkifloggedin(function (error, response) {
@@ -22,7 +21,6 @@ window.onload = function () {
             watchlist.private ? "Set public" : "Set private";
           document.getElementById("biography-input").textContent =
             watchlist["biography"];
-          loggin = true;
           content();
           const nav = document.getElementById("nav_btn");
           createNavButton("Profile", "myprofile.html", nav);
@@ -92,11 +90,10 @@ saveButton.addEventListener("click", function () {
   xhr.send(JSON.stringify(data));
 });
 
-const searchButton = document.getElementById("search-button");
-const searchuserinput = document.getElementById("searchuser-input");
-
-searchButton.addEventListener("click", function () {
-  const suserinput = searchuserinput.value.toLowerCase();
+document.getElementById("search-button").addEventListener("click", function () {
+  const suserinput = document
+    .getElementById("searchuser-input")
+    .value.toLowerCase();
   if (suserinput != username && suserinput) {
     location.href = "/userprofile.html?username=" + suserinput;
   }
@@ -105,7 +102,7 @@ searchButton.addEventListener("click", function () {
 function content() {
   const userElement = document.getElementById("user");
   userElement.textContent = "Your Watchlist: " + username;
-  if (watchlist && loggin) {
+  if (watchlist) {
     if (watchlist.watchlist.tvseries) {
       if (Object.keys(watchlist.watchlist.tvseries).length > 0) {
         // Create and append h1 for Series
@@ -211,7 +208,7 @@ function addmedia(title, serieId, episode, documentelement) {
   // Append the link element to the article element
   articleElement.appendChild(linkElement);
 
-  if (loggin && watchlist) {
+  if (watchlist) {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = "Remove";
     buttonElement.setAttribute("data-action", "remove");
@@ -254,7 +251,7 @@ function remove(article, button) {
 }
 function recommend(type, buttenElement) {
   const aitextboxeElement = document.getElementById("ai-output");
-  if (loggin && watchlist) {
+  if (watchlist) {
     let content = "";
     if (type == "tvseries") {
       if (watchlist.watchlist.tvseries) {

@@ -1,25 +1,23 @@
 import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
-
 import { createNavButton, addarticle } from "./createElements.js";
-
-let watchlist = null;
-let loggin = null;
-let totalMedia = 5;
 
 window.onload = function () {
   const nav = document.getElementById("nav_btn");
   checkifloggedin(function (error, response) {
     if (error) {
+      // user is not logged in
       content();
-      loggin = false;
       createNavButton("Login", "register_login.html", nav);
     }
     if (response) {
       getwatchlist(function (error, response) {
+        if (error) {
+          console.error("Failed to retrieve watchlist:", error);
+        }
         if (response) {
-          watchlist = JSON.parse(response);
-          loggin = true;
-          content();
+          const data = JSON.parse(response);
+          const user_watchlist = data["watchlist"];
+          content(user_watchlist);
           createNavButton("Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
         } else {
@@ -29,13 +27,14 @@ window.onload = function () {
   });
 };
 
-function content() {
+function content(user_watchlist) {
+  let totalMedia = 5;
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
       const result = JSON.parse(xhr.responseText);
       result.forEach((element) => {
-        addarticle(element, ".topmovies", "movies", loggin, watchlist);
+        addarticle(element, ".topmovies", "movies", user_watchlist);
       });
     } else {
       document
@@ -53,7 +52,7 @@ function content() {
     if (xhrShows.status === 200) {
       const showsResult = JSON.parse(xhrShows.responseText);
       showsResult.forEach((element) => {
-        addarticle(element, ".topseries", "tvseries", loggin, watchlist);
+        addarticle(element, ".topseries", "tvseries", user_watchlist);
       });
     } else {
       document

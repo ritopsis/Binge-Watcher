@@ -3,7 +3,7 @@ export function checkifloggedin(callback) {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
-      callback(null, xhr.responseText);
+      callback(null, JSON.parse(xhr.responseText));
     } else {
       callback("Error: " + xhr.status, null);
     }

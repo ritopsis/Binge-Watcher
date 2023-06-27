@@ -4,6 +4,7 @@ import { createNavButton, add, remove } from "./createElements.js";
 window.onload = function () {
   checkifloggedin(function (error, response) {
     if (error) {
+      // user is not logged in
       let nav = document.getElementById("nav_btn");
       createNavButton("Login", "register_login.html", nav);
       const url = new URL(location.href);
@@ -17,6 +18,9 @@ window.onload = function () {
       createNavButton("Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
       getwatchlist(function (error, response) {
+        if (error) {
+          console.error("Failed to retrieve watchlist:", error);
+        }
         if (response) {
           const data = JSON.parse(response);
           const user_watchlist = data["watchlist"];
@@ -35,8 +39,9 @@ window.onload = function () {
   });
 };
 
+//searchbutton
 document.getElementById("search").addEventListener("submit", function (event) {
-  event.preventDefault(); // Prevent form submission
+  event.preventDefault(); // prevent form submission
   //set params in the query
   const url = new URL(location.href);
   const params = new URLSearchParams(url.search);
@@ -48,6 +53,7 @@ document.getElementById("search").addEventListener("submit", function (event) {
 
 function handleSearchRequest(title, page, user_watchlist) {
   const xhr = new XMLHttpRequest();
+  //get titles from searchinput
   xhr.onload = function () {
     if (xhr.status === 200) {
       const sresult = JSON.parse(xhr.responseText);
@@ -61,6 +67,7 @@ function handleSearchRequest(title, page, user_watchlist) {
         addarticle(element, type, user_watchlist);
       });
 
+      //Pagination
       if (sresult.entries != 0) {
         // entries are the amout of media that came back from the request
         if (Number(sresult.page) - 1 != 0) {
@@ -167,7 +174,9 @@ function addarticle(media, type, user_watchlist) {
 
   // check if the user is logged in to show the Add/Remove button
   if (user_watchlist) {
+    // create button element for adding and removing media from the watchlist
     const buttonElement = document.createElement("button");
+    // check if the mediaId is in the user's watchlist
     if (user_watchlist[type]?.hasOwnProperty(media.id)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
@@ -175,6 +184,7 @@ function addarticle(media, type, user_watchlist) {
       buttonElement.textContent = "Add";
       buttonElement.setAttribute("data-action", "add");
     }
+    // add event listener for the button
     buttonElement.addEventListener("click", function () {
       const action = buttonElement.getAttribute("data-action");
       if (action === "add") {

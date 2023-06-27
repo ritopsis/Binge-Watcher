@@ -9,7 +9,7 @@ export function createNavButton(text, link, navElement) {
   navElement.appendChild(listItem);
 }
 
-export function addarticle(content, documentelement, type, loggin, watchlist) {
+export function addarticle(content, documentelement, type, user_watchlist) {
   const articleElement = document.createElement("article");
   articleElement.id = content.id;
   articleElement.setAttribute("data-type", type);
@@ -50,9 +50,9 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
   // Append the link element to the article element
   articleElement.appendChild(linkElement);
 
-  if (loggin && watchlist) {
+  if (user_watchlist) {
     const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][type].hasOwnProperty(content.id)) {
+    if (user_watchlist[type]?.hasOwnProperty(content.id)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
     } else {

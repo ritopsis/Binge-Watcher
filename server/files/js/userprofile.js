@@ -1,5 +1,4 @@
 import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
-
 import { createNavButton, add, remove } from "./createElements.js";
 
 let username = null;
@@ -70,7 +69,6 @@ document.getElementById("search-button").addEventListener("click", function () {
     .value.toLowerCase();
   if (searchinput != username && searchinput != "") {
     location.href = "/userprofile.html?username=" + searchinput;
-  } else {
   }
 });
 

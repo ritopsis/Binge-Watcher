@@ -168,6 +168,11 @@
           "title": "Digimon: Digital Monsters",
           "date": "2023-06-27T11:49:39.592Z",
           "episode": {}
+        },
+        "tt0388629": {
+          "title": "One Piece: Stampede",
+          "date": "2023-06-27T12:37:08.432Z",
+          "episode": {}
         }
       },
       "movies": {
@@ -242,12 +247,16 @@
         "tt8856470": {
           "title": "Pokémon Mewtwo Slaat Terug Evolutie",
           "date": "2023-06-27T11:28:45.216Z"
+        },
+        "tt6595896": {
+          "title": "Pokémon: De Film - Ik Kies Jou",
+          "date": "2023-06-27T12:16:53.698Z"
         }
       }
     }
   },
   "poki": {
-    "private": false,
+    "private": true,
     "biography": "",
     "watchlist": {
       "tvseries": {
