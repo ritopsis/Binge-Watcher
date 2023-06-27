@@ -1,9 +1,4 @@
-import {
-  checkifloggedin,
-  getwatchlist,
-  addWatchlist,
-  removeWatchlist,
-} from "./requestFunctions.js";
+import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
 import { createNavButton, add, remove } from "./createElements.js";
 let watchlist = null;
 let username = null;

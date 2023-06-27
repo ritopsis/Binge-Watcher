@@ -1,10 +1,5 @@
-import {
-  checkifloggedin,
-  getwatchlist,
-  addWatchlist,
-  removeWatchlist,
-} from "./requestFunctions.js";
-import { createNavButton } from "./createElements.js";
+import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
+import { createNavButton, add, remove } from "./createElements.js";
 
 let watchlist = null;
 let content = null;
@@ -18,8 +13,7 @@ window.onload = function () {
       if (xhr.status === 200) {
         const result = JSON.parse(xhr.responseText);
         if (result.titleType.isSeries) {
-          // true = serie
-          // call episodes
+          // true = serie -> get episodes
           const xhrEpisode = new XMLHttpRequest();
           xhrEpisode.onload = function () {
             if (xhrEpisode.status === 200) {
@@ -46,7 +40,6 @@ window.onload = function () {
     xhr.send();
   });
 
-  const menuItems = document.getElementById("menuItems");
   checkifloggedin(function (error, response) {
     if (error) {
       console.log("Error:", error);
@@ -108,7 +101,6 @@ function addarticle(content) {
   divWrapper.classList.add("main-article");
 
   // Create the image element
-  // Create the image element
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
   imageElement.src = content.primaryImage && content.primaryImage.url;
@@ -130,8 +122,7 @@ function addarticle(content) {
   titleElement.textContent = title;
   divElement.appendChild(titleElement);
 
-  // Create the release date element
-
+  // create the release date element
   if (
     content.releaseDate &&
     content.releaseDate.month &&
@@ -144,20 +135,20 @@ function addarticle(content) {
     divElement.appendChild(releaseDateElement);
   }
 
-  // Create the plot element
+  // create the plot element
   if (content.plot) {
     const plotElement = document.createElement("p");
     plotElement.textContent = content.plot.plotText.plainText;
     divElement.appendChild(plotElement);
   }
 
-  // Create the movie details element
+  // create the movie details element
   const movieDetails = document.createElement("div");
   movieDetails.className = "movieDetails";
   divElement.appendChild(movieDetails);
   divWrapper.appendChild(divElement);
 
-  // Create the rating element
+  // create the rating element
   const ratingDivElement = document.createElement("div");
   ratingDivElement.className = "rating";
   const ratingElement = document.createElement("p");
@@ -200,32 +191,13 @@ function addarticle(content) {
   topMoviesElement.appendChild(articleElement);
 }
 
-function add(article, button) {
-  addWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Remove";
-      button.setAttribute("data-action", "remove"); // Change the action to "remove"
-    }
-  });
-}
-function remove(article, button) {
-  removeWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Add";
-      button.setAttribute("data-action", "add"); // Change the action to "add"
-    }
-  });
-}
 function displaySeasonAndEpisode(watchlist, data) {
+  //get the main article
   const articleElement = document.querySelector("article");
   const id = articleElement.id;
   const title = articleElement.dataset.name;
 
-  // Create an object to store episodes by season
+  // create an object to store episodes by season
   const seasons = {};
 
   data.forEach((episode) => {
@@ -235,26 +207,26 @@ function displaySeasonAndEpisode(watchlist, data) {
     episode["title"] = title;
 
     if (!isNaN(seasonNumber) && !isNaN(episodeNumber)) {
-      // Check if the season exists in the seasons object, if not, create it
+      // check if the season exists in the seasons object, if not, create it
       if (!seasons.hasOwnProperty(seasonNumber)) {
         seasons[seasonNumber] = [];
       }
 
-      // Add the episode to the respective season
+      // add the episode to the respective season
       seasons[seasonNumber].push(episode);
     }
   });
 
-  // Create the additional container
+  // create the additional container
   const additionalContainer = document.createElement("div");
   additionalContainer.className = "additional-container";
 
-  // Iterate over the seasons and create the season tabs and episodes
+  // iterate over the seasons and create the season tabs and episodes
   for (const seasonNumber in seasons) {
     const seasonElement = document.createElement("div");
     seasonElement.className = "season";
 
-    // Create a button for the season
+    // create a button for the season
     const seasonButton = document.createElement("button");
     seasonButton.textContent = `Season ${seasonNumber}`;
     seasonButton.setAttribute("data-bs-toggle", "collapse");
@@ -268,7 +240,7 @@ function displaySeasonAndEpisode(watchlist, data) {
     episodesContainer.className = "episodes-container collapse";
     episodesContainer.id = `season-${seasonNumber}-episodes`;
 
-    // Create episode elements for the current season
+    // create episode elements for the current season
     seasons[seasonNumber].forEach((episode) => {
       const episodeElement = document.createElement("div");
       episodeElement.className = "episodes";
@@ -305,7 +277,7 @@ function displaySeasonAndEpisode(watchlist, data) {
     additionalContainer.appendChild(seasonElement);
   }
 
-  // Append the additional container to the seasons-container
+  // append the additional container to the seasons-container
   document.getElementById("seasons-container").appendChild(additionalContainer);
 }
 

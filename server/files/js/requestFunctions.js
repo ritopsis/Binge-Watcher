@@ -59,3 +59,4 @@ export function removeWatchlist(article, callback) {
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(JSON.stringify(data));
 }
+//module's compilation

@@ -7,6 +7,8 @@ const session = require("express-session"); //library handles cookies and checki
 const config = require(path.join(__dirname, "config.js"));
 const registerPath = path.join("data", "registeredaccounts.json");
 const userdataPath = path.join("data", "userdata.json");
+const cors = require("cors");
+app.use(cors());
 
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, "files")));
@@ -32,6 +34,7 @@ const options = {
 };
 
 app.get("/pop_media", function (req, res) {
+  //get popular medias)
   const totalMedia = req.query.limit; // number of medias we want to have
   const mediaList = req.query.list; // from a medialist (movielist,serielist)
   const URL = `https://moviesdatabase.p.rapidapi.com/titles/random?list=${mediaList}&limit=${totalMedia}`;
@@ -153,8 +156,8 @@ app.get("/logout", function (req, res) {
 
 // POST-Methods
 app.post("/register", function (req, res) {
+  // create a user
   const { username, password } = req.body;
-
   // Check if username and password is longer than 4 characters
   if (username.length >= 3 || password.length >= 3) {
     //check if username contains any special characters
@@ -519,15 +522,6 @@ function isAuthenticated(req, res, next) {
     res.status(401).send("Unauthorized");
   }
 }
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 app.listen(3000);
 

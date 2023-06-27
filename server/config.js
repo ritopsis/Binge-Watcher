@@ -7,3 +7,4 @@ module.exports = {
   rapidChatGPTApiKey: "",
   secret: "bingigis",
 };
+//loaded dynamically at runtime.
