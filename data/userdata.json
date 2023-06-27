@@ -1,6 +1,6 @@
 {
   "hamza": {
-    "private": true,
+    "private": false,
     "biography": "",
     "watchlist": {
       "tvseries": {
@@ -50,6 +50,10 @@
         "tt0979432": {
           "title": "Boardwalk Empire",
           "date": "2023-06-26T09:48:26.212Z"
+        },
+        "tt0078748": {
+          "title": "Alien",
+          "date": "2023-06-27T10:09:40.649Z"
         }
       }
     }
@@ -132,6 +136,10 @@
         "tt0103064": {
           "title": "Terminator 2: Judgment Day",
           "date": "2023-06-26T13:46:35.736Z"
+        },
+        "tt0097576": {
+          "title": "Indiana Jones and the Last Crusade",
+          "date": "2023-06-27T10:14:37.102Z"
         }
       }
     }

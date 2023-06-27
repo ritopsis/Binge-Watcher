@@ -10,6 +10,7 @@ let watchlist = null;
 let watchlistofuser = null;
 let loggin = null;
 let username = null;
+
 window.onload = function () {
   checkifloggedin(function (error, response) {
     if (error) {
@@ -137,7 +138,7 @@ function addmedia(title, serieId, episode, documentelement) {
 
   if (loggin && watchlist) {
     const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][type].hasOwnProperty(content.id)) {
+    if (watchlist["watchlist"][type].hasOwnProperty(serieId)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
     } else {
