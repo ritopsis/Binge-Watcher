@@ -7,7 +7,6 @@ import {
 import { createNavButton } from "./createElements.js";
 
 let watchlist = null;
-let loggin = null;
 let content = null;
 
 window.onload = function () {
@@ -19,8 +18,8 @@ window.onload = function () {
       if (xhr.status === 200) {
         const result = JSON.parse(xhr.responseText);
         if (result.titleType.isSeries) {
-          // true = Serie, false = keine Serie sondern Film
-          // Episoden abrufen
+          // true = serie
+          // call episodes
           const xhrEpisode = new XMLHttpRequest();
           xhrEpisode.onload = function () {
             if (xhrEpisode.status === 200) {
@@ -35,8 +34,7 @@ window.onload = function () {
           xhrEpisode.open("GET", `/episodes/${id}`, true);
           xhrEpisode.send();
         } else {
-          // ist ein Film
-          console.log(result);
+          // false = movie
           resolve(result);
         }
       } else {
@@ -65,7 +63,6 @@ window.onload = function () {
           console.log(error);
         });
     } else {
-      loggin = true;
       let nav = document.getElementById("nav_btn");
       createNavButton("Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
@@ -134,10 +131,18 @@ function addarticle(content) {
   divElement.appendChild(titleElement);
 
   // Create the release date element
-  const releaseDateElement = document.createElement("p");
-  releaseDateElement.className = "release";
-  releaseDateElement.textContent = `Release Date: ${content.releaseDate.month}/${content.releaseDate.day}/${content.releaseDate.year}`;
-  divElement.appendChild(releaseDateElement);
+
+  if (
+    content.releaseDate &&
+    content.releaseDate.month &&
+    content.releaseDate.day &&
+    content.releaseDate.year
+  ) {
+    const releaseDateElement = document.createElement("p");
+    releaseDateElement.className = "release";
+    releaseDateElement.textContent = `Release Date: ${content.releaseDate.month}/${content.releaseDate.day}/${content.releaseDate.year}`;
+    divElement.appendChild(releaseDateElement);
+  }
 
   // Create the plot element
   if (content.plot) {
@@ -156,13 +161,16 @@ function addarticle(content) {
   const ratingDivElement = document.createElement("div");
   ratingDivElement.className = "rating";
   const ratingElement = document.createElement("p");
-  ratingElement.textContent = content.ratingsSummary.aggregateRating;
+  console.log(content);
+  ratingElement.textContent = content.ratingsSummary.aggregateRating
+    ? content.ratingsSummary.aggregateRating
+    : "0";
   ratingDivElement.appendChild(document.createTextNode("Rating:"));
   ratingDivElement.appendChild(ratingElement);
   divWrapper.appendChild(ratingDivElement);
   articleElement.appendChild(divWrapper);
 
-  if (loggin && watchlist) {
+  if (watchlist) {
     const buttonElement = document.createElement("button");
     if (watchlist["watchlist"][type].hasOwnProperty(content.id)) {
       buttonElement.textContent = "Remove";

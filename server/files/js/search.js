@@ -105,12 +105,12 @@ function handleSearchRequest(title, page, user_watchlist) {
 
 function createPagination(text, sitenumber, highlight) {
   // create the list item element
-  var listItem = document.createElement("li");
+  const listItem = document.createElement("li");
   // highlight true means the user is on that sitenumber currently
   listItem.className = highlight ? "page-item active" : "page-item";
 
   // create button element
-  var button = document.createElement("button");
+  const button = document.createElement("button");
   button.className = "page-link";
   button.type = "button";
 
@@ -130,7 +130,7 @@ function createPagination(text, sitenumber, highlight) {
   });
 
   // Find the parent container
-  var parentContainer = document.querySelector(".pagination");
+  const parentContainer = document.querySelector(".pagination");
 
   // Append the list item element to the parent container
   parentContainer.appendChild(listItem);
