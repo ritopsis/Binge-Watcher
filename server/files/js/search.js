@@ -2,43 +2,33 @@ import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
 import { createNavButton, add, remove } from "./createElements.js";
 
 window.onload = function () {
-  let loggin = null;
-  let watchlist = null;
-
   checkifloggedin(function (error, response) {
     if (error) {
-      loggin = false;
       let nav = document.getElementById("nav_btn");
       createNavButton("Login", "register_login.html", nav);
       const url = new URL(location.href);
       const params = new URLSearchParams(url.search);
       if (params.has("page") && params.has("title")) {
-        handleSearchRequest(
-          params.get("title"),
-          params.get("page"),
-          loggin,
-          watchlist
-        );
+        handleSearchRequest(params.get("title"), params.get("page"), null);
       }
     }
     if (response) {
       let nav = document.getElementById("nav_btn");
       createNavButton("Profile", "myprofile.html", nav);
       createNavButton("Logout", "logout", nav);
-      loggin = true;
       getwatchlist(function (error, response) {
         if (response) {
-          watchlist = JSON.parse(response);
-        }
-        const url = new URL(location.href);
-        const params = new URLSearchParams(url.search);
-        if (params.has("page") && params.has("title")) {
-          handleSearchRequest(
-            params.get("title"),
-            params.get("page"),
-            loggin,
-            watchlist
-          );
+          const data = JSON.parse(response);
+          const user_watchlist = data["watchlist"];
+          const url = new URL(location.href);
+          const params = new URLSearchParams(url.search);
+          if (params.has("page") && params.has("title")) {
+            handleSearchRequest(
+              params.get("title"),
+              params.get("page"),
+              user_watchlist
+            );
+          }
         }
       });
     }
@@ -56,7 +46,7 @@ document.getElementById("search").addEventListener("submit", function (event) {
   location.href = url;
 });
 
-function handleSearchRequest(title, page, loggin, watchlist) {
+function handleSearchRequest(title, page, user_watchlist) {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
@@ -68,7 +58,7 @@ function handleSearchRequest(title, page, loggin, watchlist) {
         mainElement.removeChild(mainElement.firstChild);
       }
       result.forEach((element) => {
-        addarticle(element, type, loggin, watchlist);
+        addarticle(element, type, user_watchlist);
       });
 
       if (sresult.entries != 0) {
@@ -139,7 +129,7 @@ function createPagination(text, sitenumber, highlight) {
   parentContainer.appendChild(listItem);
 }
 
-function addarticle(media, type, loggin, watchlist) {
+function addarticle(media, type, user_watchlist) {
   // check type movie or series
   type = type == "movie" ? "movies" : "tvseries";
 
@@ -176,9 +166,9 @@ function addarticle(media, type, loggin, watchlist) {
   articleElement.appendChild(linkElement);
 
   // check if the user is logged in to show the Add/Remove button
-  if (loggin && watchlist) {
+  if (user_watchlist) {
     const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][type].hasOwnProperty(media.id)) {
+    if (user_watchlist[type]?.hasOwnProperty(media.id)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
     } else {
