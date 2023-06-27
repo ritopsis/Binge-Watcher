@@ -4,7 +4,7 @@ import {
   addWatchlist,
   removeWatchlist,
 } from "./requestFunctions.js";
-import { createNavButton } from "./createElements.js";
+import { createNavButton, add, remove } from "./createElements.js";
 let watchlist = null;
 let username = null;
 window.onload = function () {
@@ -16,12 +16,13 @@ window.onload = function () {
       username = response;
       getwatchlist(function (error, response) {
         if (response) {
-          watchlist = JSON.parse(response);
+          const data = JSON.parse(response);
+          const user_watchlist = data["watchlist"];
           document.getElementById("set-privacy-button").textContent =
-            watchlist.private ? "Set public" : "Set private";
+            user_watchlist.private ? "Set public" : "Set private";
           document.getElementById("biography-input").textContent =
-            watchlist["biography"];
-          content();
+            user_watchlist["biography"];
+          content(user_watchlist);
           const nav = document.getElementById("nav_btn");
           createNavButton("Profile", "myprofile.html", nav);
           createNavButton("Logout", "logout", nav);
@@ -99,29 +100,26 @@ document.getElementById("search-button").addEventListener("click", function () {
   }
 });
 
-function content() {
+function content(user_watchlist) {
   const userElement = document.getElementById("user");
   userElement.textContent = "Your Watchlist: " + username;
-  if (watchlist) {
-    if (watchlist.watchlist.tvseries) {
-      if (Object.keys(watchlist.watchlist.tvseries).length > 0) {
+  if (user_watchlist) {
+    if (user_watchlist.tvseries) {
+      if (Object.keys(user_watchlist.tvseries).length > 0) {
         // Create and append h1 for Series
         const seriesHeader = document.createElement("h1");
         seriesHeader.textContent = "Series:";
         document.getElementById("series").appendChild(seriesHeader);
       }
 
-      let tvseries = watchlist.watchlist.tvseries;
+      let tvseries = user_watchlist.tvseries;
 
       const sortedSeries = Object.entries(tvseries)
         .sort(([, a], [, b]) => new Date(b.date) - new Date(a.date))
         .map(([key, value]) => ({ id: key, ...value }));
 
-      console.log(sortedSeries);
-
       for (let serieId in sortedSeries) {
         let highestEpisode = null;
-
         for (let episodeId in sortedSeries[serieId].episode) {
           const episode = sortedSeries[serieId].episode[episodeId];
           const episodeParts = episode.split("-");
@@ -146,27 +144,29 @@ function content() {
             sortedSeries[serieId].title,
             sortedSeries[serieId].id,
             highestEpisode.season + "-" + highestEpisode.episodeNumber,
-            ".series"
+            ".series",
+            user_watchlist
           );
         } else {
           addmedia(
             sortedSeries[serieId].title,
             sortedSeries[serieId].id,
             null,
-            ".series"
+            ".series",
+            user_watchlist
           );
         }
       }
     }
-    if (watchlist.watchlist.movies) {
+    if (user_watchlist.movies) {
       // Create and append h1 for Movies
-      if (Object.keys(watchlist.watchlist.movies).length) {
+      if (Object.keys(user_watchlist.movies).length) {
         const moviesHeader = document.createElement("h1");
         moviesHeader.textContent = "Movies:";
         document.getElementById("movies").appendChild(moviesHeader);
       }
 
-      let movies = watchlist.watchlist.movies;
+      const movies = user_watchlist.movies;
       const sortedMovies = Object.entries(movies)
         .sort(([, a], [, b]) => new Date(b.date) - new Date(a.date))
         .map(([key, value]) => ({ id: key, ...value }));
@@ -175,7 +175,8 @@ function content() {
           sortedMovies[movieId].title,
           sortedMovies[movieId].id,
           null,
-          ".movies"
+          ".movies",
+          user_watchlist
         );
       }
     }
@@ -199,56 +200,34 @@ function addmedia(title, serieId, episode, documentelement) {
   // Append the image and heading elements to the link element
   linkElement.appendChild(headingElement);
 
-  if (episode) {
+  if (type == "tvseries") {
     const headingElement2 = document.createElement("h3");
-    headingElement2.textContent = "Last watched: " + episode;
+    headingElement2.textContent = episode
+      ? "Last watched: " + episode
+      : "Not started";
     linkElement.appendChild(headingElement2);
   }
-
   // Append the link element to the article element
   articleElement.appendChild(linkElement);
 
-  if (watchlist) {
-    const buttonElement = document.createElement("button");
-    buttonElement.textContent = "Remove";
-    buttonElement.setAttribute("data-action", "remove");
-    buttonElement.addEventListener("click", function () {
-      const action = buttonElement.getAttribute("data-action");
-      if (action === "add") {
-        add(articleElement, buttonElement);
-      } else {
-        remove(articleElement, buttonElement);
-      }
-    });
-    articleElement.appendChild(buttonElement);
-  }
+  const buttonElement = document.createElement("button");
+  buttonElement.textContent = "Remove";
+  buttonElement.setAttribute("data-action", "remove");
+  buttonElement.addEventListener("click", function () {
+    const action = buttonElement.getAttribute("data-action");
+    if (action === "add") {
+      add(articleElement, buttonElement);
+    } else {
+      remove(articleElement, buttonElement);
+    }
+  });
+  articleElement.appendChild(buttonElement);
 
   // Add the article element to the document
   const topMoviesElement = document.querySelector(documentelement);
   topMoviesElement.appendChild(articleElement);
 }
 
-function add(article, button) {
-  addWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Remove";
-      button.setAttribute("data-action", "remove"); // Change the action to "remove"
-    }
-  });
-}
-
-function remove(article, button) {
-  removeWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Add";
-      button.setAttribute("data-action", "add"); // Change the action to "add"
-    }
-  });
-}
 function recommend(type, buttenElement) {
   const aitextboxeElement = document.getElementById("ai-output");
   if (watchlist) {

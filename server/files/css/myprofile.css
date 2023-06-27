@@ -163,7 +163,7 @@ nav a:hover {
 
 article a h1 {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 21px;
   margin: 12px 0;
 }
 
@@ -188,8 +188,8 @@ article a {
 
 article h3 {
   margin-top: 12px;
-  font-size: 12px;
-  color: #9ca3af;
+  font-size: 16px;
+  color: #434649;
 }
 
 article img {
@@ -231,33 +231,7 @@ button[data-action="add"]:hover {
   background-color: #252525;
 }
 
-footer {
-  justify-content: center;
-  display: flex;
-}
-
-ul {
-  padding: 0;
-  gap: 10px;
-  justify-content: center;
-  display: flex;
-}
-
-li button {
-  cursor: pointer;
-  font-weight: 700;
-  width: 55px;
-  height: 55px;
-  border-radius: 999rem;
-  border: 0;
-  color: white;
-  background: black;
-}
-
-#movies {
-  margin: 40px 0;
-}
-
+#movies,
 #series {
   margin: 40px 0;
 }
@@ -274,6 +248,7 @@ li button {
   margin-top: 10px;
   width: 100px;
 }
+
 .content-recommend {
   display: flex;
   flex-direction: column;

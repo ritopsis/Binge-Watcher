@@ -1,9 +1,9 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const app = express();
+const app = express(); //our server
 const fs = require("fs"); //For file creation/reading
-const session = require("express-session");
+const session = require("express-session"); //library handles cookies and checking sessionid
 const config = require(path.join(__dirname, "config.js"));
 const registerPath = path.join("data", "registeredaccounts.json");
 const userdataPath = path.join("data", "userdata.json");
@@ -12,11 +12,12 @@ const userdataPath = path.join("data", "userdata.json");
 app.use(express.static(path.join(__dirname, "files")));
 
 app.use(bodyParser.json());
+
 //middleware
 app.use(
   session({
     secret: config.secret, // secret key used to sign the session ID cookie
-    resave: false, // forces the session to be saved back to the session store, even if it wasn't modified during the request
+    resave: false, // only saved session in session store if it was modified during the request
     saveUninitialized: false, //uninitialized sessions will not be saved in the session store
   })
 );

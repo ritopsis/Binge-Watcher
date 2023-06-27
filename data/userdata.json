@@ -1,347 +1,294 @@
 {
-  "hamza": {
+  "lena": {
     "private": false,
-    "biography": "",
+    "biography": "Ich bin so coooool ******",
     "watchlist": {
       "tvseries": {
-        "tt1856010": {
-          "title": "House of Cards",
-          "date": "2023-06-26T09:47:15.684Z",
+        "tt4574334": {
+          "title": "Stranger Things",
+          "date": "2023-06-27T14:30:36.193Z",
           "episode": {}
         },
-        "tt0141842": {
-          "title": "The Sopranos",
-          "date": "2023-06-27T10:33:15.311Z",
-          "episode": {
-            "tt0705250": "2-1",
-            "tt0705240": "2-2",
-            "tt0705288": "2-3",
-            "tt0705237": "2-4",
-            "tt0705230": "2-5",
-            "tt0705278": "2-6"
-          }
-        }
-      },
-      "movies": {
-        "tt0097576": {
-          "title": "Indiana Jones and the Last Crusade",
-          "date": "2023-06-26T09:47:14.763Z"
-        },
-        "tt0071315": {
-          "title": "Chinatown",
-          "date": "2023-06-26T09:47:15.068Z"
-        },
-        "tt6763664": {
-          "title": "The Haunting of Hill House",
-          "date": "2023-06-26T09:48:25.718Z"
-        },
-        "tt0979432": {
-          "title": "Boardwalk Empire",
-          "date": "2023-06-26T09:48:26.212Z"
-        },
-        "tt0078748": {
-          "title": "Alien",
-          "date": "2023-06-27T10:09:40.649Z"
-        }
-      }
-    }
-  },
-  "lukas": {
-    "private": false,
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
-    }
-  },
-  "timmy": {
-    "private": false,
-    "biography": "",
-    "watchlist": {
-      "tvseries": {},
-      "movies": {}
-    }
-  },
-  "a": {
-    "private": false,
-    "biography": "*******",
-    "watchlist": {
-      "tvseries": {
-        "tt0367279": {
-          "title": "Arrested Development",
-          "date": "2023-06-26T13:46:50.889Z",
-          "episode": {
-            "tt0515236": "1-1",
-            "tt0515256": "1-2",
-            "tt0515212": "1-3",
-            "tt0515223": "1-4",
-            "tt0515253": "2-1",
-            "tt0515254": "2-2",
-            "tt0515209": "2-3",
-            "tt0515219": "2-4",
-            "tt0515243": "2-5",
-            "tt0515250": "3-1",
-            "tt0515249": "3-2"
-          }
-        },
-        "tt0112159": {
-          "title": "Neon Genesis Evangelion",
-          "date": "2023-06-27T10:32:54.157Z",
-          "episode": {}
-        },
-        "tt1513168": {
-          "title": "Through the Wormhole",
-          "date": "2023-06-27T10:32:54.653Z",
+        "tt2244495": {
+          "title": "The Eric Andre Show",
+          "date": "2023-06-27T14:30:36.977Z",
           "episode": {}
         },
         "tt0098936": {
           "title": "Twin Peaks",
-          "date": "2023-06-27T10:32:56.926Z",
+          "date": "2023-06-27T14:30:37.345Z",
           "episode": {}
         },
-        "tt0417373": {
-          "title": "The Venture Bros.",
-          "date": "2023-06-27T11:00:13.866Z",
+        "tt0310455": {
+          "title": "Foyle's War",
+          "date": "2023-06-27T14:30:37.744Z",
           "episode": {}
         },
-        "tt5290382": {
-          "title": "Mindhunter",
-          "date": "2023-06-27T11:01:50.576Z",
-          "episode": {}
+        "tt9544034": {
+          "title": "The Family Man",
+          "date": "2023-06-27T14:30:47.712Z",
+          "episode": {
+            "tt9637242": "1-1",
+            "tt9637266": "1-2"
+          }
         },
-        "tt0096548": {
-          "title": "Blackadder Goes Forth",
-          "date": "2023-06-27T11:01:53.550Z",
+        "tt9335498": {
+          "title": "Demon Slayer: Kimetsu No Yaiba",
+          "date": "2023-06-27T14:30:55.296Z",
           "episode": {}
         },
         "tt8289930": {
           "title": "Formula 1: Drive to Survive",
-          "date": "2023-06-27T11:01:54.110Z",
+          "date": "2023-06-27T14:30:55.656Z",
           "episode": {}
         },
-        "tt3530232": {
-          "title": "Last Week Tonight with John Oliver",
-          "date": "2023-06-27T11:01:54.422Z",
+        "tt4786824": {
+          "title": "The Crown",
+          "date": "2023-06-27T14:30:55.968Z",
           "episode": {}
         },
-        "tt1856010": {
-          "title": "House of Cards",
-          "date": "2023-06-27T11:02:28.136Z",
+        "tt0121955": {
+          "title": "South Park",
+          "date": "2023-06-27T14:30:56.232Z",
           "episode": {}
         },
-        "tt0141842": {
-          "title": "The Sopranos",
-          "date": "2023-06-27T11:02:28.472Z",
-          "episode": {}
-        },
-        "tt1831164": {
-          "title": "Leyla ile Mecnun",
-          "date": "2023-06-27T11:11:50.534Z",
-          "episode": {}
-        },
-        "tt4269716": {
-          "title": "Umbre",
-          "date": "2023-06-27T11:11:51.301Z",
-          "episode": {}
-        },
-        "tt10541088": {
-          "title": "Clarkson's Farm",
-          "date": "2023-06-27T11:11:51.622Z",
-          "episode": {}
-        },
-        "tt2098220": {
-          "title": "Hunter x Hunter",
-          "date": "2023-06-27T11:11:53.414Z",
-          "episode": {}
-        },
-        "tt10233448": {
-          "title": "Vinland Saga",
-          "date": "2023-06-27T11:11:58.502Z",
-          "episode": {}
-        },
-        "tt0988818": {
-          "title": "Gintama",
-          "date": "2023-06-27T11:11:59.286Z",
-          "episode": {}
-        },
-        "tt0210418": {
-          "title": "Digimon: Digital Monsters",
-          "date": "2023-06-27T11:49:39.592Z",
-          "episode": {}
-        },
-        "tt0388629": {
-          "title": "One Piece: Stampede",
-          "date": "2023-06-27T12:37:08.432Z",
+        "tt0773262": {
+          "title": "Dexter",
+          "date": "2023-06-27T14:30:56.769Z",
           "episode": {}
         }
       },
       "movies": {
-        "tt0081505": {
-          "title": "The Shining",
-          "date": "2023-06-26T13:46:34.888Z"
+        "tt0056592": {
+          "title": "To Kill a Mockingbird",
+          "date": "2023-06-27T14:30:38.706Z"
         },
-        "tt0093058": {
-          "title": "Full Metal Jacket",
-          "date": "2023-06-27T10:32:59.189Z"
+        "tt0118799": {
+          "title": "Het leven is mooi",
+          "date": "2023-06-27T14:30:39.026Z"
         },
-        "tt0040522": {
-          "title": "Ladri di biciclette",
-          "date": "2023-06-27T11:00:24.535Z"
+        "tt0111161": {
+          "title": "The Shawshank Redemption",
+          "date": "2023-06-27T14:30:39.329Z"
         },
-        "tt0087843": {
-          "title": "Once Upon a Time in America",
-          "date": "2023-06-27T11:01:55.397Z"
+        "tt1291584": {
+          "title": "Warrior",
+          "date": "2023-06-27T14:30:39.640Z"
         },
-        "tt0198781": {
-          "title": "Monsters, Inc.",
-          "date": "2023-06-27T11:01:55.709Z"
+        "tt0075314": {
+          "title": "Taxi Driver",
+          "date": "2023-06-27T14:30:39.953Z"
         },
-        "tt0070735": {
-          "title": "The Sting",
-          "date": "2023-06-27T11:01:56.013Z"
+        "tt0120737": {
+          "title": "The Lord of the Rings: The Fellowship of the Ring",
+          "date": "2023-06-27T14:30:58.201Z"
         },
-        "tt0364569": {
-          "title": "Oldeuboi",
-          "date": "2023-06-27T11:01:56.341Z"
+        "tt0032553": {
+          "title": "De dictator",
+          "date": "2023-06-27T14:30:58.456Z"
         },
-        "tt3315342": {
-          "title": "Logan",
-          "date": "2023-06-27T11:01:56.669Z"
+        "tt2267998": {
+          "title": "Gone Girl",
+          "date": "2023-06-27T14:30:58.736Z"
         },
-        "tt0071315": {
-          "title": "Chinatown",
-          "date": "2023-06-27T11:02:28.855Z"
+        "tt0892769": {
+          "title": "How to Train Your Dragon",
+          "date": "2023-06-27T14:30:59.008Z"
         },
-        "tt0979432": {
-          "title": "Boardwalk Empire",
-          "date": "2023-06-27T11:02:29.199Z"
+        "tt0032976": {
+          "title": "Rebecca",
+          "date": "2023-06-27T14:30:59.673Z"
         },
-        "tt6763664": {
-          "title": "The Haunting of Hill House",
-          "date": "2023-06-27T11:02:29.551Z"
+        "tt16124664": {
+          "title": "Harry Potter and the Cursed Child: San Francisco",
+          "date": "2023-06-27T14:31:25.208Z"
         },
-        "tt0097576": {
-          "title": "Indiana Jones and the Last Crusade",
-          "date": "2023-06-27T11:02:29.871Z"
+        "tt7783322": {
+          "title": "Harry Potter: A History of Magic",
+          "date": "2023-06-27T14:31:25.800Z"
         },
-        "tt0059578": {
-          "title": "For a Few Dollars More",
-          "date": "2023-06-27T11:12:00.070Z"
+        "tt16116640": {
+          "title": "Harry Potter and the Cursed Child: London Show",
+          "date": "2023-06-27T14:31:26.144Z"
         },
-        "tt0816692": {
-          "title": "Interstellar",
-          "date": "2023-06-27T11:12:00.494Z"
+        "tt0241527": {
+          "title": "Harry Potter en de steen der wijzen",
+          "date": "2023-06-27T14:31:37.656Z"
         },
-        "tt0468569": {
-          "title": "The Dark Knight",
-          "date": "2023-06-27T11:12:01.582Z"
+        "tt0295297": {
+          "title": "Harry Potter en de geheime kamer",
+          "date": "2023-06-27T14:31:38.153Z"
         },
-        "tt0129167": {
-          "title": "De IJzeren reus",
-          "date": "2023-06-27T11:12:01.926Z"
+        "tt0304141": {
+          "title": "Harry Potter en de gevangene van Azkaban",
+          "date": "2023-06-27T14:31:38.753Z"
         },
-        "tt0068646": {
-          "title": "The Godfather",
-          "date": "2023-06-27T11:12:02.606Z"
-        },
-        "tt8856470": {
-          "title": "Pokémon Mewtwo Slaat Terug Evolutie",
-          "date": "2023-06-27T11:28:45.216Z"
-        },
-        "tt6595896": {
-          "title": "Pokémon: De Film - Ik Kies Jou",
-          "date": "2023-06-27T12:16:53.698Z"
-        },
-        "tt0338013": {
-          "title": "Eternal Sunshine of the Spotless Mind",
-          "date": "2023-06-27T13:50:08.010Z"
-        },
-        "tt8929308": {
-          "title": "In the Dino",
-          "date": "2023-06-27T13:50:48.176Z"
+        "tt25403504": {
+          "title": "RiffTrax: Harry Potter and the Sorcerer's Stone",
+          "date": "2023-06-27T14:31:41.433Z"
         }
       }
     }
   },
   "poki": {
-    "private": true,
-    "biography": "",
+    "private": false,
+    "biography": "skr skr ****",
     "watchlist": {
       "tvseries": {
-        "tt1831164": {
-          "title": "Leyla ile Mecnun",
-          "date": "2023-06-27T11:08:31.765Z",
+        "tt10048342": {
+          "title": "The Queen's Gambit",
+          "date": "2023-06-27T14:31:59.273Z",
           "episode": {}
         },
-        "tt1486217": {
-          "title": "Archer",
-          "date": "2023-06-27T11:08:32.030Z",
+        "tt12343534": {
+          "title": "Jujutsu Kaisen",
+          "date": "2023-06-27T14:32:06.176Z",
+          "episode": {
+            "tt21361588": "2-1",
+            "tt13352292": "1-5",
+            "tt13220452": "1-4",
+            "tt13220444": "1-3",
+            "tt13220442": "1-2",
+            "tt12967596": "1-1"
+          }
+        },
+        "tt4574334": {
+          "title": "Stranger Things",
+          "date": "2023-06-27T14:31:59.960Z",
           "episode": {}
         },
-        "tt4269716": {
-          "title": "Umbre",
-          "date": "2023-06-27T11:08:32.278Z",
-          "episode": {}
-        },
-        "tt10541088": {
-          "title": "Clarkson's Farm",
-          "date": "2023-06-27T11:08:32.557Z",
-          "episode": {}
-        },
-        "tt10233448": {
-          "title": "Vinland Saga",
-          "date": "2023-06-27T11:08:32.829Z",
-          "episode": {}
-        },
-        "tt0141842": {
-          "title": "The Sopranos",
-          "date": "2023-06-27T11:08:42.021Z",
-          "episode": {}
-        },
-        "tt1856010": {
-          "title": "House of Cards",
-          "date": "2023-06-27T11:08:42.637Z",
-          "episode": {}
-        },
-        "tt2098220": {
-          "title": "Hunter x Hunter",
-          "date": "2023-06-27T11:08:56.622Z",
+        "tt0278238": {
+          "title": "Samurai Jack",
+          "date": "2023-06-27T14:32:00.529Z",
           "episode": {}
         },
         "tt0988818": {
           "title": "Gintama",
-          "date": "2023-06-27T11:09:01.741Z",
+          "date": "2023-06-27T14:32:00.824Z",
+          "episode": {}
+        }
+      },
+      "movies": {}
+    }
+  },
+  "a": {
+    "private": false,
+    "biography": "",
+    "watchlist": {
+      "tvseries": {
+        "tt4269716": {
+          "title": "Umbre",
+          "date": "2023-06-27T14:41:54.094Z",
+          "episode": {}
+        },
+        "tt1865718": {
+          "title": "Gravity Falls",
+          "date": "2023-06-27T14:41:54.578Z",
+          "episode": {}
+        },
+        "tt2243973": {
+          "title": "Hannibal",
+          "date": "2023-06-27T14:42:33.168Z",
           "episode": {
-            "tt8731106": "8-1",
-            "tt8731112": "8-2",
-            "tt8731114": "8-3"
+            "tt3230882": "2-2",
+            "tt3230884": "2-3",
+            "tt3230886": "2-4",
+            "tt3230890": "2-5",
+            "tt3230896": "2-6",
+            "tt3230898": "2-7",
+            "tt3230894": "2-8",
+            "tt3230900": "2-9",
+            "tt3230904": "2-10",
+            "tt3230906": "2-11",
+            "tt3230910": "2-12",
+            "tt3230908": "2-13",
+            "tt3000124": "2-1"
+          }
+        },
+        "tt3322312": {
+          "title": "Daredevil",
+          "date": "2023-06-27T14:42:04.491Z",
+          "episode": {}
+        },
+        "tt5897304": {
+          "title": "Mob Psycho 100",
+          "date": "2023-06-27T14:46:17.603Z",
+          "episode": {
+            "tt9300038": "2-1"
+          }
+        },
+        "tt0407362": {
+          "title": "Battlestar Galactica",
+          "date": "2023-06-27T14:47:01.729Z",
+          "episode": {}
+        },
+        "tt0280249": {
+          "title": "Dragon Ball",
+          "date": "2023-06-27T15:02:56.017Z",
+          "episode": {
+            "tt1168026": "9-1",
+            "tt1168045": "9-2",
+            "tt1168006": "9-3",
+            "tt1168007": "8-1",
+            "tt1168043": "8-2",
+            "tt1168028": "8-3",
+            "tt1167760": "7-1",
+            "tt1168035": "7-2",
+            "tt1167913": "7-3",
+            "tt1168057": "6-1",
+            "tt1168076": "6-3"
+          }
+        },
+        "tt0388629": {
+          "title": "One Piece: Stampede",
+          "date": "2023-06-27T15:22:28.674Z",
+          "episode": {}
+        },
+        "tt0118273": {
+          "title": "Brass Eye",
+          "date": "2023-06-27T15:22:29.274Z",
+          "episode": {}
+        },
+        "tt3230854": {
+          "title": "The Expanse",
+          "date": "2023-06-27T15:22:29.625Z",
+          "episode": {}
+        },
+        "tt4508902": {
+          "title": "One Punch Man",
+          "date": "2023-06-27T15:22:44.297Z",
+          "episode": {
+            "tt4569062": "1-1",
+            "tt5109276": "1-2",
+            "tt5109278": "1-3",
+            "tt5152430": "1-4",
+            "tt5169658": "1-5",
+            "tt5173426": "1-6",
+            "tt5203540": "1-7",
+            "tt5220908": "1-8",
+            "tt5236798": "1-9",
+            "tt5252356": "1-10",
+            "tt5257562": "1-11",
+            "tt5271822": "1-12"
           }
         }
       },
       "movies": {
-        "tt0059578": {
-          "title": "For a Few Dollars More",
-          "date": "2023-06-27T11:08:29.662Z"
+        "tt0119698": {
+          "title": "Mononoke-hime",
+          "date": "2023-06-27T14:41:57.010Z"
         },
-        "tt0816692": {
-          "title": "Interstellar",
-          "date": "2023-06-27T11:08:29.951Z"
+        "tt0112471": {
+          "title": "Before Sunrise",
+          "date": "2023-06-27T14:42:10.088Z"
         },
-        "tt0129167": {
-          "title": "De IJzeren reus",
-          "date": "2023-06-27T11:08:30.197Z"
+        "tt0114709": {
+          "title": "Toy Story",
+          "date": "2023-06-27T14:42:11.025Z"
         },
-        "tt0468569": {
-          "title": "The Dark Knight",
-          "date": "2023-06-27T11:08:30.445Z"
-        },
-        "tt0068646": {
-          "title": "The Godfather",
-          "date": "2023-06-27T11:08:30.951Z"
-        },
-        "tt0071315": {
-          "title": "Chinatown",
-          "date": "2023-06-27T11:08:47.933Z"
+        "tt5884052": {
+          "title": "Pokémon: Detective Pikachu",
+          "date": "2023-06-27T15:05:42.131Z"
         }
       }
     }

@@ -2,6 +2,8 @@ import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
 import { createNavButton, addarticle } from "./createElements.js";
 
 window.onload = function () {
+  // code to be executed after the page has fully loaded
+  // able to access elements and resources of the page here
   const nav = document.getElementById("nav_btn");
   checkifloggedin(function (error, response) {
     if (error) {

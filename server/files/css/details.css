@@ -208,7 +208,7 @@ button[data-action="add"]:hover {
 }
 
 main {
-  display: flex !important;
+  display: flex;
   align-items: center;
   min-height: calc(100vh - 160px);
   max-width: 1400px;
@@ -227,8 +227,8 @@ main {
     font-size: 24px;
     font-weight: 700;
     display: flex;
-    align-items: center; /* Change align-items to flex-start */
-    flex-direction: column; /* Change flex-direction to column */
+    align-items: center;
+    flex-direction: column;
     max-width: 1400px;
     justify-content: space-between;
   }
@@ -241,8 +241,8 @@ main {
 
   .season {
     margin-right: 10px;
-    display: block; /* Change display to block */
-    margin-bottom: 10px; /* Add margin-bottom */
+    display: block;
+    margin-bottom: 10px;
   }
   .nav_left {
     font-size: 24px;
@@ -251,34 +251,6 @@ main {
 
   button {
     width: calc(100vw - 64px);
-  }
-
-  .stats {
-    justify-content: center;
-    align-items: center;
-  }
-
-  .banner {
-    margin-top: 70px;
-    height: auto;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .banner-content {
-    max-width: 100%;
-  }
-
-  .banner-content h1 {
-    font-size: 36px;
-  }
-
-  .banner-content p {
-    font-size: 12px;
-  }
-
-  .banner-content button {
-    font-size: 12px;
   }
 
   .main-article {
