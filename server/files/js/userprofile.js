@@ -1,14 +1,7 @@
-import {
-  checkifloggedin,
-  getwatchlist,
-  addWatchlist,
-  removeWatchlist,
-} from "./requestFunctions.js";
+import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
 
-import { createNavButton } from "./createElements.js";
-let watchlist = null;
-let watchlistofuser = null;
-let loggin = null;
+import { createNavButton, add, remove } from "./createElements.js";
+
 let username = null;
 
 window.onload = function () {
@@ -29,21 +22,23 @@ window.onload = function () {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
         if (xhr.status === 200) {
-          watchlistofuser = JSON.parse(xhr.responseText);
-          if (!watchlistofuser.private) {
+          const searchuser_data = JSON.parse(xhr.responseText);
+          if (!searchuser_data.private) {
             const biography = document.getElementById("biography");
-            if (watchlistofuser["biography"]) {
+            if (searchuser_data["biography"]) {
               //If the User wrote a biography
               biography.textContent =
-                "About me: " + watchlistofuser["biography"];
+                "About me: " + searchuser_data["biography"];
             }
             const user = document.getElementById("user");
+            const searchuser_watchlist = searchuser_data["watchlist"];
             user.textContent = usernameofsearch + "'s Watchlist";
             getwatchlist(function (error, response) {
               if (response) {
-                watchlist = JSON.parse(response);
-                loggin = true;
-                content();
+                const data = JSON.parse(response);
+                const user_watchlist = data["watchlist"];
+                console.log(user_watchlist);
+                content(user_watchlist, searchuser_watchlist);
               } else {
               }
             });
@@ -69,82 +64,83 @@ window.onload = function () {
   });
 };
 
-const searchButton = document.getElementById("search-button");
-const searchuserinput = document.getElementById("searchuser-input");
-
-searchButton.addEventListener("click", function () {
-  const suserinput = searchuserinput.value;
-  if (suserinput != username && suserinput != "") {
-    location.href = "/userprofile.html?username=" + suserinput;
+document.getElementById("search-button").addEventListener("click", function () {
+  const searchinput = document
+    .getElementById("searchuser-input")
+    .value.toLowerCase();
+  if (searchinput != username && searchinput != "") {
+    location.href = "/userprofile.html?username=" + searchinput;
   } else {
   }
 });
 
-function content() {
-  if (watchlistofuser) {
-    if (watchlistofuser.watchlist.tvseries) {
-      if (Object.keys(watchlistofuser.watchlist.tvseries).length > 0) {
-        // Create and append h1 for Series
-        const seriesHeader = document.createElement("h1");
-        seriesHeader.textContent = "Series:";
-        document.getElementById("series").appendChild(seriesHeader);
-      }
+function content(user_watchlist, searchuser_watchlist) {
+  if (searchuser_watchlist) {
+    if (
+      searchuser_watchlist.tvseries &&
+      Object.keys(searchuser_watchlist.tvseries).length > 0
+    ) {
+      // create and append h1 for "Series"
+      const seriesHeader = document.createElement("h1");
+      seriesHeader.textContent = "Series:";
+      document.getElementById("series").appendChild(seriesHeader);
 
-      let tvseries = watchlistofuser.watchlist.tvseries;
-      for (let serieId in tvseries) {
-        addmedia(tvseries[serieId].title, serieId, null, ".series");
+      const series = searchuser_watchlist.tvseries;
+      for (let serieId in series) {
+        addmedia(series[serieId].title, serieId, user_watchlist, ".series");
       }
     }
-    if (watchlistofuser.watchlist.movies) {
-      // Create and append h1 for Movies
-      if (Object.keys(watchlistofuser.watchlist.movies).length) {
-        const moviesHeader = document.createElement("h1");
-        moviesHeader.textContent = "Movies:";
-        document.getElementById("movies").appendChild(moviesHeader);
-      }
+    if (
+      searchuser_watchlist.movies &&
+      Object.keys(searchuser_watchlist.movies).length > 0
+    ) {
+      // create and append h1 for "Movies"
+      const moviesHeader = document.createElement("h1");
+      moviesHeader.textContent = "Movies:";
+      document.getElementById("movies").appendChild(moviesHeader);
 
-      let movies = watchlistofuser.watchlist.movies;
+      let movies = searchuser_watchlist.movies;
       for (let movieId in movies) {
-        addmedia(movies[movieId].title, movieId, null, ".movies");
+        addmedia(movies[movieId].title, movieId, user_watchlist, ".movies");
       }
     }
   }
 }
 
-function addmedia(title, serieId, episode, documentelement) {
+function addmedia(title, mediaId, user_watchlist, documentelement) {
+  // check type movie or series
   const type = documentelement == ".movies" ? "movies" : "tvseries";
+
+  // create an article element
   const articleElement = document.createElement("article");
-  articleElement.id = serieId;
+  articleElement.id = mediaId;
+  articleElement.setAttribute("data-type", type);
+  articleElement.setAttribute("data-name", title);
 
-  // Create the link element
+  // create link element that leads to media_details.html with the mediaId
   const linkElement = document.createElement("a");
-  linkElement.href = "/media_details.html?id=" + serieId;
+  linkElement.href = "/media_details.html?id=" + mediaId;
 
-  // Create the heading element
+  // create h1 element for the media title
   const headingElement = document.createElement("h1");
   headingElement.textContent = title;
 
-  // Append the image and heading elements to the link element
-  linkElement.appendChild(headingElement);
-
-  if (episode) {
-    const headingElement2 = document.createElement("h3");
-    headingElement2.textContent = episode;
-    linkElement.appendChild(headingElement2);
-  }
-
-  // Append the link element to the article element
+  linkElement.appendChild(headingElement); // make the title clickable
   articleElement.appendChild(linkElement);
 
-  if (loggin && watchlist) {
+  // check if the user is logged in to show the Add/Remove button
+  if (user_watchlist) {
+    // create button element for adding and removing media from the watchlist
     const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][type].hasOwnProperty(serieId)) {
+    // check if the mediaId is in the user's watchlist
+    if (user_watchlist[type]?.hasOwnProperty(mediaId)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
     } else {
       buttonElement.textContent = "Add";
       buttonElement.setAttribute("data-action", "add");
     }
+    // add event listener for the button
     buttonElement.addEventListener("click", function () {
       const action = buttonElement.getAttribute("data-action");
       if (action === "add") {
@@ -155,30 +151,6 @@ function addmedia(title, serieId, episode, documentelement) {
     });
     articleElement.appendChild(buttonElement);
   }
-
-  // Add the article element to the document
-  const topMoviesElement = document.querySelector(documentelement);
-  topMoviesElement.appendChild(articleElement);
-}
-
-function add(article, button) {
-  addWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Remove";
-      button.setAttribute("data-action", "remove"); // Change the action to "remove"
-    }
-  });
-}
-
-function remove(article, button) {
-  removeWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Add";
-      button.setAttribute("data-action", "add"); // Change the action to "add"
-    }
-  });
+  // add the article element to the specified document element
+  document.querySelector(documentelement).appendChild(articleElement);
 }

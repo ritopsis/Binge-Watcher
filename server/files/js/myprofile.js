@@ -186,9 +186,11 @@ function content() {
 }
 
 function addmedia(title, serieId, episode, documentelement) {
+  const type = documentelement == ".movies" ? "movies" : "tvseries";
   const articleElement = document.createElement("article");
   articleElement.id = serieId;
-
+  articleElement.setAttribute("data-type", type);
+  articleElement.setAttribute("data-name", title);
   // Create the link element
   const linkElement = document.createElement("a");
   linkElement.href = "/media_details.html?id=" + serieId;

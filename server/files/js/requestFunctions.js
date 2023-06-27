@@ -29,7 +29,7 @@ export function addWatchlist(article, callback) {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
-      callback(null, xhr.responseText);
+      callback(null, true);
     } else {
       callback("Error: " + xhr.status, null);
     }
@@ -47,7 +47,7 @@ export function removeWatchlist(article, callback) {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     if (xhr.status === 200) {
-      callback(null, xhr.responseText);
+      callback(null, true);
     } else {
       callback("Error: " + xhr.status, null);
     }

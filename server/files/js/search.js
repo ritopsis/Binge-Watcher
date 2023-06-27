@@ -1,13 +1,7 @@
-import {
-  checkifloggedin,
-  getwatchlist,
-  addWatchlist,
-  removeWatchlist,
-} from "./requestFunctions.js";
-import { createNavButton } from "./createElements.js";
+import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
+import { createNavButton, add, remove } from "./createElements.js";
 
 window.onload = function () {
-  const menuItems = document.getElementById("menuItems");
   let loggin = null;
   let watchlist = null;
 
@@ -81,7 +75,7 @@ function handleSearchRequest(title, page, loggin, watchlist) {
         // entries are the amout of media that came back from the request
         if (Number(sresult.page) - 1 != 0) {
           // user is not at the first page
-          createPagination("Back ", Number(sresult.page) - 1, false); // creates "Previous"-Button with text: "Previous"
+          createPagination("Back  ", Number(sresult.page) - 1, false); // creates "Previous"-Button with text: "Previous"
           createPagination(null, Number(sresult.page) - 1, false); // creates "Previous"-Button with text: previous Pagenumber
         }
         createPagination(null, Number(sresult.page), true); // current page
@@ -89,7 +83,7 @@ function handleSearchRequest(title, page, loggin, watchlist) {
         if (sresult.next) {
           //there is a next page
           createPagination(null, Number(sresult.page) + 1, false); // next page with text: Pagenumber
-          createPagination("Next ", Number(sresult.page) + 1, false); // next page with text: "Next"
+          createPagination("Next  ", Number(sresult.page) + 1, false); // next page with text: "Next"
         } else if (Number(sresult.page) - 1 != 0) {
           // check again if we are not at the first page
           createPagination("First", 1); // with "First" go back to the first page
@@ -111,12 +105,14 @@ function handleSearchRequest(title, page, loggin, watchlist) {
   xhr.open("GET", url, true);
   xhr.send();
 }
+
 function createPagination(text, sitenumber, highlight) {
-  // Create the list item element
+  // create the list item element
   var listItem = document.createElement("li");
+  // highlight true means the user is on that sitenumber currently
   listItem.className = highlight ? "page-item active" : "page-item";
 
-  // Create the button element
+  // create button element
   var button = document.createElement("button");
   button.className = "page-link";
   button.type = "button";
@@ -124,6 +120,7 @@ function createPagination(text, sitenumber, highlight) {
   // Append the button element to the list item element
   listItem.appendChild(button);
 
+  //if there is text than use text else use the sitenumber as the button text
   button.textContent = text ? text : sitenumber;
 
   // Add a click event listener to the button
@@ -141,50 +138,47 @@ function createPagination(text, sitenumber, highlight) {
   // Append the list item element to the parent container
   parentContainer.appendChild(listItem);
 }
-function addarticle(movie, type, loggin, watchlist) {
-  if (type == "movie") {
-    type = "movies";
-  } else {
-    type = "tvseries";
-  }
 
+function addarticle(media, type, loggin, watchlist) {
+  // check type movie or series
+  type = type == "movie" ? "movies" : "tvseries";
+
+  // create an article element
   const articleElement = document.createElement("article");
-  articleElement.id = movie.id;
+  articleElement.id = media.id;
   articleElement.setAttribute("data-type", type);
 
+  // create link element that leads to media_details.html with the mediaId
   const linkElement = document.createElement("a");
-  linkElement.href = "/media_details.html?id=" + movie.id;
+  linkElement.href = "/media_details.html?id=" + media.id;
 
-  // Create the image element
+  // create the image element
   const imageElement = document.createElement("img");
   imageElement.classList.add("articleimage");
-  imageElement.src = movie.primaryImage && movie.primaryImage.url;
-  imageElement.alt = "Movie Image";
+  imageElement.src = media.primaryImage && media.primaryImage.url;
+  imageElement.alt = "Media Image";
   imageElement.loading = "lazy";
 
-  // Add an onerror event to handle image loading failure
+  // add onerror event to handle image loading failure
   imageElement.onerror = function () {
     imageElement.src = "./image/poster.png";
     imageElement.alt = "Alternative Image";
   };
 
-  const h3Element = document.createElement("h3");
-  h3Element.id = "toph2";
-  h3Element.textContent = movie.year; // add your year here
-
+  // create h1 element for the media title
   const h1Element = document.createElement("h1");
-  h1Element.id = "toph2";
-  h1Element.textContent = movie.titleText.text;
+  h1Element.textContent = media.titleText.text;
 
+  // title and image clickable
   linkElement.appendChild(imageElement);
-  linkElement.appendChild(h3Element);
   linkElement.appendChild(h1Element);
 
   articleElement.appendChild(linkElement);
 
+  // check if the user is logged in to show the Add/Remove button
   if (loggin && watchlist) {
     const buttonElement = document.createElement("button");
-    if (watchlist["watchlist"][type].hasOwnProperty(movie.id)) {
+    if (watchlist["watchlist"][type].hasOwnProperty(media.id)) {
       buttonElement.textContent = "Remove";
       buttonElement.setAttribute("data-action", "remove");
     } else {
@@ -201,29 +195,7 @@ function addarticle(movie, type, loggin, watchlist) {
     });
     articleElement.appendChild(buttonElement);
   }
-  // Add the article element to the document
+  // add the article element to main
   const topMoviesElement = document.querySelector("main");
   topMoviesElement.appendChild(articleElement);
-}
-
-function add(article, button) {
-  addWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Remove";
-      button.setAttribute("data-action", "remove"); // Change the action to "remove"
-    }
-  });
-}
-
-function remove(article, button) {
-  removeWatchlist(article, function (error, response) {
-    if (error) {
-      // Handle error
-    } else {
-      button.textContent = "Add";
-      button.setAttribute("data-action", "add"); // Change the action to "add"
-    }
-  });
 }

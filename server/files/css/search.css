@@ -98,6 +98,29 @@ nav a:hover {
   background-color: #8a102e;
 }
 
+.custom-pagination .page-link {
+  padding: 3px;
+  border-radius: 6px;
+  color: #be123c;
+  background-color: #c9c9c9;
+}
+
+.custom-pagination .page-item.active .page-link {
+  border-radius: 6px;
+  background-color: #be123c;
+  border: none;
+}
+.custom-pagination .page-link:hover {
+  border-radius: 6px;
+  color: white;
+  background-color: #be123c;
+}
+.custom-pagination .page-link:focus {
+  border-radius: 6px;
+  outline: none;
+  box-shadow: none;
+}
+
 .searchcontainer {
   display: flex;
   flex-direction: column;

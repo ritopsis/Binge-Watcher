@@ -75,22 +75,24 @@ export function addarticle(content, documentelement, type, loggin, watchlist) {
   topMoviesElement.appendChild(articleElement);
 }
 
-function add(article, button) {
+export function add(article, button) {
   addWatchlist(article, function (error, response) {
     if (error) {
-      // Handle error
-    } else {
+      console.error("Error adding to watchlist:", error);
+    }
+    if (response) {
       button.textContent = "Remove";
-      button.setAttribute("data-action", "remove"); // Change the action to "remove"
+      button.setAttribute("data-action", "remove"); // change the action to "remove"
     }
   });
 }
 
-function remove(article, button) {
+export function remove(article, button) {
   removeWatchlist(article, function (error, response) {
     if (error) {
-      // Handle error
-    } else {
+      console.error("Error removing from watchlist:", error);
+    }
+    if (response) {
       button.textContent = "Add";
       button.setAttribute("data-action", "add"); // Change the action to "add"
     }
