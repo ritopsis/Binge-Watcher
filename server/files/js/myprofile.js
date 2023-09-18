@@ -2,6 +2,7 @@ import { checkifloggedin, getwatchlist } from "./requestFunctions.js";
 import { createNavButton, add, remove } from "./createElements.js";
 let watchlist = null;
 let username = null;
+let settingo = null;
 window.onload = function () {
   checkifloggedin(function (error, response) {
     if (error) {
@@ -14,10 +15,16 @@ window.onload = function () {
           const data = JSON.parse(response);
           const user_watchlist = data["watchlist"];
           watchlist = user_watchlist;
-          document.getElementById("set-privacy-button").textContent =
-            user_watchlist.private ? "Set public" : "Set private";
           document.getElementById("biography-input").textContent =
             data["biography"];
+            if(data["private"])
+            {
+              document.getElementById("set-privacy-button").textContent = "Set public"
+            }
+            else
+            {
+              document.getElementById("set-privacy-button").textContent = "Set private" 
+            }
           content(user_watchlist);
           const nav = document.getElementById("nav_btn");
           createNavButton("Profile", "myprofile.html", nav);
@@ -43,6 +50,8 @@ document
     event.preventDefault();
     this.disable = true;
     recommend("tvseries", this);
+    console.log("blubs")
+
   });
 
 document

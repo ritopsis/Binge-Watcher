@@ -46,7 +46,7 @@ function content(user_watchlist) {
         );
     }
   };
-  xhr.open("GET", `/pop_media?limit=${totalMedia}&list=top_rated_250`, true);
+  xhr.open("GET", `/pop_media?limit=${totalMedia}&list=most_pop_movies`, true);
   xhr.send();
 
   const xhrShows = new XMLHttpRequest();
